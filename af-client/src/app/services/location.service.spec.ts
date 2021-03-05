@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { LocationService } from './location.service';
+import { LocationDto } from '../models/location-dto';
 
 describe('LocationService', () => {
   let service: LocationService;
@@ -54,7 +55,7 @@ describe('LocationService', () => {
   //test	public LocationDto getLocation( int index)
   it('should return a single location', () => {
     const locale = service.getLocationById(1);
-    expect(locale).toBeInstanceOf(LocationDTO);
+    expect(locale).toBeInstanceOf(LocationDto);
   });
 
   //test	public void updateState(int index,String state)
