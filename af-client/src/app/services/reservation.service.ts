@@ -8,6 +8,19 @@ export class ReservationService {
 
   constructor() { }
 
-  getAllReservations() {}
+  getReservationById() { }
 
+  getAllReservations() { }
+
+  getAllReservationsByRoomId() { }
+
+  addReservation() { }
+
+  updateReservation() { }
+
+  deleteReservation() { }
+
+  assignBatch() { }
+
+  getTrainingStationReservations() {}
 }
