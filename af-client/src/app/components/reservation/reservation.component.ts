@@ -1,7 +1,7 @@
 
 import { Reservation } from '../../models/reservation';
 import { ReservationService } from '../../services/reservation.service';
-import { Component, OnInit } from '../components/location/node_modules/@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-reservation',
@@ -14,7 +14,7 @@ export class ReservationComponent implements OnInit {
   selectedReservation?:Reservation;
 
   constructor(private reservationService:ReservationService) {
-    this.reservationList = reservationService.getAllReservations();
+    // this.reservationList = reservationService.getAllReservations();
    }
 
   ngOnInit(): void {
