@@ -10,6 +10,7 @@ import { RoomComponent } from './components/room/room.component';
 import { LocationService } from './services/location.service';
 import { ReservationService } from './services/reservation.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   
   providers: [

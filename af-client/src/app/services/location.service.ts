@@ -17,7 +17,7 @@ export class LocationService {
   }
 
   getLocationsByState(state: string) {
-    
+    return this.http.get<LocationDto[]>(`${this.apiBase}/locations/state/${state}`);
   }
 
   getLocationsByCity(city: string) {}
