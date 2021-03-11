@@ -27,7 +27,30 @@
     <label for="reservation-endDate">reservation endDate: </label>
     <input id="reservation-endDate" [(ngModel)]="reservation.endDate" placeholder="endDate"/>
   </div>
+  <div>
+    <label for="reservation-batchId">reservation batchId: </label>
+    <input id="reservation-batchId" [(ngModel)]="reservation.batchId" placeholder="BatchId" />
+    <button (click)="getBatches()" *ngIf="reservation.batchId == undefined">Add batch from Caliber</button>
+  </div>
 </div>
  <button (click)="update()">SAVE</button>
   <button (click)="delete()">DELETE</button> 
+</div>
+
+<div *ngIf="batchError">
+  <h1 class="error">{{batchError}}</h1>
+</div>
+
+<div *ngIf="batches">
+  <ul>
+    <li *ngFor="let batch of batches">
+      <button (click)="assignBatch(batch.id)">
+        <span class="badge">{{batch.id}} </span>
+        <span>Batch ID: {{batch.batchId}} </span>
+        <span>Name: {{batch.name}} </span>
+        <span>Start Date: {{batch.startDate}} </span>
+        <span>End Date: {{batch.endDate}}</span>
+      </button>
+    </li>
+  </ul>
 </div>
