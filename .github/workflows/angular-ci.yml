@@ -24,8 +24,8 @@ jobs:
         with: 
           node-version: '12.x'
       - name: Install
+        working-directory: ./af-client
         run: |
-          cd ./af-client
-          ls ./
+          npm install
       - name: Test CI
         run: npm run test-headless
