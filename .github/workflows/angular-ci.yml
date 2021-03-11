@@ -28,6 +28,7 @@ jobs:
       - name: Install
         run: |
           pwd
+          ls
           npm install
       - name: Test CI
         run: npm run test-headless
