@@ -1,8 +1,13 @@
 <p>reservation works!</p>
-<div ng-if="selectedReservation">
-  <h1>{{selectedReservation.locationId}} {{selectedReservation.buildingId}} {{selectedReservation.roomId}}</h1>
-  <p ng-if="selectedReservation.batchId">Batch: {{selectedReservation.batchId}}</p>
+<div *ngIf="selectedReservation; else noReservation">
+  <h1>{{selectedReservation.locationId}} {{selectedReservation.buildingId}} {{selectedReservation.roomId}}</h1> <!-- Replace with names of location, building and room -->
+  <p *ngIf="selectedReservation.batchId">Batch: {{selectedReservation.batchId}}</p>
   <p>Reserved by: {{selectedReservation.reserver}}</p>
   <p>Resvered from: {{selectedReservation.startDate}}</p>
   <p>Resvered to: {{selectedReservation.endDate}}</p>
+  <!-- Form for editing Reservation here -->
 </div>
+<ng-template #noReservation>
+  <h1>No reservation selected</h1>
+  <!-- form for making new reservation here -->
+</ng-template>
