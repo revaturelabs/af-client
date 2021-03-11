@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Reservation } from '../models/reservation';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -49,7 +49,7 @@ export class ReservationService {
   assignBatch( reservation: Reservation, batchId: number ) {
     const url = environment.reservartionBackendUrl + `api/reservations/${reservation.reservationId}/${batchId}`;
 
-    return this.httpClient.put<string>(url, null);
+    return this.httpClient.put<HttpResponse<any>>(url, null);
   }
 
   getTrainingStationReservations() {
