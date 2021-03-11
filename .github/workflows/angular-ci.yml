@@ -20,11 +20,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+        with:
+          path: $GITHUB_WORKSPACE/af-client
       - uses: actions/setup-node@master
         with: 
           node-version: '12.x'
       - name: Install
         run: |
-          ls $GITHUB_WORKSPACE/af-client
+          ls pwd
       - name: Test CI
         run: npm run test-headless
