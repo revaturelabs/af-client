@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 import { Reservation } from '../models/reservation';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
-
   constructor(private httpClient: HttpClient) { }
-
+  
   getReservationById(reservationId: number) {
     const url = environment.reservartionBackendUrl + `api/reservations/${reservationId}`;
 

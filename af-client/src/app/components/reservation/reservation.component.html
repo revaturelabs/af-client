@@ -1,8 +1,20 @@
 <p>reservation works!</p>
-<div ng-if="selectedReservation">
+
+<div class="reservation">
+  <ul>
+    <li *ngFor="let reservation of reservations">
+      <a routerLink="detail/{{reservation.id}}">
+        <span class="badge">{{ reservation.reservationId }}</span>
+        {{ reservation.roomType }} {{ reservation.reserver }}
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- <div ng-if="selectedReservation">
   <h1>{{selectedReservation.locationId}} {{selectedReservation.buildingId}} {{selectedReservation.roomId}}</h1>
   <p ng-if="selectedReservation.batchId">Batch: {{selectedReservation.batchId}}</p>
   <p>Reserved by: {{selectedReservation.reserver}}</p>
   <p>Resvered from: {{selectedReservation.startDate}}</p>
   <p>Resvered to: {{selectedReservation.endDate}}</p>
-</div>
+</div> -->
