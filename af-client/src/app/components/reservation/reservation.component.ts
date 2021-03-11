@@ -13,10 +13,12 @@ export class ReservationComponent implements OnInit {
   @Input() selectedReservation: Reservation;
   response: string;
   roomId: number;
-  constructor(private reservationService: ReservationService, private router: Router) {
+  reservations: Reservation[];
+
+  constructor( private reservationService: ReservationService, private router: Router ) {
 
   }
-  reservations: Reservation[]
+
   ngOnInit(): void {
     this.reservationService.getAllReservations()
       .subscribe((reservations: Reservation[]) => {
@@ -24,8 +26,9 @@ export class ReservationComponent implements OnInit {
         this.reservations = reservations;
       });
   }
-  getAllReservationsByRoomId(roomId : number):void {
-    // let roomId = idForm.value.searchId
+
+  getAllReservationsByRoomId(roomId: number): void {
+
     this.reservationService.getAllReservationsByRoomId(roomId)
       .subscribe((reservations: Reservation[]) => {
         console.log('getting reservations by room id');

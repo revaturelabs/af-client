@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Reservation } from 'src/app/models/reservation';
 import { ReservationService } from 'src/app/services/reservation.service';
+import { CaliberService } from '../../services/caliber.service';
+import { BacthDTO } from '../../models/batch-dto';
 
 @Component({
   selector: 'app-reservation-detail',
@@ -10,11 +12,14 @@ import { ReservationService } from 'src/app/services/reservation.service';
 })
 export class ReservationDetailComponent implements OnInit {
   reservation: Reservation;
+  batches: BacthDTO[];
+  batchError: string;
 
   constructor(private reservationService: ReservationService,
     private route: ActivatedRoute,
-    // private location: Location
-    ) { }
+    private caliberService: CaliberService) {
+
+  }
 
   ngOnInit(): void {
     this.getReservation();
@@ -40,4 +45,22 @@ export class ReservationDetailComponent implements OnInit {
     .subscribe(resertion => this.reservation = resertion);
   }
 
+  getBatches(): void {
+    this.caliberService.getAllCurrentBatches().subscribe((batches) => {
+      this.batches = batches;
+    });
+  }
+
+  assignBatch(id: number) {
+    this.reservationService.assignBatch(this.reservation, id).subscribe(
+      (response) => {
+        if (response.status === 200) {
+          // route to this route
+        }
+      },
+      (error) => {
+        this.batchError = error.error;
+        console.log(this.batchError)
+      });
+  }
 }
