@@ -17,6 +17,44 @@
     room id:
     <input id="location-city" [(ngModel)]="roomId" placeholder="id"/>
   </div>
+
+  <!-- <div >
+    
+    <h2>Add Reservation</h2>
+  <div>
+    <label for="reservation-buildingId">reservation buildingId: </label>
+    <input id="reservation-city" #buildingId placeholder="buildingId"/>
+  </div>
+  <div>
+    <label for="reservation-roomType">reservation roomType: </label>
+    <input id="reservation-roomType" #roomType placeholder="roomType"/>
+  </div>
+  <div>
+    <label for="reservation-roomId">reservation roomId: </label>
+    <input id="reservation-roomId" #roomId placeholder="roomId"/>
+  </div>
+  <div>
+    <label for="reservation-reserver">reservation reserver: </label>
+    <input id="reservation-reserver" #reserver placeholder="reserver"/>
+  </div>
+  <div>
+    <label for="reservation-startDate">reservation startDate: </label>
+    <input id="reservation-startDate" #startDate placeholder="startDate"/>
+  </div>
+  <div>
+    <label for="reservation-endDate">reservation endDate: </label>
+    <input id="reservation-endDate" #endDate placeholder="endDate"/>
+  </div>
+  <div>
+    <label for="reservation-endDate">reservation batchId: </label>
+    <input id="reservation-endDate" #batchId placeholder="batchId"/>
+  </div>
+  <button class="add-button" (click)="add(buildingId.value, roomType.value); buildingId.value='' roomType.value=''">
+    Add
+  </button>
+</div> -->
+
+
   <ul>
     <li *ngFor="let reservation of reservations">
       <a routerLink="{{reservation.reservationId}}">

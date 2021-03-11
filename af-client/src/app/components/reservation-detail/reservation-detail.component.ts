@@ -35,8 +35,9 @@ export class ReservationDetailComponent implements OnInit {
     console.log(res);
   }
 
-  update(): void {
-    this.reservationService.updateReservation(this.reservation);
+  async update(): Promise<void> {
+    this.reservationService.updateReservation(this.reservation)
+    .subscribe(resertion => this.reservation = resertion);
   }
 
 }

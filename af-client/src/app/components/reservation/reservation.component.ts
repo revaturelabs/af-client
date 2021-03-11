@@ -33,4 +33,17 @@ export class ReservationComponent implements OnInit {
       });
   }
 
+  async add(buildingId, roomType): Promise<void> {
+    let newReservation: Reservation;
+    buildingId = buildingId.trim();
+    roomType = roomType.trim();
+    if (!buildingId) { return; }
+    newReservation.buildingId = buildingId;
+    newReservation.roomType = roomType;
+    this.reservationService.addReservation(newReservation)
+      .subscribe((res : Reservation) => {
+        this.reservations.push(res);
+      });
+  }
+
 }
