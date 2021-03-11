@@ -4,7 +4,13 @@
 
 export const environment = {
   production: false,
+<<<<<<< HEAD
   apiBase: 'http://localhost:8080'
+=======
+  caliberUrl: "https://caliber2-mock.revaturelabs.com:443/mock/training/",
+  locationBackendUrl: "",
+  reservartionBackendUrl: "http://localhost:8080/"
+>>>>>>> 49dda902db3a5a4dadc25dbed6f0507f3f1b53ad
 };
 
 /*
