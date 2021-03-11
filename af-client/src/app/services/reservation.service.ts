@@ -10,29 +10,63 @@ export class ReservationService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getReservationById( reservationId: number ) { }
+  getReservationById(reservationId: number) {
+    const url = environment.reservartionBackendUrl + `api/reservations/${reservationId}`;
 
-  getAllReservations() { }
-
-  getAllReservationsByRoomId( roomId: number) { }
-
-  addReservation( reservation: Reservation ) { }
-
-  updateReservation( reservation: Reservation ) { }
-
-  deleteReservation( reservationId: number) { }
-
-  async assignBatch( reservation: Reservation, batchId: number ) {
-    const url = environment.reservartionBackendUrl + `api/reservations/${reservation.id}/${batchId}`;
-
-    let response = await this.httpClient.put( url, null, {
-      observe: 'response'
-    }).toPromise().catch( (err) => {
-
-    });
-
-    // display response?
+    return this.httpClient.get<Reservation>(url);
   }
 
-  getTrainingStationReservations() {}
+  getAllReservations() {
+    const url = environment.reservartionBackendUrl + `api/reservations/`;
+
+    return this.httpClient.get<Reservation[]>(url);
+  }
+
+  getAllReservationsByRoomId(roomId: number) {
+    const url = environment.reservartionBackendUrl + `api/reservations/rooms/${roomId}`;
+
+    return this.httpClient.get<Reservation[]>(url);
+  }
+
+  addReservation(reservation: Reservation) {
+    const url = environment.reservartionBackendUrl + `api/reservations/`;
+
+    return this.httpClient.post<Reservation>(url, reservation);
+  }
+
+  updateReservation(reservation: Reservation) {
+    const url = environment.reservartionBackendUrl + `api/reservations/`;
+
+    return this.httpClient.put<Reservation>(url, reservation);
+  }
+
+  deleteReservation(reservationId: number) {
+    const url = environment.reservartionBackendUrl + `api/reservations/${reservationId}`;
+
+    return this.httpClient.delete(url);
+  }
+
+  assignBatch( reservation: Reservation, batchId: number ) {
+    const url = environment.reservartionBackendUrl + `api/reservations/${reservation.id}/${batchId}`;
+
+    return this.httpClient.put<string>(url, null);
+  }
+
+  getTrainingStationReservations() {
+    const url = environment.reservartionBackendUrl + `api/reservations/trainingstations`;
+
+    return this.httpClient.get<Reservation[]>(url);
+  }
+
+  getAllAvailableMeetingRooms(buildingId: number, startDate: string, endDate: string) {
+    const url = environment.reservartionBackendUrl + `api/reservations/${buildingId}/meetingrooms`;
+    const requestBody = {
+      startDate: startDate,
+      endDate: endDate
+    };
+
+    return this.httpClient.get<Reservation[]>(url, {
+      params: requestBody
+    });
+  }
 }

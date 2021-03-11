@@ -4,8 +4,6 @@ import { Reservation } from '../models/reservation';
 
 import { ReservationService } from './reservation.service';
 
-
-
 describe('ReservationService', () => {
   let service: ReservationService;
 
@@ -63,8 +61,10 @@ describe('ReservationService', () => {
    });
   
   //test  void assignBatch(Reservation reservation, Integer batchId);
-  it('should be an object', () => {
-    let reservation: Reservation;
+  it('Test Assign batch to reservation', async () => {
+    let reservation: Reservation = new Reservation(4, 1, 1, 1, 'PHYSICAL', 'Angular Unit Test', '02-02-2021 00:00', '02-02-2021 01:00');
+    await service.assignBatch(reservation, 101);
+    expect(reservation.batchId == 101).toBeTruthy();
    });
   
   //test  List<Reservation> findTrainingStations();
