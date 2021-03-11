@@ -1,14 +1,15 @@
-export class LocationDto {
+import { BuildingDto } from './building-dto';
+export class LocationDetailsDto {
     id: number;
     city: string;
     state: string;
     zipCode: string;
-    numBuildings: number;
+    buildings: BuildingDto[];
     constructor( 
         id: number, 
         city: string, 
         state: string, 
         zipCode: string, 
-        numBuildings: number 
+        buildings: BuildingDto[]
     ) {}
 }

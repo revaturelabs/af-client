@@ -10,6 +10,7 @@ import { BuildingComponent } from './components/building/building.component';
 import { RoomComponent } from './components/room/room.component';
 import { LocationService } from './services/location.service';
 import { ReservationService } from './services/reservation.service';
+import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 
@@ -25,9 +26,9 @@ import { NavbarComponent } from './components/navbar/navbar.component';
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     AppRoutingModule,
-    
+    HttpClientModule,
+    FormsModule
   ],
   
   providers: [

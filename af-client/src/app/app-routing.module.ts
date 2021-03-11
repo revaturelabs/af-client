@@ -1,7 +1,8 @@
+import { AppComponent } from './app.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BuildingComponent } from './components/building/building.component';
 import { LocationComponent } from './components/location/location.component';
+import { BuildingComponent } from './components/building/building.component';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { RoomComponent } from './components/room/room.component';
 
