@@ -25,6 +25,7 @@ jobs:
           node-version: '12.x'
       - name: Install
         run: |
-          ls -R $GITHUB_WORKSPACE/af-client
+          cd $GITHUB_WORKSPACE/af-client/af-client/af-client
+          npm install
       - name: Test CI
         run: npm run test-headless
