@@ -9,7 +9,7 @@ import { LocationDto } from '../models/location-dto';
   providedIn: 'root'
 })
 export class LocationService {
-  apiBase = environment.apiBase;
+  apiBase = environment.locationBackendUrl;
 
   constructor(private http: HttpClient) { }
 
