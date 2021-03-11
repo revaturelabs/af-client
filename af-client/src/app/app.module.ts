@@ -12,6 +12,7 @@ import { LocationService } from './services/location.service';
 import { ReservationService } from './services/reservation.service';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { ReservationDetailComponent } from './components/reservation-detail/reservation-detail.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     BuildingComponent,
     RoomComponent,
     NavbarComponent,
+    ReservationDetailComponent,
     
   ],
   imports: [

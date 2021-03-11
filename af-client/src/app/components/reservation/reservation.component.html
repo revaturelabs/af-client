@@ -19,7 +19,7 @@
   </div>
   <ul>
     <li *ngFor="let reservation of reservations">
-      <a routerLink="detail/{{reservation.id}}">
+      <a routerLink="{{reservation.reservationId}}">
         <span class="badge">{{ reservation.reservationId }}</span>
         <span>room id:{{ reservation.roomId }}</span>  <span>room type:{{ reservation.roomType }}</span>  <span>reserver:{{ reservation.reserver }}</span>
         <span>start:{{ reservation.startDate }}</span>

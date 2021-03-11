@@ -42,12 +42,12 @@ export class ReservationService {
 
   deleteReservation(reservationId: number) {
     const url = environment.reservartionBackendUrl + `api/reservations/${reservationId}`;
-
+      console.log("deleting")
     return this.httpClient.delete(url);
   }
 
   assignBatch( reservation: Reservation, batchId: number ) {
-    const url = environment.reservartionBackendUrl + `api/reservations/${reservation.id}/${batchId}`;
+    const url = environment.reservartionBackendUrl + `api/reservations/${reservation.reservationId}/${batchId}`;
 
     return this.httpClient.put<string>(url, null);
   }
