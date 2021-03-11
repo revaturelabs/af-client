@@ -12,7 +12,7 @@
 }
 #logo:defined {
     /* specify logo padding arbitray amount for now */
-    padding: 4%; /* supposed to be the size of the 'R' in the logo*/
+    margin: 29px; /* supposed to be the size of the 'R' in the logo*/
 }
 /* everywhere else */
 * {
