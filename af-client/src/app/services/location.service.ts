@@ -1,3 +1,4 @@
+import { LocationDetailsDto } from './../models/location-details-dto';
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -20,10 +21,16 @@ export class LocationService {
     return this.http.get<LocationDto[]>(`${this.apiBase}/locations/state/${state}`);
   }
 
-  getLocationsByCity(city: string) {}
+  getLocationsByCity(city: string) {
+    return this.http.get<LocationDto[]>(`${this.apiBase}/locations/city/${city}`);
+  }
 
-  getLocationsByZipCode(zipCode: string) {}
+  getLocationsByZipCode(zipCode: string) {
+    return this.http.get<LocationDto[]>(`${this.apiBase}/locations/zip/${zipCode}`);
+  }
 
-  getLocationById(index:number) {}
+  getLocationById(index:number) {
+    return this.http.get<LocationDetailsDto>(`${this.apiBase}/locations/id/${index}`);
+  }
 
 }

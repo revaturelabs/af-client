@@ -64,9 +64,24 @@
             <button>Search</button>
         </form>
     </div>
+    <br>
+    <div id="testy"></div>
     <br><br><br>
 
-    <div class="searchedLocations"></div>
+
+    <!-- <div class="searchedLocations"
+        *ngFor="let searched of searchedLocations"
+    >
+        <span>ID: {{location.id}}</span>
+        <br>
+        <span>{{location.city}} </span>
+        <span>{{location.state}} </span>
+        <span>{{location.zipCode}} </span>
+        <br>
+        <span>Buildings: </span>
+        <span>{{location.numBuildings}}</span>
+        <br><br>
+    </div> -->
     
     <button (click)="backButton()">Back</button>
 </div>
