@@ -12,7 +12,7 @@ export class ReservationComponent implements OnInit {
 
   @Input() selectedReservation: Reservation;
   response: string;
-
+  roomId: number;
   constructor(private reservationService: ReservationService, private router: Router) {
 
   }
@@ -21,6 +21,14 @@ export class ReservationComponent implements OnInit {
     this.reservationService.getAllReservations()
       .subscribe((reservations: Reservation[]) => {
         console.log('getting reservations');
+        this.reservations = reservations;
+      });
+  }
+  getAllReservationsByRoomId(roomId : number):void {
+    // let roomId = idForm.value.searchId
+    this.reservationService.getAllReservationsByRoomId(roomId)
+      .subscribe((reservations: Reservation[]) => {
+        console.log('getting reservations by room id');
         this.reservations = reservations;
       });
   }
