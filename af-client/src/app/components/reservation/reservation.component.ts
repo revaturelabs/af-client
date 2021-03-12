@@ -42,15 +42,13 @@ export class ReservationComponent implements OnInit {
       });
   }
 
-  async add(buildingId, roomType): Promise<void> {
-    let newReservation: Reservation;
-    buildingId = buildingId.trim();
-    roomType = roomType.trim();
-    if (!buildingId) {
-      return;
-    }
-    newReservation.buildingId = buildingId;
-    newReservation.roomType = roomType;
+  add(newReservation: Reservation): void {
+    console.log(newReservation)
+    // buildingId = buildingId.trim();
+    // if (!buildingId) {
+    //   return;
+    // }
+    // newReservation.buildingId = buildingId;
     this.reservationService
       .addReservation(newReservation)
       .subscribe((res: Reservation) => {

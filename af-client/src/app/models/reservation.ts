@@ -8,6 +8,8 @@ export class Reservation {
   reserver: string;
   startDate: string;
   endDate: string;
+  roomOccupation: string;
+
 
   constructor(
     reservationId: number,
@@ -18,7 +20,8 @@ export class Reservation {
     reserver: string,
     startDate: string,
     endDate: string,
-    batchId?: number
+    batchId?: number,
+    roomOccupation?: string
     ) {
 
     this.reservationId = reservationId;
@@ -30,6 +33,7 @@ export class Reservation {
     this.reserver = reserver;
     this.startDate = startDate;
     this.endDate = endDate;
+    this.roomOccupation = roomOccupation;
   }
   
 }

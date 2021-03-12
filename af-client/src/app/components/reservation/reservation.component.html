@@ -23,41 +23,49 @@
     <button (click)="getAllMeetingRoomReservations()">Show Meeting Room Reservations </button>
   </div>
 
-  <!-- <div >
-    
-    <h2>Add Reservation</h2>
-  <div>
-    <label for="reservation-buildingId">reservation buildingId: </label>
-    <input id="reservation-city" #buildingId placeholder="buildingId"/>
+
+  <div >
+    <form #saveForm="ngForm" (ngSubmit)="add(saveForm.value)" novalidate> 
+            <h2>Add Reservation</h2>
+            <div>
+              <label for="reservation-locationId">LocationId: </label>
+              <input id="locationId" name="locationId" placeholder="locationId" ngModel/>
+            </div>     
+          <div>
+            <label for="reservation-buildingId">BuildingId: </label>
+            <input id="buildingId" name="buildingId" placeholder="buildingId" ngModel/>
+          </div>        
+          <div>
+            <label for="reservation-roomId">RoomId: </label>
+            <input id="roomId" name="roomId" placeholder="roomId" ngModel/>
+          </div>
+          <div>
+            <label for="reservation-roomType">RoomType: </label>
+            <input id="roomType" name="roomType" placeholder="roomType" ngModel/>
+          </div>
+          <div>
+            <label for="reservation-roomOccupation">RoomOccupation: </label>
+            <input id="reservation-roomOccupation" name="roomOccupation" placeholder="roomOccupation" ngModel/>
+          </div>
+          <div>        
+            <label for="reservation-reserver">Reserver: </label>
+            <input id="reserver" name="reserver" placeholder="reserver" ngModel/>
+          </div>
+          <div>
+            <label for="reservation-startDate">StartDate: </label>
+            <input id="startDate" name="startDate" placeholder="startDate" ngModel/>
+          </div>
+          <div>
+            <label for="reservation-endDate">EndDate: </label>
+            <input id="endDate" name="endDate" placeholder="endDate" ngModel/>
+          </div>
+          <div>
+            <label for="reservation-batchId">BatchId: </label>
+            <input id="batchId" name="batchId" placeholder="batchId" ngModel/>
+          </div>
+          <button>Add Reservation</button>
+    </form>
   </div>
-  <div>
-    <label for="reservation-roomType">reservation roomType: </label>
-    <input id="reservation-roomType" #roomType placeholder="roomType"/>
-  </div>
-  <div>
-    <label for="reservation-roomId">reservation roomId: </label>
-    <input id="reservation-roomId" #roomId placeholder="roomId"/>
-  </div>
-  <div>
-    <label for="reservation-reserver">reservation reserver: </label>
-    <input id="reservation-reserver" #reserver placeholder="reserver"/>
-  </div>
-  <div>
-    <label for="reservation-startDate">reservation startDate: </label>
-    <input id="reservation-startDate" #startDate placeholder="startDate"/>
-  </div>
-  <div>
-    <label for="reservation-endDate">reservation endDate: </label>
-    <input id="reservation-endDate" #endDate placeholder="endDate"/>
-  </div>
-  <div>
-    <label for="reservation-endDate">reservation batchId: </label>
-    <input id="reservation-endDate" #batchId placeholder="batchId"/>
-  </div>
-  <button class="add-button" (click)="add(buildingId.value, roomType.value); buildingId.value='' roomType.value=''">
-    Add
-  </button>
-</div> -->
 
 
   <ul>
