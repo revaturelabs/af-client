@@ -1,13 +1,83 @@
 <p>reservation works!</p>
-<div *ngIf="selectedReservation; else noReservation">
-  <h1>{{selectedReservation.locationId}} {{selectedReservation.buildingId}} {{selectedReservation.roomId}}</h1> <!-- Replace with names of location, building and room -->
-  <p *ngIf="selectedReservation.batchId">Batch: {{selectedReservation.batchId}}</p>
-  <p>Reserved by: {{selectedReservation.reserver}}</p>
-  <p>Resvered from: {{selectedReservation.startDate}}</p>
-  <p>Resvered to: {{selectedReservation.endDate}}</p>
-  <!-- Form for editing Reservation here -->
+<div class="reservation">
+  <!-- <div>
+    <form #idForm="ngForm" (ngSubmit)="getAllReservationsByRoomId(idForm)">
+      <span>ID: </span>
+      <select name="searchId" id="type-id" ngModel>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+      </select>
+      <button>Search</button>
+  </form>
+  </div> -->
+  <div>
+    <button (click)="getAllReservationsByRoomId(roomId)">search by roomId </button>
+    <input  [(ngModel)]="roomId" placeholder="Room Id"/>
+    <button (click)="getAlltrainingStationReservations()">Show Training Station Reservations </button>
+  </div>
+  <div>
+    <button (click)="getAllReservationsByBuildingId(buildingId)">search by buildingId </button>
+    <input  [(ngModel)]="buildingId" placeholder="Building Id"/>
+    <button (click)="getAllMeetingRoomReservations()">Show Meeting Room Reservations </button>
+  </div>
+
+
+  <div >
+    <form #saveForm="ngForm" (ngSubmit)="add(saveForm.value)" novalidate> 
+            <h2>Add Reservation</h2>
+            <div>
+              <label for="reservation-locationId">LocationId: </label>
+              <input id="locationId" name="locationId" placeholder="locationId" ngModel/>
+            </div>     
+          <div>
+            <label for="reservation-buildingId">BuildingId: </label>
+            <input id="buildingId" name="buildingId" placeholder="buildingId" ngModel/>
+          </div>        
+          <div>
+            <label for="reservation-roomId">RoomId: </label>
+            <input id="roomId" name="roomId" placeholder="roomId" ngModel/>
+          </div>
+          <div>
+            <label for="reservation-roomType">RoomType: </label>
+            <input id="roomType" name="roomType" placeholder="roomType" ngModel/>
+          </div>
+          <div>
+            <label for="reservation-roomOccupation">RoomOccupation: </label>
+            <input id="reservation-roomOccupation" name="roomOccupation" placeholder="roomOccupation" ngModel/>
+          </div>
+          <div>        
+            <label for="reservation-reserver">Reserver: </label>
+            <input id="reserver" name="reserver" placeholder="reserver" ngModel/>
+          </div>
+          <div>
+            <label for="reservation-startDate">StartDate: </label>
+            <input id="startDate" name="startDate" placeholder="MM-DD-YYYY HH:MM" ngModel/>
+          </div>
+          <div>
+            <label for="reservation-endDate">EndDate: </label>
+            <input id="endDate" name="endDate" placeholder="MM-DD-YYYY HH:MM" ngModel/>
+          </div>
+          <div>
+            <label for="reservation-batchId">BatchId: </label>
+            <input id="batchId" name="batchId" placeholder="batchId" ngModel/>
+          </div>
+          <button>Add Reservation</button>
+    </form>
+  </div>
+
+
+  <ul>
+    <li *ngFor="let reservation of reservations">
+      <a routerLink="{{reservation.reservationId}}">
+        <span class="badge">{{ reservation.reservationId }}</span>
+        <span>Room id:{{ reservation.roomId }}</span>
+        <span>Room type:{{ reservation.roomType }}</span>
+        <span>Reserver:{{ reservation.reserver }}</span>
+        <span>Start:{{ reservation.startDate }}</span>
+        <span>End:{{ reservation.endDate }}</span>
+        <span *ngIf="reservation.batchId">Batch:  {{reservation.batchId}}</span>
+      </a>
+    </li>
+  </ul>
 </div>
-<ng-template #noReservation>
-  <h1>No reservation selected</h1>
-  <!-- form for making new reservation here -->
-</ng-template>

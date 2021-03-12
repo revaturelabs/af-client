@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Reservation } from '../models/reservation';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservationService {
-
   constructor(private httpClient: HttpClient) { }
-
+  
   getReservationById(reservationId: number) {
     const url = environment.reservartionBackendUrl + `${reservationId}`;
 
@@ -42,18 +42,22 @@ export class ReservationService {
 
   deleteReservation(reservationId: number) {
     const url = environment.reservartionBackendUrl + `${reservationId}`;
-
     return this.httpClient.delete(url);
   }
 
   assignBatch( reservation: Reservation, batchId: number ) {
     const url = environment.reservartionBackendUrl + `${reservation.id}/${batchId}`;
-
-    return this.httpClient.put<string>(url, null);
+    return this.httpClient.put<HttpResponse<any>>(url, null);
   }
 
   getTrainingStationReservations() {
     const url = environment.reservartionBackendUrl + `trainingstations`;
+
+    return this.httpClient.get<Reservation[]>(url);
+  }
+
+  getTrainingStationReservationsByBuildingId(buildingId: number) {
+    const url = environment.reservartionBackendUrl + `api/reservations/trainingstations/building/${buildingId}`;
 
     return this.httpClient.get<Reservation[]>(url);
   }
