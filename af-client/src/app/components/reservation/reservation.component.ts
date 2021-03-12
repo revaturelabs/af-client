@@ -33,7 +33,6 @@ export class ReservationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.getAllReservations();
     this.getBatches();
   }
 
@@ -57,11 +56,6 @@ export class ReservationComponent implements OnInit {
 
   add(newReservation: Reservation): void {
     console.log(newReservation);
-    // buildingId = buildingId.trim();
-    // if (!buildingId) {
-    //   return;
-    // }
-    // newReservation.buildingId = buildingId;
     if (newReservation.startDate == '' || newReservation.endDate == '') {
       alert('Please enter the correct time-slot');
     } else {
