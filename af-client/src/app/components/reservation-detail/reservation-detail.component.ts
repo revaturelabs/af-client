@@ -17,7 +17,7 @@ export class ReservationDetailComponent implements OnInit {
 
   constructor(private reservationService: ReservationService,
     private route: ActivatedRoute,
-    private caliberService: CaliberService) {
+    private caliberService: CaliberService ) {
 
   }
 
@@ -54,9 +54,9 @@ export class ReservationDetailComponent implements OnInit {
   assignBatch(id: number) {
     this.reservationService.assignBatch(this.reservation, id).subscribe(
       (response) => {
-        if (response.status === 200) {
-          // route to this route
-        }
+        this.getReservation();
+        this.batches = undefined;
+        this.batchError = undefined;
       },
       (error) => {
         this.batchError = error.error;
