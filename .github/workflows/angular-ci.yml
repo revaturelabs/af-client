@@ -7,7 +7,8 @@ on:
   # Triggers the workflow on push or pull request events but only for the main branch
   pull_request:
     branches: [ main ]
-
+  workflow_dispatch:
+  
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -23,6 +24,9 @@ jobs:
         with: 
           node-version: '12.x'
       - name: Install
-        run: npm install
+        working-directory: ./af-client
+        run: |
+          npm install
       - name: Test CI
+        working-directory: ./af-client
         run: npm run test-headless
