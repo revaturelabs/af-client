@@ -46,7 +46,7 @@ export class ReservationService {
   }
 
   assignBatch( reservation: Reservation, batchId: number ) {
-    const url = environment.reservartionBackendUrl + `${reservation.id}/${batchId}`;
+    const url = environment.reservartionBackendUrl + `${reservation.reservationId}/${batchId}`;
     return this.httpClient.put<HttpResponse<any>>(url, null);
   }
 
