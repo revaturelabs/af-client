@@ -70,7 +70,7 @@
       <div>
         <label for="reservation-batchId">BatchId: </label>
         <select id="batchId" name="batchId" placeholder="batchId" ngModel>
-          <option value="">Select Batch</option>
+          <option value="">Select Batch (optional)</option>
           <option *ngFor="let batch of batches" value="{{batch.id}}">Batch ID: {{batch.id}} Name: {{batch.name}} Start Date: {{batch.startDate}} End Date: {{batch.endDate}}</option>
         </select>
       </div>
