@@ -1,5 +1,5 @@
 export class Reservation {
-  id: number;
+  reservationId: number;
   batchId?: number;
   buildingId: number;
   locationId: number;
@@ -8,8 +8,11 @@ export class Reservation {
   reserver: string;
   startDate: string;
   endDate: string;
+  roomOccupation: string;
 
-  constructor(id: number,
+
+  constructor(
+    reservationId: number,
     buildingId: number,
     locationId: number,
     roomId: number,
@@ -17,9 +20,11 @@ export class Reservation {
     reserver: string,
     startDate: string,
     endDate: string,
-    batchId?: number) {
+    batchId?: number,
+    roomOccupation?: string
+    ) {
 
-    this.id = id;
+    this.reservationId = reservationId;
     this.batchId = batchId;
     this.buildingId = buildingId;
     this.locationId = locationId;
@@ -28,5 +33,7 @@ export class Reservation {
     this.reserver = reserver;
     this.startDate = startDate;
     this.endDate = endDate;
+    this.roomOccupation = roomOccupation;
   }
+  
 }
