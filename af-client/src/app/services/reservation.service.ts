@@ -57,7 +57,7 @@ export class ReservationService {
   }
 
   getTrainingStationReservationsByBuildingId(buildingId: number) {
-    const url = environment.reservartionBackendUrl + `api/reservations/trainingstations/building/${buildingId}`;
+    const url = environment.reservartionBackendUrl + `trainingstations/building/${buildingId}`;
 
     return this.httpClient.get<Reservation[]>(url);
   }
