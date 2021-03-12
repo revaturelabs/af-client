@@ -13,9 +13,14 @@
   </form>
   </div> -->
   <div>
-    <button (click)="getAllReservationsByRoomId(roomId)">search </button>
-    room id:
-    <input id="location-city" [(ngModel)]="roomId" placeholder="id"/>
+    <button (click)="getAllReservationsByRoomId(roomId)">search by roomId </button>
+    <input  [(ngModel)]="roomId" placeholder="Room Id"/>
+    <button (click)="getAlltrainingStationReservations()">Show Training Station Reservations </button>
+  </div>
+  <div>
+    <button (click)="getAllReservationsByBuildingId(buildingId)">search by buildingId </button>
+    <input  [(ngModel)]="buildingId" placeholder="Building Id"/>
+    <button (click)="getAllMeetingRoomReservations()">Show Meeting Room Reservations </button>
   </div>
 
   <!-- <div >

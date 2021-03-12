@@ -58,6 +58,12 @@ export class ReservationService {
     return this.httpClient.get<Reservation[]>(url);
   }
 
+  getTrainingStationReservationsByBuildingId(buildingId: number) {
+    const url = environment.reservartionBackendUrl + `api/reservations/trainingstations/building/${buildingId}`;
+
+    return this.httpClient.get<Reservation[]>(url);
+  }
+
   getAllAvailableMeetingRooms(buildingId: number, startDate: string, endDate: string) {
     const url = environment.reservartionBackendUrl + `api/reservations/${buildingId}/meetingrooms`;
     const requestBody = {
