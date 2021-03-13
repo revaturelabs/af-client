@@ -3,6 +3,7 @@ import { Reservation } from '../models/reservation';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { RoomDto } from '../models/room-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -69,7 +70,7 @@ export class ReservationService {
       endDate: endDate
     };
 
-    return this.httpClient.get<Reservation[]>(url, {
+    return this.httpClient.get<RoomDto[]>(url, {
       params: requestBody
     });
   }
