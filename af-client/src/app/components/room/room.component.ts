@@ -24,8 +24,13 @@ export class RoomComponent implements OnInit {
       this.reservationService
       .getAllAvailableMeetingRooms(data.buildingId,data.startDate,data.endDate)
       .subscribe((returnRooms: RoomDto[]) => {
-        console.log('getting rooms');
-        this.rooms = returnRooms;
+        if(returnRooms && returnRooms.length > 0){
+          console.log('getting rooms');
+          this.rooms = returnRooms;
+        }else{
+          alert('Meeting rooms not avaialable for this time!');
+        }
+        
       });
 
     }

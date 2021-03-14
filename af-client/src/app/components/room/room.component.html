@@ -1,6 +1,6 @@
 <div>
     <form #roomsForm="ngForm" (ngSubmit)="viewAvaialableMeetingRooms(roomsForm.value)"> 
-        <h2>Add Reservation</h2>
+        <h2>View Available Meeting Rooms</h2>
         <div>
             <label for="BuildingId">BuildingId: </label>
             <select name="buildingId" id="buildingId" ngModel>
@@ -16,15 +16,17 @@
             <label for="reservation-endDate">EndDate: </label>
             <input id="endDate" name="endDate" required placeholder="MM-DD-YYYY HH:MM" ngModel/>
           </div>
-          <button>View Avaialable Meeting Rooms</button>
+          <button>View Available Meeting Rooms</button>
     </form>
-    <ul>
-        <li *ngFor="let room of rooms">
-          <a routerLink="{{ room.id }}">
-            <span class="badge">{{ room.id }}</span>
-            <span>Room Type:{{ room.type }}</span>
-            <span>Reserver:{{ room.occupation }}</span>            
-          </a>
-        </li>
-      </ul>
+    <div>
+        <ul>
+            <li *ngFor="let room of rooms">
+            <a routerLink="{{ room.id }}">
+                <span class="badge">{{ room.id }}</span>
+                <span>Room Type:{{ room.type }}</span>
+                <span>Reserver:{{ room.occupation }}</span>            
+            </a>
+            </li>
+        </ul>
+    </div>
 </div>
