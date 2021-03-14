@@ -10,11 +10,13 @@ import { ReservationService } from 'src/app/services/reservation.service';
 export class RoomComponent implements OnInit {
 
   rooms: RoomDto[];
-  arrBuildingIds = [1,2,3];
+  arrBuildingIds = [1,2,3,4,5];
+  available: boolean;
 
   constructor(private reservationService: ReservationService) { }
 
   ngOnInit(): void {
+    
   }
 
   viewAvaialableMeetingRooms(data): void{
@@ -26,9 +28,12 @@ export class RoomComponent implements OnInit {
       .subscribe((returnRooms: RoomDto[]) => {
         if(returnRooms && returnRooms.length > 0){
           console.log('getting rooms');
+          this.available = true;
           this.rooms = returnRooms;
         }else{
+          this.available = false;
           alert('Meeting rooms not avaialable for this time!');
+        
         }
         
       });
