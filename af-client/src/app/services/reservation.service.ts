@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Reservation } from '../models/reservation';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { RoomDto } from '../models/room-dto';
+import { RoomDto } from 'src/app/models/room-dto';
+
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,6 @@ export class ReservationService {
     return this.httpClient.get<Reservation[]>(url);
   }
 
-  // TODO change this to room DTO
   getAllAvailableMeetingRooms(buildingId: number, startDate: string, endDate: string) {
     const url = environment.reservartionBackendUrl + `${buildingId}/meetingrooms`;
     const requestBody = {
