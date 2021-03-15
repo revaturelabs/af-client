@@ -10,13 +10,27 @@ import { RoomDto } from '../models/room-dto';
 export class RoomService {
   constructor(private httpClient: HttpClient) {}
 
+  getAllRooms(): Observable<RoomDto[]> {
+    const url = environment.locationBackendUrl + '/rooms';
+    return this.httpClient.get<RoomDto[]>(url);
+  }
+
+  getAllRemoteMeetingRooms(): Observable<RoomDto[]> {
+    const url = environment.locationBackendUrl + '/rooms/remote/meeting';
+    return this.httpClient.get<RoomDto[]>(url);
+  }
+  getAllPhysicalMeetingRooms(): Observable<RoomDto[]> {
+    const url = environment.locationBackendUrl + '/rooms/physical/meeting';
+    return this.httpClient.get<RoomDto[]>(url);
+  }
+
   getAllRemoteTrainingRooms(): Observable<RoomDto[]> {
     const url = environment.locationBackendUrl + '/rooms/remote/training';
     return this.httpClient.get<RoomDto[]>(url);
   }
 
-  getAllRooms(): Observable<RoomDto[]> {
-    const url = environment.locationBackendUrl + '/rooms';
+  getAllPhysicalTrainingRooms(): Observable<RoomDto[]> {
+    const url = environment.locationBackendUrl + '/rooms/physical/training';
     return this.httpClient.get<RoomDto[]>(url);
   }
 }

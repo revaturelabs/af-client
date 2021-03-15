@@ -34,4 +34,31 @@ describe('RoomService', () => {
     });
     expect(response).toBeInstanceOf(Array);
   });
+
+  it('should provide a list of all remote meeting rooms', () => {
+    const meetingRoomsObservable = service.getAllRemoteMeetingRooms();
+    let response;
+
+    meetingRoomsObservable.subscribe((res) => {
+      response = res;
+    });
+    expect(response).toBeInstanceOf(Array);
+  });
+
+  it('should provide a list of all physical meeting rooms', () => {
+    const physicalMeetingRoomsObservable = service.getAllPhysicalMeetingRooms();
+    let response;
+
+    physicalMeetingRoomsObservable.subscribe((res) => {
+      response = res;
+    });
+  });
+
+  it('should provide a list of all physical training rooms', () => {
+    const physicalTrainingRoomsObservable = service.getAllPhysicalTrainingRooms();
+    let response;
+    physicalTrainingRoomsObservable.subscribe((res) => {
+      response = res;
+    });
+  });
 });
