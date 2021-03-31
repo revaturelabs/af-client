@@ -4,6 +4,7 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from '../shared/material/material.module';
 
+
 const components = [HeaderComponent, FooterComponent];
 
 @NgModule({
