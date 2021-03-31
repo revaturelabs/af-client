@@ -25,5 +25,6 @@ jobs:
       run: |
         sudo npm install
         sudo npm install -g firebase-tools
+        sudo ng build --prod
         firebase use production --token ${{ secrets.FIREBASE_TOKEN }}
         firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
