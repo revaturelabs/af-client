@@ -5,7 +5,9 @@
       <mat-menu #menu="matMenu">
         <button mat-menu-item>
           <mat-icon>location_city</mat-icon>
-          <span>Create New Location</span>
+          <a [routerLink]="['/location']" routerLinkActive="router-link-active" >
+            <span>Create New Location</span>
+          </a>
         </button>
         <button mat-menu-item>
           <mat-icon>calendar_today</mat-icon>
