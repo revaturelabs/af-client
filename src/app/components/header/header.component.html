@@ -1,1 +1,22 @@
-<p>header works!</p>
+<mat-toolbar>
+    <button mat-icon-button aria-label="menu" [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>location_city</mat-icon>
+          <span>Create New Location</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>calendar_today</mat-icon>
+          <span>Reserve a Room</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>date_range</mat-icon>
+          <span>View My Reservations</span>
+        </button>
+      </mat-menu>
+    <span>AssignForce</span>
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary">Logout</button>
+</mat-toolbar>
