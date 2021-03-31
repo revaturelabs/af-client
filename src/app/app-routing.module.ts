@@ -10,6 +10,7 @@ const routes: Routes = [
     path: 'location',
     component: LocationPageComponent,
     children: [
+      { path: '', redirectTo: 'inspect-location', pathMatch: 'full' },
       { path: 'inspect-location', component: InspectLocationComponent },
       { path: 'inspect-building', component: InspectBuildingComponent },
       { path: 'inspect-room', component: InspectRoomComponent },

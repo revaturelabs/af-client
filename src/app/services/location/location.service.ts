@@ -18,37 +18,37 @@ export class LocationService {
     {
       locationId: 2,
       name: 'location 2',
-      state: 'MA',
-      city: 'Boston',
-      zipCode: '02118',
+      state: 'NY',
+      city: 'New York City',
+      zipCode: '10001',
     },
     {
       locationId: 3,
       name: 'location 3',
-      state: 'MA',
-      city: 'Boston',
-      zipCode: '02116',
+      state: 'AL',
+      city: 'Montgomery',
+      zipCode: '12112',
     },
     {
       locationId: 4,
       name: 'location 4',
-      state: 'MA',
-      city: 'Boston',
-      zipCode: '02116',
+      state: 'NJ',
+      city: 'Newark',
+      zipCode: '22116',
     },
     {
       locationId: 5,
-      name: 'location 1',
-      state: 'MA',
-      city: 'Boston',
-      zipCode: '02116',
+      name: 'location 5',
+      state: 'WA',
+      city: 'Seattle',
+      zipCode: '52116',
     },
     {
       locationId: 6,
-      name: 'location 1',
-      state: 'MA',
-      city: 'Boston',
-      zipCode: '02116',
+      name: 'location 6',
+      state: 'SD',
+      city: 'Pierre',
+      zipCode: '32116',
     },
   ];
 
@@ -68,5 +68,5 @@ export class LocationService {
     return of(location);
   }
 
-  
+
 }

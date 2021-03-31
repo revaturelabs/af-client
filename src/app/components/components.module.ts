@@ -13,10 +13,6 @@ import { AppRoutingModule } from '../app-routing.module';
 import { AddLocationComponent } from './add-location/add-location.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-<<<<<<< HEAD
-
-const components = [HeaderComponent, FooterComponent];
-=======
 const components = [
   HeaderComponent,
   FooterComponent,
@@ -27,7 +23,6 @@ const components = [
   CreateLocationComponent,
   AddLocationComponent
 ];
->>>>>>> 6986f52d22e0b91d3e18ce356917aee6eb0e82af
 
 @NgModule({
   declarations: [components],
