@@ -4,9 +4,13 @@ import { CreateLocationComponent } from './components/create-location/create-loc
 import { InspectBuildingComponent } from './components/inspect-building/inspect-building.component';
 import { InspectLocationComponent } from './components/inspect-location/inspect-location.component';
 import { InspectRoomComponent } from './components/inspect-room/inspect-room.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { LocationPageComponent } from './components/location-page/location-page.component';
+import { SigninPageComponent } from './components/signin-page/signin-page.component';
 
 const routes: Routes = [
+  { path: '', component: LandingPageComponent },
+  { path: 'signin', component: SigninPageComponent },
   {
     path: 'location',
     component: LocationPageComponent,

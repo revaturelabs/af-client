@@ -15,6 +15,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComfirmComponent } from '../services/app-confirm/app-confirm.component';
 import { AddBuildingComponent } from './add-building/add-building.component';
 import { AddRoomComponent } from './add-room/add-room.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { SigninPageComponent } from './signin-page/signin-page.component';
+import { SignupPageComponent } from './signup-page/signup-page.component';
 
 const components = [
   HeaderComponent,
@@ -26,12 +29,23 @@ const components = [
   CreateLocationComponent,
   AddLocationComponent,
   AppComfirmComponent,
-  AddBuildingComponent
+  AddBuildingComponent,
+  AddRoomComponent,
+  LandingPageComponent,
+  SigninPageComponent,
+  SignupPageComponent,
 ];
 
 @NgModule({
-  declarations: [components, AddRoomComponent],
-  imports: [CommonModule, MaterialModule, RouterModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
+  declarations: [components],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    RouterModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   exports: [components],
 })
 export class ComponentsModule {}
