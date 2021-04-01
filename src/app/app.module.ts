@@ -18,8 +18,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     AppRoutingModule,
     BrowserAnimationsModule,
     ComponentsModule,
-    MaterialModule,
-    FlexLayoutModule
+    MaterialModule
   ],
   providers: [AppConfirmService],
   bootstrap: [AppComponent]
