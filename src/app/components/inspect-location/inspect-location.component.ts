@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Location } from 'src/app/models/location';
+import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { LocationService } from 'src/app/services/location/location.service';
 import { AddLocationComponent } from '../add-location/add-location.component';
 
@@ -35,7 +36,8 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
 
   constructor(
     private locationService: LocationService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private confirmService: AppConfirmService
   ) {}
 
   ngOnInit(): void {
@@ -65,28 +67,34 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
 
   editLocation(loc: Location) {
     this.locationData = loc;
-    this.openDialog();
+    this.openDialog("Edit location");
   }
 
-  deleteLocation(locationId: number) {
-    console.log(locationId);
+  deleteLocation(location: Location) {
+    this.confirmService
+      .confirm({ message: `Delete ${location.name}`, title: 'Delete location' })
+      .subscribe((confirm) => {
+        if (confirm) {
+          console.log('Delete ', location);
+        }
+      });
   }
 
   chooseLocation(loc: Location) {
-    console.log('location: ', loc);
+    console.log('Select location: ', loc);
   }
 
   addLocation() {
     this.locationData = {};
-    this.openDialog();
+    this.openDialog("Add location");
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(AddLocationComponent , {
-      data: { ...this.locationData }
+  openDialog(title: string) {
+    const dialogRef = this.dialog.open(AddLocationComponent, {
+      data: { ...this.locationData, title },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
+      console.log("dialog return", result);
     });
   }
 }

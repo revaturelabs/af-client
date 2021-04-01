@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentsModule } from './components/components.module';
 import { MaterialModule } from './shared/material/material.module';
+import { AppConfirmService } from './services/app-confirm/app-confirm.service';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,7 @@ import { MaterialModule } from './shared/material/material.module';
     ComponentsModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [AppConfirmService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
