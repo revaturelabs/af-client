@@ -13,6 +13,7 @@ import { AppRoutingModule } from '../app-routing.module';
 import { AddLocationComponent } from './add-location/add-location.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComfirmComponent } from '../services/app-confirm/app-confirm.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 const components = [
   HeaderComponent,
@@ -27,7 +28,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [components],
+  declarations: [components, LandingPageComponent],
   imports: [CommonModule, MaterialModule, RouterModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   exports: [components],
 })
