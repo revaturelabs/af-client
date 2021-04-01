@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ComponentsModule } from './components/components.module';
 import { MaterialModule } from './shared/material/material.module';
 import { AppConfirmService } from './services/app-confirm/app-confirm.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AppConfirmService } from './services/app-confirm/app-confirm.service';
     AppRoutingModule,
     BrowserAnimationsModule,
     ComponentsModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule
   ],
   providers: [AppConfirmService],
   bootstrap: [AppComponent]
