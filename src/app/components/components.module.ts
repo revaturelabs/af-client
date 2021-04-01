@@ -14,6 +14,8 @@ import { AddLocationComponent } from './add-location/add-location.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComfirmComponent } from '../services/app-confirm/app-confirm.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { SigninPageComponent } from './signin-page/signin-page.component';
+import { SignupPageComponent } from './signup-page/signup-page.component';
 
 const components = [
   HeaderComponent,
@@ -28,7 +30,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [components, LandingPageComponent],
+  declarations: [components, LandingPageComponent, SigninPageComponent, SignupPageComponent],
   imports: [CommonModule, MaterialModule, RouterModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   exports: [components],
 })
