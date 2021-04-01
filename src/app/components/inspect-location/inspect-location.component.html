@@ -3,6 +3,7 @@
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
 </mat-form-field>
+<br>
 <button mat-raised-button (click)="addLocation()">Add location</button>
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort class="table-hover"  matSortActive="name" matSortDirection="asc">
@@ -54,6 +55,6 @@
             <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
         </tr>
     </table>
-
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
+<h3 *ngIf="selectedLocation">Current selected location: {{selectedLocation?.name}}</h3>

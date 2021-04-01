@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
+import { MatStepperModule } from '@angular/material/stepper';
 @NgModule({
   exports: [
     MatButtonModule,
@@ -19,7 +20,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatToolbarModule,
     MatIconModule,
     MatMenuModule,
-    MatSortModule
+    MatSortModule,
+    MatStepperModule
   ],
 })
 export class MaterialModule {}
