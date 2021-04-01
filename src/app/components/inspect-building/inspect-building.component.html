@@ -1,4 +1,5 @@
 <h1>Inspect Building Page</h1>
+<h3 *ngIf="locationData" class="text-muted">Current location: {{ locationData }}</h3>
 <div class="d-flex align-items-center mt-4">
     <mat-form-field class="w-100 mr-3">
         <mat-label>Search</mat-label>
@@ -24,7 +25,7 @@
         <!-- Name Column -->
         <ng-container matColumnDef="roomCount">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Room count </th>
-            <td mat-cell *matCellDef="let row"> 100 </td>
+            <td mat-cell *matCellDef="let row"> {{row.roomCount}} </td>
         </ng-container>
 
 

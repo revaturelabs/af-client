@@ -53,7 +53,7 @@ export class LocationService {
   ];
 
 
-  currentLocation?: Location;
+  currentLocation?: Location = {};
 
   constructor() {}
 

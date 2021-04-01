@@ -6,8 +6,8 @@ import { Building } from 'src/app/models/building';
   providedIn: 'root',
 })
 export class BuildingService {
-  
-  currentBuilding?: Building;
+
+  currentBuilding?: Building = {};
 
   buildings = [
     { buildingId: 0, address: 'address 0', locationId: 1 },

@@ -7,7 +7,15 @@ import { Building } from 'src/app/models/building';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { BuildingService } from 'src/app/services/building/building.service';
 import { LocationService } from 'src/app/services/location/location.service';
+import { RoomService } from 'src/app/services/room/room.service';
 import { AddBuildingComponent } from '../add-building/add-building.component';
+
+
+interface BuildingWithRoomCount {
+  buildingId?: number;
+  address?: string;
+  roomCount?: number;
+}
 
 @Component({
   selector: 'app-inspect-building',
@@ -16,7 +24,7 @@ import { AddBuildingComponent } from '../add-building/add-building.component';
 })
 export class InspectBuildingComponent implements OnInit, AfterViewInit {
 
-  @Input() locationData?: Location;
+  @Input() locationData?: string;
   selectedBuilding?: Building;
   buildingData?: Building;
 
@@ -35,6 +43,7 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
     private buildingService: BuildingService,
     private confirmService: AppConfirmService,
     public dialog: MatDialog,
+    private roomService: RoomService
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +60,13 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
         this.locationService.currentLocation?.locationId!
       )
       .subscribe((res) => {
-        this.dataSource = new MatTableDataSource(res);
+        let arr: BuildingWithRoomCount[] = res;
+        
+        arr.forEach( building => {
+          this.roomService.getRoomByBuilding(building).subscribe( res => 
+            building.roomCount =  res.length )
+          })
+        this.dataSource = new MatTableDataSource(arr);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });

@@ -5,6 +5,7 @@ import { Location } from 'src/app/models/location';
 import { BuildingService } from 'src/app/services/building/building.service';
 import { LocationService } from 'src/app/services/location/location.service';
 import { InspectBuildingComponent } from '../inspect-building/inspect-building.component';
+import { InspectRoomComponent } from '../inspect-room/inspect-room.component';
 
 @Component({
   selector: 'app-create-location',
@@ -13,7 +14,9 @@ import { InspectBuildingComponent } from '../inspect-building/inspect-building.c
 })
 export class CreateLocationComponent implements OnInit {
 
-  @ViewChild(InspectBuildingComponent) child!:InspectBuildingComponent;
+  @ViewChild(InspectBuildingComponent) buildingChild!:InspectBuildingComponent;
+  @ViewChild(InspectRoomComponent) roomChild!:InspectRoomComponent;
+
   firstFormGroup!: FormGroup;
   currentLocation?: Location;
   currentBuilding?: Building;
@@ -26,6 +29,7 @@ export class CreateLocationComponent implements OnInit {
     this.firstFormGroup = this._formBuilder.group({
       firstCtrl: ['', Validators.required]
     });
+    this.getCurrentLocation();
   }
 
   test() {
@@ -42,7 +46,11 @@ export class CreateLocationComponent implements OnInit {
   }
 
   reInitBuildingPage() {
-    this.child.ngOnInit();
+    this.buildingChild.ngOnInit();
+  }
+
+  reInitRoomPage() {
+    this.roomChild.ngOnInit();
   }
 
 }
