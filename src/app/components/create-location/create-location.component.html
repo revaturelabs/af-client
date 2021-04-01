@@ -2,7 +2,7 @@
     <mat-step>
         <app-inspect-location (click)="getCurrentLocation()"></app-inspect-location>
         <div class="d-flex">
-            <button class="w-100" color="primary" mat-raised-button matStepperNext *ngIf="currentLocation" (click)="reInitBuildingPage()">Next</button>
+            <button class="w-100" color="primary" mat-raised-button matStepperNext *ngIf="currentLocation?.locationId" (click)="reInitBuildingPage()">Next</button>
         </div>
     </mat-step>
     <mat-step>
