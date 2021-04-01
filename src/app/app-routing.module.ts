@@ -5,11 +5,13 @@ import { InspectLocationComponent } from './components/inspect-location/inspect-
 import { InspectRoomComponent } from './components/inspect-room/inspect-room.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { LocationPageComponent } from './components/location-page/location-page.component';
+import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
 import { SigninPageComponent } from './components/signin-page/signin-page.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'signin', component: SigninPageComponent },
+  { path: 'reservation', component: ReservationPageComponent },
   {
     path: 'location',
     component: LocationPageComponent,
