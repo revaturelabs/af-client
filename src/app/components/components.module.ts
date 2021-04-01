@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from '../app-routing.module';
 import { AddLocationComponent } from './add-location/add-location.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppComfirmComponent } from '../services/app-confirm/app-confirm.component';
 
 const components = [
   HeaderComponent,
@@ -21,7 +22,8 @@ const components = [
   InspectBuildingComponent,
   InspectRoomComponent,
   CreateLocationComponent,
-  AddLocationComponent
+  AddLocationComponent,
+  AppComfirmComponent
 ];
 
 @NgModule({

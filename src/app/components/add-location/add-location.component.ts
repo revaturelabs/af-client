@@ -7,42 +7,63 @@ import {
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from 'src/app/models/location';
+
+export interface LocationDialogData {
+  locationId?: number;
+  name?: string;
+  state?: string;
+  city?: string;
+  zipCode?: string;
+  title?: String;
+}
 @Component({
   selector: 'app-add-location',
   templateUrl: './add-location.component.html',
   styleUrls: ['./add-location.component.sass'],
 })
 export class AddLocationComponent implements OnInit {
-  // addLocationForm!: FormGroup;
+  addLocationForm!: FormGroup;
 
   constructor(
     public dialogRef: MatDialogRef<AddLocationComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Location,
+    @Inject(MAT_DIALOG_DATA) public data: LocationDialogData,
     private fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    // const name = new FormControl('', Validators.required);
-    // const state = new FormControl('', Validators.required);
-    // const city = new FormControl('', Validators.required);
-    // const zipCode = new FormControl('', Validators.required);
+    const name = new FormControl(this.data.name, Validators.required);
+    const state = new FormControl(this.data.state, Validators.required);
+    const city = new FormControl(this.data.city, Validators.required);
+    const zipCode = new FormControl(this.data.zipCode, Validators.required);
 
-    // this.addLocationForm = this.fb.group({
-    //   name,
-    //   state,
-    //   city,
-    //   zipCode,
-    // });
+    this.addLocationForm = this.fb.group({
+      name,
+      state,
+      city,
+      zipCode,
+    });
   }
 
   closeDialog(): void {
-    // console.log("on submit");
-    
-    // const name = this.addLocationForm.value.name;
-    // const state = this.addLocationForm.value.state;
-    // const city = this.addLocationForm.value.city;
-    // const zipCode = this.addLocationForm.value.zipCode;
-    // this.data = {locationId: 0, name, state, city, zipCode};
     this.dialogRef.close();
+  }
+
+  submitForm() {
+    if (this.readFormData()) {
+      delete this.data.title;
+      this.dialogRef.close(this.data);
+    } else {
+      console.log('Invalid form data');
+    }
+  }
+
+  readFormData(): boolean {
+    const valid = this.addLocationForm.valid;
+    const name = this.addLocationForm.value.name;
+    const state = this.addLocationForm.value.state;
+    const city = this.addLocationForm.value.city;
+    const zipCode = this.addLocationForm.value.zipCode;
+    this.data = { ...this.data, locationId: 0, name, state, city, zipCode };
+    return valid;
   }
 }
