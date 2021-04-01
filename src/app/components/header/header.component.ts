@@ -11,10 +11,15 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   @ViewChild(MatMenuTrigger) trigger!: MatMenuTrigger;
-  // someMethod() {
-  //   this.trigger.openMenu();
-  // }
+  
+  //Need service method to check if User is Logged in
 
+  loggedIn:boolean = false;
+
+  logout(){
+    this.loggedIn = false;
+  }
+  
 
   ngOnInit(): void {
   }
