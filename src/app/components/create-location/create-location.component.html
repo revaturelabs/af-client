@@ -1,15 +1,21 @@
-<p>create-location works!</p>
 <mat-horizontal-stepper linear #stepper>
     <mat-step>
         <app-inspect-location (click)="getCurrentLocation()"></app-inspect-location>
         <button mat-button matStepperNext *ngIf="currentLocation" (click)="reInitBuildingPage()">Next</button>
     </mat-step>
     <mat-step>
-        <h3>{{ currentLocation?.name}}</h3>
-        <app-inspect-building></app-inspect-building>
+        <h3>Current location: {{ currentLocation?.name}}</h3>
+        <app-inspect-building [locationData]="" (click)="getCurrentBuilding()"></app-inspect-building>
         <div>
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperNext *ngIf="currentBuilding">Next</button>
+        </div>
+    </mat-step>
+    <mat-step>
+        <h3>Current building: {{ currentBuilding?.buildingId}}</h3>
+        <app-inspect-room></app-inspect-room>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
         </div>
     </mat-step>
 

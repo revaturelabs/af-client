@@ -13,6 +13,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { AddLocationComponent } from './add-location/add-location.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComfirmComponent } from '../services/app-confirm/app-confirm.component';
+import { AddBuildingComponent } from './add-building/add-building.component';
+import { AddRoomComponent } from './add-room/add-room.component';
 
 const components = [
   HeaderComponent,
@@ -23,11 +25,12 @@ const components = [
   InspectRoomComponent,
   CreateLocationComponent,
   AddLocationComponent,
-  AppComfirmComponent
+  AppComfirmComponent,
+  AddBuildingComponent
 ];
 
 @NgModule({
-  declarations: [components],
+  declarations: [components, AddRoomComponent],
   imports: [CommonModule, MaterialModule, RouterModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   exports: [components],
 })
