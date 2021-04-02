@@ -6,7 +6,6 @@ import { Location } from 'src/app/models/location';
   providedIn: 'root',
 })
 export class LocationService {
-
   locations: Location[] = [
     {
       locationId: 1,
@@ -52,17 +51,15 @@ export class LocationService {
     },
   ];
 
-
   currentLocation?: Location = {};
 
   constructor() {}
 
-
-  getAllLocation():Observable<Location[]> {
+  getAllLocation(): Observable<Location[]> {
     return of(this.locations);
   }
 
-  deleteLocation():Observable<boolean> {
+  deleteLocation(localtion: Location): Observable<boolean> {
     return of(false);
   }
 
@@ -70,6 +67,4 @@ export class LocationService {
     this.locations.push(location);
     return of(location);
   }
-
-
 }

@@ -76,6 +76,14 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
       .subscribe((confirm) => {
         if (confirm) {
           console.log('Delete ', location);
+          this.locationService.deleteLocation(location).subscribe(
+            (res) => {
+              console.log(res);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
         }
       });
   }
