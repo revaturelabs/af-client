@@ -20,6 +20,7 @@ const routes: Routes = [
       { path: 'inspect-room', component: InspectRoomComponent },
     ],
   },
+  {path: "**", component: LandingPageComponent}
 ];
 
 @NgModule({

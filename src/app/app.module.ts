@@ -8,6 +8,7 @@ import { ComponentsModule } from './components/components.module';
 import { MaterialModule } from './shared/material/material.module';
 import { AppConfirmService } from './services/app-confirm/app-confirm.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     BrowserAnimationsModule,
     ComponentsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    HttpClientModule
   ],
   providers: [AppConfirmService],
   bootstrap: [AppComponent]
