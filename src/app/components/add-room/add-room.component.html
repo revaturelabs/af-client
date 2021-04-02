@@ -2,17 +2,22 @@
 <form [formGroup]="addRoomForm" (ngSubmit)="submitForm()" class="d-flex flex-column gap-2">
     <mat-form-field>
         <mat-label>Room name</mat-label>
-        <input matInput type="text" name="name" formControlName="name"/>
+        <input matInput type="text" name="name" formControlName="name" />
     </mat-form-field>
 
     <mat-form-field>
         <mat-label>Type</mat-label>
-        <input matInput type="number" name="type" formControlName="type"/>
+        <mat-select name="type" formControlName="type" >
+            <mat-option *ngFor="let room of roomTypes" [value]="room.value" >
+                {{room.viewValue}}
+            </mat-option>
+            
+        </mat-select>
     </mat-form-field>
-    
+
     <mat-form-field>
         <mat-label>Capacity</mat-label>
-        <input matInput type="number" name="capacity" formControlName="capacity"/>
+        <input matInput type="number" name="capacity" formControlName="capacity" />
     </mat-form-field>
 
     <div class="d-flex gap-2 align-items-center">

@@ -2,12 +2,13 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { RoomType } from 'src/app/models/room';
 import { AddBuildingComponent, BuildingDialogData } from '../add-building/add-building.component';
 
 export interface RoomDialogData {
   roomId?: number;
   name?: string;
-  type?: number;
+  type?: RoomType;
   capacity?: number;
   buildingId?: number;
   title?: String;
@@ -20,8 +21,13 @@ export interface RoomDialogData {
 })
 export class AddRoomComponent implements OnInit {
 
-  
+  selectedValue?: RoomType;
   addRoomForm!: FormGroup;
+
+  roomTypes = [
+    { value: RoomType.CLASSROOM, viewValue: 'CLASSROOM' },
+    { value: RoomType.ONLINE, viewValue: 'ONLINE'}
+  ]
 
   constructor(
     public dialogRef: MatDialogRef<AddBuildingComponent>,
@@ -36,7 +42,7 @@ export class AddRoomComponent implements OnInit {
     const capacity = new FormControl(this.data.capacity, Validators.required);
 
     this.addRoomForm = this.fb.group({
-      name, type, capacity
+      name, capacity, type
     });
   }
 
