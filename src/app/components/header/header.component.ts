@@ -16,9 +16,8 @@ export class HeaderComponent implements OnInit {
   }
 
   @ViewChild(MatMenuTrigger) trigger!: MatMenuTrigger;
-  // someMethod() {
-  //   this.trigger.openMenu();
-  // }
+  
+  //Need service method to check if User is Logged in
 
   logout(){
     localStorage.removeItem("Authorization");
