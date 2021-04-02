@@ -9,7 +9,6 @@ import { AppConfirmService } from './services/app-confirm/app-confirm.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ToastrModule } from 'ngx-toastr';
 
-
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -19,16 +18,14 @@ import { ToastrModule } from 'ngx-toastr';
     ComponentsModule,
     MaterialModule,
     FlexLayoutModule,
-  // rather than using ngx-loading we can use mat-spinner
-    ToastrModule.forRoot()
-  //  {  -- previous settings
-  //    timeOut: 5000,
-  //    positionClass: 'toast-top-right',
-  //    progressBar: true,
-  //    newestOnTop: false,
-  //    maxOpened: 4
-  //  }
-  
+    // rather than using ngx-loading we can use mat-spinner
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-top-right',
+      progressBar: true,
+      newestOnTop: false,
+      maxOpened: 4,
+    }),
   ],
   providers: [AppConfirmService],
   bootstrap: [AppComponent],
