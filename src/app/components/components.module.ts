@@ -44,8 +44,10 @@ const components = [
     RouterModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule  
   ],
-  exports: [components],
+  exports: [
+    components
+  ]
 })
-export class ComponentsModule {}
+export class ComponentsModule { }

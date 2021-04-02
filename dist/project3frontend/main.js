@@ -132,6 +132,100 @@ HeaderComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineCo
 
 /***/ }),
 
+/***/ "5u9F":
+/*!******************************************************************!*\
+  !*** ./src/app/components/landing-page/google-map-rev.module.ts ***!
+  \******************************************************************/
+/*! exports provided: GoogleMapRevModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GoogleMapRevModule", function() { return GoogleMapRevModule; });
+/* harmony import */ var _angular_google_maps__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/google-maps */ "3sZV");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _google_map_rev_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./google-map-rev.component */ "6mdJ");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
+
+
+
+
+class GoogleMapRevModule {
+}
+GoogleMapRevModule.ɵfac = function GoogleMapRevModule_Factory(t) { return new (t || GoogleMapRevModule)(); };
+GoogleMapRevModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineNgModule"]({ type: GoogleMapRevModule });
+GoogleMapRevModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵdefineInjector"]({ imports: [[
+            _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+            _angular_google_maps__WEBPACK_IMPORTED_MODULE_0__["GoogleMapsModule"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientJsonpModule"],
+        ]] });
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_4__["ɵɵsetNgModuleScope"](GoogleMapRevModule, { declarations: [_google_map_rev_component__WEBPACK_IMPORTED_MODULE_3__["GoogleMapRevComponent"]], imports: [_angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+        _angular_google_maps__WEBPACK_IMPORTED_MODULE_0__["GoogleMapsModule"],
+        _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
+        _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientJsonpModule"]], exports: [_google_map_rev_component__WEBPACK_IMPORTED_MODULE_3__["GoogleMapRevComponent"]] }); })();
+
+
+/***/ }),
+
+/***/ "6mdJ":
+/*!*********************************************************************!*\
+  !*** ./src/app/components/landing-page/google-map-rev.component.ts ***!
+  \*********************************************************************/
+/*! exports provided: GoogleMapRevComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GoogleMapRevComponent", function() { return GoogleMapRevComponent; });
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../environments/environment */ "AytR");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "qCKp");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "kU1M");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common/http */ "tk/3");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ "ofXK");
+/* harmony import */ var _angular_google_maps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/google-maps */ "3sZV");
+
+
+
+
+
+
+
+function GoogleMapRevComponent_google_map_0_Template(rf, ctx) { if (rf & 1) {
+    const _r2 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵgetCurrentView"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementStart"](0, "google-map", 1);
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵlistener"]("mapClick", function GoogleMapRevComponent_google_map_0_Template_google_map_mapClick_0_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵrestoreView"](_r2); const ctx_r1 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"](); return ctx_r1.moveMap($event); });
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵelementEnd"]();
+} if (rf & 2) {
+    const ctx_r0 = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵnextContext"]();
+    _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("center", ctx_r0.center)("zoom", ctx_r0.zoom);
+} }
+class GoogleMapRevComponent {
+    constructor(httpClient) {
+        this.API_KEY = _environments_environment__WEBPACK_IMPORTED_MODULE_0__["environment"].API_KEY;
+        this.center = { lat: 24, lng: 12 };
+        this.zoom = 4;
+        this.apiLoaded = httpClient.jsonp(`https://maps.googleapis.com/maps/api/js?key=${this.API_KEY}`, 'callback')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(() => true), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(() => Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])(false)));
+    }
+    moveMap(event) {
+        this.center = (event.latLng.toJSON());
+    }
+}
+GoogleMapRevComponent.ɵfac = function GoogleMapRevComponent_Factory(t) { return new (t || GoogleMapRevComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdirectiveInject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"])); };
+GoogleMapRevComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵdefineComponent"]({ type: GoogleMapRevComponent, selectors: [["google-map-rev"]], decls: 2, vars: 3, consts: [["height", "400px", "width", "750px", 3, "center", "zoom", "mapClick", 4, "ngIf"], ["height", "400px", "width", "750px", 3, "center", "zoom", "mapClick"]], template: function GoogleMapRevComponent_Template(rf, ctx) { if (rf & 1) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵtemplate"](0, GoogleMapRevComponent_google_map_0_Template, 1, 2, "google-map", 0);
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipe"](1, "async");
+    } if (rf & 2) {
+        _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵproperty"]("ngIf", _angular_core__WEBPACK_IMPORTED_MODULE_3__["ɵɵpipeBind1"](1, 1, ctx.apiLoaded));
+    } }, directives: [_angular_common__WEBPACK_IMPORTED_MODULE_5__["NgIf"], _angular_google_maps__WEBPACK_IMPORTED_MODULE_6__["GoogleMap"]], pipes: [_angular_common__WEBPACK_IMPORTED_MODULE_5__["AsyncPipe"]], encapsulation: 2 });
+
+
+/***/ }),
+
 /***/ "8azW":
 /*!*******************************************************************!*\
   !*** ./src/app/components/add-building/add-building.component.ts ***!
@@ -237,7 +331,8 @@ __webpack_require__.r(__webpack_exports__);
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 const environment = {
-    production: false
+    production: false,
+    API_KEY: "AIzaSyDs47rjEmxP2a7lM4TKvSLtbJ1h5oe8wUQ"
 };
 /*
  * For easier debugging in development mode, you can import the following file
@@ -1132,28 +1227,19 @@ LocationService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineI
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "fXoL");
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-toastr */ "5eHb");
-/* harmony import */ var _components_header_header_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/header/header.component */ "2MiI");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "tyNb");
-/* harmony import */ var _components_footer_footer_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/footer/footer.component */ "LmEr");
-
+/* harmony import */ var _components_header_header_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/header/header.component */ "2MiI");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "tyNb");
+/* harmony import */ var _components_footer_footer_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/footer/footer.component */ "LmEr");
 
 
 
 
 class AppComponent {
-    constructor(toastr) {
-        this.toastr = toastr;
+    constructor() {
         this.title = 'project3frontend';
     }
-    ngOnInit() { }
-    // can add this to app.component.html as a click event to test
-    // probably add method with custom inputs as seperate notification service or to app-confirm?
-    showToaster() {
-        this.toastr.success("Hello there, toaster here!");
-    }
 }
-AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_1__["ToastrService"])); };
+AppComponent.ɵfac = function AppComponent_Factory(t) { return new (t || AppComponent)(); };
 AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: AppComponent, selectors: [["app-root"]], decls: 8, vars: 0, consts: [[1, "main-container"], [1, "grid-container"], [1, "ro-container"]], template: function AppComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "header");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](1, "app-header");
@@ -1168,7 +1254,7 @@ AppComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineCompo
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-    } }, directives: [_components_header_header_component__WEBPACK_IMPORTED_MODULE_2__["HeaderComponent"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterOutlet"], _components_footer_footer_component__WEBPACK_IMPORTED_MODULE_4__["FooterComponent"]], styles: [".main-container[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 64px;\n  width: 100%;\n  height: calc(100vh - 64px);\n  overflow: auto;\n}\n\n.grid-container[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-rows: 1fr auto;\n  height: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2FwcC5jb21wb25lbnQuc2FzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGVBQUE7RUFDQSxTQUFBO0VBQ0EsV0FBQTtFQUNBLDBCQUFBO0VBQ0EsY0FBQTtBQUNKOztBQUNBO0VBQ0ksYUFBQTtFQUNBLDRCQUFBO0VBQ0EsWUFBQTtBQUVKIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuc2FzcyIsInNvdXJjZXNDb250ZW50IjpbIi5tYWluLWNvbnRhaW5lclxuICAgIHBvc2l0aW9uOiBmaXhlZFxuICAgIHRvcDogNjRweFxuICAgIHdpZHRoOiAxMDAlXG4gICAgaGVpZ2h0OiBjYWxjKDEwMHZoIC0gNjRweClcbiAgICBvdmVyZmxvdzogYXV0b1xuXG4uZ3JpZC1jb250YWluZXJcbiAgICBkaXNwbGF5OiBncmlkXG4gICAgZ3JpZC10ZW1wbGF0ZS1yb3dzOiAxZnIgYXV0b1xuICAgIGhlaWdodDogMTAwJVxuIl19 */"] });
+    } }, directives: [_components_header_header_component__WEBPACK_IMPORTED_MODULE_1__["HeaderComponent"], _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterOutlet"], _components_footer_footer_component__WEBPACK_IMPORTED_MODULE_3__["FooterComponent"]], styles: [".main-container[_ngcontent-%COMP%] {\n  position: fixed;\n  top: 64px;\n  width: 100%;\n  height: calc(100vh - 64px);\n  overflow: auto;\n}\n\n.grid-container[_ngcontent-%COMP%] {\n  display: grid;\n  grid-template-rows: 1fr auto;\n  height: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL2FwcC5jb21wb25lbnQuc2FzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGVBQUE7RUFDQSxTQUFBO0VBQ0EsV0FBQTtFQUNBLDBCQUFBO0VBQ0EsY0FBQTtBQUNKOztBQUNBO0VBQ0ksYUFBQTtFQUNBLDRCQUFBO0VBQ0EsWUFBQTtBQUVKIiwiZmlsZSI6ImFwcC5jb21wb25lbnQuc2FzcyIsInNvdXJjZXNDb250ZW50IjpbIi5tYWluLWNvbnRhaW5lclxuICAgIHBvc2l0aW9uOiBmaXhlZFxuICAgIHRvcDogNjRweFxuICAgIHdpZHRoOiAxMDAlXG4gICAgaGVpZ2h0OiBjYWxjKDEwMHZoIC0gNjRweClcbiAgICBvdmVyZmxvdzogYXV0b1xuXG4uZ3JpZC1jb250YWluZXJcbiAgICBkaXNwbGF5OiBncmlkXG4gICAgZ3JpZC10ZW1wbGF0ZS1yb3dzOiAxZnIgYXV0b1xuICAgIGhlaWdodDogMTAwJVxuIl19 */"] });
 
 
 /***/ }),
@@ -1648,7 +1734,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_app_confirm_app_confirm_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/app-confirm/app-confirm.service */ "tTUq");
 /* harmony import */ var _angular_flex_layout__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/flex-layout */ "YUcS");
 /* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-toastr */ "5eHb");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ "fXoL");
+/* harmony import */ var _components_landing_page_google_map_rev_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/landing-page/google-map-rev.module */ "5u9F");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ "fXoL");
+
 
 
 
@@ -1663,30 +1751,30 @@ __webpack_require__.r(__webpack_exports__);
 class AppModule {
 }
 AppModule.ɵfac = function AppModule_Factory(t) { return new (t || AppModule)(); };
-AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]] });
-AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵdefineInjector"]({ providers: [_services_app_confirm_app_confirm_service__WEBPACK_IMPORTED_MODULE_6__["AppConfirmService"]], imports: [[
+AppModule.ɵmod = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineNgModule"]({ type: AppModule, bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]] });
+AppModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵdefineInjector"]({ providers: [_services_app_confirm_app_confirm_service__WEBPACK_IMPORTED_MODULE_6__["AppConfirmService"]], imports: [[
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
             _app_routing_module__WEBPACK_IMPORTED_MODULE_1__["AppRoutingModule"],
             _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_3__["BrowserAnimationsModule"],
             _components_components_module__WEBPACK_IMPORTED_MODULE_4__["ComponentsModule"],
             _shared_material_material_module__WEBPACK_IMPORTED_MODULE_5__["MaterialModule"],
             _angular_flex_layout__WEBPACK_IMPORTED_MODULE_7__["FlexLayoutModule"],
-            // rather than using ngx-loading we can use mat-spinner
-            ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrModule"].forRoot()
-            //  {  -- previous settings
-            //    timeOut: 5000,
-            //    positionClass: 'toast-top-right',
-            //    progressBar: true,
-            //    newestOnTop: false,
-            //    maxOpened: 4
-            //  }
+            _components_landing_page_google_map_rev_module__WEBPACK_IMPORTED_MODULE_9__["GoogleMapRevModule"],
+            ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrModule"].forRoot({
+                timeOut: 5000,
+                positionClass: 'toast-top-right',
+                progressBar: true,
+                newestOnTop: false,
+                maxOpened: 4,
+            })
         ]] });
-(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_9__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
+(function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_10__["ɵɵsetNgModuleScope"](AppModule, { declarations: [_app_component__WEBPACK_IMPORTED_MODULE_2__["AppComponent"]], imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
         _app_routing_module__WEBPACK_IMPORTED_MODULE_1__["AppRoutingModule"],
         _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_3__["BrowserAnimationsModule"],
         _components_components_module__WEBPACK_IMPORTED_MODULE_4__["ComponentsModule"],
         _shared_material_material_module__WEBPACK_IMPORTED_MODULE_5__["MaterialModule"],
-        _angular_flex_layout__WEBPACK_IMPORTED_MODULE_7__["FlexLayoutModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrModule"]] }); })();
+        _angular_flex_layout__WEBPACK_IMPORTED_MODULE_7__["FlexLayoutModule"],
+        _components_landing_page_google_map_rev_module__WEBPACK_IMPORTED_MODULE_9__["GoogleMapRevModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrModule"]] }); })();
 
 
 /***/ }),
@@ -1922,7 +2010,7 @@ ComponentsModule.ɵinj = _angular_core__WEBPACK_IMPORTED_MODULE_19__["ɵɵdefine
             _angular_router__WEBPACK_IMPORTED_MODULE_9__["RouterModule"],
             _app_routing_module__WEBPACK_IMPORTED_MODULE_10__["AppRoutingModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_12__["FormsModule"],
-            _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ReactiveFormsModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_12__["ReactiveFormsModule"]
         ]] });
 (function () { (typeof ngJitMode === "undefined" || ngJitMode) && _angular_core__WEBPACK_IMPORTED_MODULE_19__["ɵɵsetNgModuleScope"](ComponentsModule, { declarations: [_header_header_component__WEBPACK_IMPORTED_MODULE_1__["HeaderComponent"],
         _footer_footer_component__WEBPACK_IMPORTED_MODULE_2__["FooterComponent"],
@@ -2324,19 +2412,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppRoutingModule", function() { return AppRoutingModule; });
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/router */ "tyNb");
 /* harmony import */ var _components_create_location_create_location_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/create-location/create-location.component */ "I9CR");
-/* harmony import */ var _components_landing_page_landing_page_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/landing-page/landing-page.component */ "wn8t");
+/* harmony import */ var _components_landing_page_google_map_rev_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/landing-page/google-map-rev.component */ "6mdJ");
 /* harmony import */ var _components_location_page_location_page_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/location-page/location-page.component */ "jEDi");
 /* harmony import */ var _components_signin_page_signin_page_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/signin-page/signin-page.component */ "TA28");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ "fXoL");
 
 
+// import { InspectBuildingComponent } from './components/inspect-building/inspect-building.component';
+// import { InspectLocationComponent } from './components/inspect-location/inspect-location.component';
+// import { InspectRoomComponent } from './components/inspect-room/inspect-room.component';
+// import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 
 
 
 
 const routes = [
-    { path: '', component: _components_landing_page_landing_page_component__WEBPACK_IMPORTED_MODULE_2__["LandingPageComponent"] },
+    { path: '', component: _components_landing_page_google_map_rev_component__WEBPACK_IMPORTED_MODULE_2__["GoogleMapRevComponent"] },
     { path: 'signin', component: _components_signin_page_signin_page_component__WEBPACK_IMPORTED_MODULE_4__["SigninPageComponent"] },
     {
         path: 'location',
@@ -2374,11 +2466,9 @@ __webpack_require__.r(__webpack_exports__);
 
 class LandingPageComponent {
     constructor() { }
-    ngOnInit() {
-    }
 }
 LandingPageComponent.ɵfac = function LandingPageComponent_Factory(t) { return new (t || LandingPageComponent)(); };
-LandingPageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: LandingPageComponent, selectors: [["app-landing-page"]], decls: 14, vars: 0, consts: [["id", "landingPage", "fxLayout", "column", "fxLayoutAlign", "center center"], [1, "title", "pb-2"], ["src", "../../../assets/images/map.jpg", "alt", "map"], [1, "title"]], template: function LandingPageComponent_Template(rf, ctx) { if (rf & 1) {
+LandingPageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineComponent"]({ type: LandingPageComponent, selectors: [["app-landing-page"]], decls: 13, vars: 0, consts: [["id", "landingPage", "fxLayout", "column", "fxLayoutAlign", "center center"], [1, "title", "pb-2"], [1, "title"]], template: function LandingPageComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "div", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](1, "section");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](2, "div", 1);
@@ -2388,16 +2478,15 @@ LandingPageComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdef
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](5, "aside");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](6, "Space Management Platform");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelement"](7, "img", 2);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "section");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "div", 3);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](10, "h3");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](11, "About");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "section");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "div", 2);
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](9, "h3");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](10, "About");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "p");
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](13, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, possimus! Voluptatem, sint cumque maiores quis tenetur nam minima sapiente aliquid. Aspernatur porro nesciunt eius minus, rerum, officiis sunt labore neque hic reiciendis itaque sint aut? Magnam facere rem consequuntur necessitatibus amet mollitia dicta recusandae illo minima nostrum deleniti exercitationem dolores sunt voluptatum itaque adipisci, quibusdam qui, magni sint! Commodi, molestiae corrupti eum harum ad mollitia cum sit quos facere officia qui perferendis labore doloribus, modi dolor sapiente. Officiis consequuntur perferendis sint dolor debitis a amet laborum! Placeat ut facere a dolorem! Fugit nemo facilis maxime odio quis odit quas fugiat?");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](11, "p");
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](12, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, possimus! Voluptatem, sint cumque maiores quis tenetur nam minima sapiente aliquid. Aspernatur porro nesciunt eius minus, rerum, officiis sunt labore neque hic reiciendis itaque sint aut? Magnam facere rem consequuntur necessitatibus amet mollitia dicta recusandae illo minima nostrum deleniti exercitationem dolores sunt voluptatum itaque adipisci, quibusdam qui, magni sint! Commodi, molestiae corrupti eum harum ad mollitia cum sit quos facere officia qui perferendis labore doloribus, modi dolor sapiente. Officiis consequuntur perferendis sint dolor debitis a amet laborum! Placeat ut facere a dolorem! Fugit nemo facilis maxime odio quis odit quas fugiat?");
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
