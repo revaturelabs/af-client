@@ -22,6 +22,7 @@ const routes: Routes = [
       { path: 'create-location', component: CreateLocationComponent },
     ],
   },
+  {path: "**", component: LandingPageComponent}
 ];
 
 @NgModule({
