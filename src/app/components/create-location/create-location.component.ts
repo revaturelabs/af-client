@@ -17,32 +17,28 @@ export class CreateLocationComponent implements OnInit {
   @ViewChild(InspectBuildingComponent) buildingChild!:InspectBuildingComponent;
   @ViewChild(InspectRoomComponent) roomChild!:InspectRoomComponent;
 
-  firstFormGroup!: FormGroup;
   currentLocation?: Location;
   currentBuilding?: Building;
+  completeLocationSelect: boolean = false;
+  completeBuildingSelect: boolean = false;
+
 
   constructor(private locationService: LocationService,
     private _formBuilder: FormBuilder, 
     private buildingService: BuildingService) { }
 
   ngOnInit(): void {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
     this.getCurrentLocation();
-  }
-
-  test() {
-    console.log(this.locationService.currentLocation);
-    
   }
 
   getCurrentLocation() {
     this.currentLocation = this.locationService.currentLocation;
+    this.completeLocationSelect = !!this.currentLocation?.locationId;
   }
   
   getCurrentBuilding() {
     this.currentBuilding = this.buildingService.currentBuilding;
+    this.completeBuildingSelect = !!this.currentBuilding?.buildingId;
   }
 
   reInitBuildingPage() {

@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,7 +15,6 @@ import { BuildingService } from 'src/app/services/building/building.service';
 import { LocationService } from 'src/app/services/location/location.service';
 import { RoomService } from 'src/app/services/room/room.service';
 import { AddBuildingComponent } from '../add-building/add-building.component';
-
 
 interface BuildingWithRoomCount {
   buildingId?: number;
@@ -23,7 +28,6 @@ interface BuildingWithRoomCount {
   styleUrls: ['./inspect-building.component.sass'],
 })
 export class InspectBuildingComponent implements OnInit, AfterViewInit {
-
   @Input() locationData?: string;
   selectedBuilding?: Building;
   buildingData?: Building;
@@ -61,11 +65,12 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
       )
       .subscribe((res) => {
         let arr: BuildingWithRoomCount[] = res;
-        
-        arr.forEach( building => {
-          this.roomService.getRoomByBuilding(building).subscribe( res => 
-            building.roomCount =  res.length )
-          })
+
+        arr.forEach((building) => {
+          this.roomService
+            .getRoomByBuilding(building)
+            .subscribe((res) => (building.roomCount = res.length));
+        });
         this.dataSource = new MatTableDataSource(arr);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -83,7 +88,7 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
 
   editBuilding(building: Building) {
     this.buildingData = building;
-    this.openDialog("Edit location");
+    this.openDialog('Edit location');
   }
 
   deleteBuilding(building: Building) {
@@ -110,8 +115,11 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
   }
 
   addBuilding() {
-    this.buildingData = { locationId: this.locationService.currentLocation?.locationId };
-    this.openDialog("Add location");
+    this.buildingData = {
+      locationId: this.locationService.currentLocation?.locationId,
+      buildingId: 0,
+    };
+    this.openDialog('Add location');
   }
 
   openDialog(title: string) {
@@ -119,7 +127,7 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
       data: { ...this.buildingData, title },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("dialog return", result);
+      console.log('dialog return', result);
     });
   }
 }

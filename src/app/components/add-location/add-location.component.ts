@@ -63,7 +63,7 @@ export class AddLocationComponent implements OnInit {
     const state = this.addLocationForm.value.state;
     const city = this.addLocationForm.value.city;
     const zipCode = this.addLocationForm.value.zipCode;
-    this.data = { ...this.data, locationId: 0, name, state, city, zipCode };
+    this.data = { ...this.data, name, state, city, zipCode };
     return valid;
   }
 }

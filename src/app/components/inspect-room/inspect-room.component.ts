@@ -66,8 +66,6 @@ export class InspectRoomComponent implements OnInit, AfterViewInit {
 
   editRoom(room: Room) {
     this.roomData = room;
-    console.log(room);
-    
     this.openDialog("Edit room");
   }
 
@@ -83,7 +81,7 @@ export class InspectRoomComponent implements OnInit, AfterViewInit {
 
 
   addRoom() {
-    this.roomData = { buildingId: this.buildingService.currentBuilding?.buildingId };
+    this.roomData = { buildingId: this.buildingService.currentBuilding?.buildingId, roomId: 0 };
     this.openDialog("Add room");
   }
 

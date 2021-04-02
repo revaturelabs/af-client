@@ -1,11 +1,10 @@
-<h1>Inspect Building Page</h1>
 <h3 *ngIf="locationData" class="text-muted">Current location: {{ locationData }}</h3>
 <div class="d-flex align-items-center mt-4">
     <mat-form-field class="w-100 mr-3">
         <mat-label>Search</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="building" #input>
     </mat-form-field>
-    <button class="w-100" color="primary" mat-raised-button (click)="addBuilding()">Add building</button>
+    <button class="w-100" color="primary" mat-raised-button (click)="addBuilding()">Add new building</button>
 </div>
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort class="table-hover"  matSortActive="name" matSortDirection="asc">
