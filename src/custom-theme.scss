@@ -1,0 +1,62 @@
+@import '~@angular/material/theming';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// a theme consists of multiple palettes
+// primary palette - all screens and components
+// accent palette - floating action btn & interactive el
+// warn palette - error state(s)
+// foreground palette - text & icons
+// background palette - el backgrounds
+
+// rev primary colors
+$rev-primary: (
+  500: #f26925,
+  100: #b9b9ba,
+  900: #474c55,
+  contrast: (
+    500: white,
+    100: white,
+    900: white
+  )
+);
+
+// rev secondary colors
+$rev-accent: (
+  500: #72a4c2,
+  100: #ffffff,
+  900: #fcb414,
+  contrast: (
+    500: white,
+    100: white,
+    900: white
+  )
+);
+
+
+// theme builder requires a palette, 
+// for now we'll use the existing mat-core colors
+// we can use the revature colors in the style guide provided
+//$color-var: mat-palette(mat-color-var, ?default, ?light, ?dark);
+
+$rev-app-primary: mat-palette($rev-primary, 500, 100, 900);
+$rev-app-accent: mat-palette($rev-accent, 500, 100, 900);
+$rev-app-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$project3frontend-theme: mat-dark-theme((
+  color: (
+    primary: $rev-app-primary,
+    accent: $rev-app-accent,
+    warn: $rev-app-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($project3frontend-theme);
