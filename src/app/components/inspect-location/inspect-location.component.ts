@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { Location } from 'src/app/models/location';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { LocationService } from 'src/app/services/location/location.service';
@@ -38,7 +39,8 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
   constructor(
     private locationService: LocationService,
     public dialog: MatDialog,
-    private confirmService: AppConfirmService
+    private confirmService: AppConfirmService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -78,10 +80,18 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
           console.log('Delete ', location);
           this.locationService.deleteLocation(location).subscribe(
             (res) => {
-              console.log(res);
+              this.toastr.success('Deleted location', 'success', {
+                timeOut: 3000,
+              });
             },
             (error) => {
-              console.log(error);
+              this.toastr.error(
+                error?.error?.message || error?.error?.error,
+                'error',
+                {
+                  timeOut: 3000,
+                }
+              );
             }
           );
         }
@@ -104,6 +114,41 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
       data: { ...this.locationData, title },
     });
     dialogRef.afterClosed().subscribe((result) => {
+      if (result?.locationId == 0) {
+        this.locationService.createLocation(result).subscribe(
+          (res) => {
+            this.toastr.success('Created new location', 'success', {
+              timeOut: 3000,
+            });
+          },
+          (error) => {
+            this.toastr.error(
+              error?.error?.message || error?.error?.error,
+              'error',
+              {
+                timeOut: 3000,
+              }
+            );
+          }
+        );
+      } else if (result?.locationId) {
+        this.locationService.updateLocation(result).subscribe(
+          (res) => {
+            this.toastr.success('Updated location', 'success', {
+              timeOut: 3000,
+            });
+          },
+          (error) => {
+            this.toastr.error(
+              error?.error?.message || error?.error?.error,
+              'error',
+              {
+                timeOut: 3000,
+              }
+            );
+          }
+        );
+      }
       console.log('dialog return', result);
     });
   }

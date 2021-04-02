@@ -67,4 +67,10 @@ export class LocationService {
     this.locations.push(location);
     return of(location);
   }
+
+  updateLocation(location: Location): Observable<Location> {
+    location.locationId = 9999;
+    return of(location);
+  }
+
 }
