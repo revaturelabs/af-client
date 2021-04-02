@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { Room } from 'src/app/models/room';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { BuildingService } from 'src/app/services/building/building.service';
@@ -37,7 +38,8 @@ export class InspectRoomComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private confirmService: AppConfirmService,
     private roomService: RoomService,
-    private buildingService: BuildingService
+    private buildingService: BuildingService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -74,7 +76,14 @@ export class InspectRoomComponent implements OnInit, AfterViewInit {
       .confirm({ message: `Delete room id: ${room.roomId}`, title: 'Delete room' })
       .subscribe((confirm) => {
         if (confirm) {
-          console.log('Delete ', room);
+          this.roomService.deleteRoom(room).subscribe(
+            (res) => {
+              this.toastr.success('Deleted room');
+            },
+            (error) => {
+              this.toastr.error(error?.error?.message || error?.error?.error);
+            }
+          );
         }
       });
   }
@@ -90,7 +99,25 @@ export class InspectRoomComponent implements OnInit, AfterViewInit {
       data: { ...this.roomData, title },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("dialog return", result);
+      if (result?.roomId == 0) {
+        this.roomService.createRoom(result).subscribe(
+          (res) => {
+            this.toastr.success('Created new room');
+          },
+          (error) => {
+            this.toastr.error(error?.error?.message || error?.error?.error);
+          }
+        );
+      } else if (result?.roomId) {
+        this.roomService.updateRoom(result).subscribe(
+          (res) => {
+            this.toastr.success('Updated room');
+          },
+          (error) => {
+            this.toastr.error(error?.error?.message || error?.error?.error);
+          }
+        );
+      }
     });
   }
 

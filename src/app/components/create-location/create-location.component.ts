@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 import { ToastrService } from 'ngx-toastr';
 import { Building } from 'src/app/models/building';
 import { Location } from 'src/app/models/location';
 import { BuildingService } from 'src/app/services/building/building.service';
 import { LocationService } from 'src/app/services/location/location.service';
 import { InspectBuildingComponent } from '../inspect-building/inspect-building.component';
+import { InspectLocationComponent } from '../inspect-location/inspect-location.component';
 import { InspectRoomComponent } from '../inspect-room/inspect-room.component';
 
 @Component({
@@ -14,8 +16,11 @@ import { InspectRoomComponent } from '../inspect-room/inspect-room.component';
   styleUrls: ['./create-location.component.sass'],
 })
 export class CreateLocationComponent implements OnInit {
+
+  @ViewChild(InspectLocationComponent) locationChild!: InspectLocationComponent;
   @ViewChild(InspectBuildingComponent) buildingChild!: InspectBuildingComponent;
   @ViewChild(InspectRoomComponent) roomChild!: InspectRoomComponent;
+  @ViewChild('stepper') stepper!: MatStepper;
 
   currentLocation?: Location;
   currentBuilding?: Building;
@@ -43,23 +48,36 @@ export class CreateLocationComponent implements OnInit {
     this.completeBuildingSelect = !!this.currentBuilding?.buildingId;
   }
 
-  gotoBuildingStep() {
-    if (this.currentLocation?.locationId) {
-      this.buildingChild.ngOnInit();
-    } else {
-      this.toastr.warning('Please choose a location to proceed', 'Warning', {
-        timeOut: 3000,
-      });
-    }
+  resetCurrentInfo() {
+    this.buildingService.currentBuilding = {};
   }
+
 
   gotoRoomStep() {
     if (this.currentBuilding?.locationId) {
       this.roomChild.ngOnInit();
     } else {
-      this.toastr.warning('Please choose a building to proceed', 'Warning', {
-        timeOut: 3000,
-      });
+      this.toastr.warning('Please choose a building to proceed');
     }
+  }
+
+  gotoBuildingStep(event: any) {
+    // complete the current step
+    if (this.currentLocation?.locationId) {
+      this.buildingChild.ngOnInit();
+      this.completeLocationSelect = true;
+      this.stepper.next();
+    } else {
+      this.toastr.warning('Please choose a location to proceed');
+    }
+  }
+
+  stepperOnChange(event: any) {
+    if(event.selectedIndex == 0) {
+      this.resetCurrentInfo();
+      this.locationChild.resetChooseLocation();
+    }
+    this.getCurrentLocation();
+    this.getCurrentBuilding();
   }
 }

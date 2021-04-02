@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { Location } from 'src/app/models/location';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
+import { BuildingService } from 'src/app/services/building/building.service';
 import { LocationService } from 'src/app/services/location/location.service';
 import { AddLocationComponent } from '../add-location/add-location.component';
 
@@ -40,7 +41,8 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
     private locationService: LocationService,
     public dialog: MatDialog,
     private confirmService: AppConfirmService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private buildingService: BuildingService
   ) {}
 
   ngOnInit(): void {
@@ -80,18 +82,10 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
           console.log('Delete ', location);
           this.locationService.deleteLocation(location).subscribe(
             (res) => {
-              this.toastr.success('Deleted location', 'success', {
-                timeOut: 3000,
-              });
+              this.toastr.success('Deleted location');
             },
             (error) => {
-              this.toastr.error(
-                error?.error?.message || error?.error?.error,
-                'error',
-                {
-                  timeOut: 3000,
-                }
-              );
+              this.toastr.error(error?.error?.message || error?.error?.error);
             }
           );
         }
@@ -99,9 +93,13 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
   }
 
   chooseLocation(loc: Location) {
-    console.log('Select location: ', loc);
     this.selectedLocation = loc;
     this.locationService.currentLocation = loc;
+    this.buildingService.currentBuilding = {};
+  }
+
+  resetChooseLocation() {
+    this.buildingService.currentBuilding = {};
   }
 
   addLocation() {
@@ -117,35 +115,19 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
       if (result?.locationId == 0) {
         this.locationService.createLocation(result).subscribe(
           (res) => {
-            this.toastr.success('Created new location', 'success', {
-              timeOut: 3000,
-            });
+            this.toastr.success('Created new location');
           },
           (error) => {
-            this.toastr.error(
-              error?.error?.message || error?.error?.error,
-              'error',
-              {
-                timeOut: 3000,
-              }
-            );
+            this.toastr.error(error?.error?.message || error?.error?.error);
           }
         );
       } else if (result?.locationId) {
         this.locationService.updateLocation(result).subscribe(
           (res) => {
-            this.toastr.success('Updated location', 'success', {
-              timeOut: 3000,
-            });
+            this.toastr.success('Updated location');
           },
           (error) => {
-            this.toastr.error(
-              error?.error?.message || error?.error?.error,
-              'error',
-              {
-                timeOut: 3000,
-              }
-            );
+            this.toastr.error(error?.error?.message || error?.error?.error);
           }
         );
       }

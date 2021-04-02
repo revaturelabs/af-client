@@ -1,8 +1,8 @@
-<mat-horizontal-stepper linear #stepper>
-    <mat-step label="Inspect Location Page" [completed]="completeLocationSelect">
+<mat-horizontal-stepper linear #stepper (selectionChange)="stepperOnChange($event)">
+    <mat-step label="Inspect Location Page" [completed]='completeLocationSelect' >
         <app-inspect-location (click)="getCurrentLocation()"></app-inspect-location>
         <div class="d-flex">
-            <button class="w-100" color="primary" mat-raised-button matStepperNext (click)="gotoBuildingStep()">Next</button>
+            <button class="w-100" color="primary" mat-raised-button matStepperNext (click)="gotoBuildingStep($event)">Next</button>
         </div>
     </mat-step>
     <mat-step label="Inspect Building Page"  [completed]="completeBuildingSelect" >

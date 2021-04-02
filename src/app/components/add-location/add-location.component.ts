@@ -55,7 +55,7 @@ export class AddLocationComponent implements OnInit {
       delete this.data.title;
       this.dialogRef.close(this.data);
     } else {
-      this.toastr.warning('Invalid input', 'warning', { timeOut: 3000 });
+      this.toastr.warning('Invalid input');
     }
   }
 

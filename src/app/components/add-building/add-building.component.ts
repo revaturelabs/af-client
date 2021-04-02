@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 export interface BuildingDialogData {
   locationId?: number;
@@ -25,7 +26,8 @@ export class AddBuildingComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddBuildingComponent>,
     @Inject(MAT_DIALOG_DATA) public data: BuildingDialogData,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -44,7 +46,7 @@ export class AddBuildingComponent implements OnInit {
       delete this.data.title;
       this.dialogRef.close(this.data);
     } else {
-      console.log('Invalid form data');
+      this.toastr.warning('Invalid input');
     }
   }
 
