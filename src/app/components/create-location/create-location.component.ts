@@ -77,6 +77,8 @@ export class CreateLocationComponent implements OnInit {
       this.resetCurrentInfo();
       this.locationChild.resetChooseLocation();
       this.buildingChild.unChooseBuilding();
+    } else if(event.selectedIndex == 2) {
+      this.gotoRoomStep();
     }
     this.getCurrentLocation();
     this.getCurrentBuilding();
