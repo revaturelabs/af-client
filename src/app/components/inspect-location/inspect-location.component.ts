@@ -20,6 +20,7 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
   city?: string;
   zipCode?: string;
   locationData?: Location;
+  selectedLocation?: Location;
 
   displayedColumns: string[] = [
     'locationId',
@@ -46,7 +47,6 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    //TODO sorting has problem
     this.dataSource.sort = this.sort;
   }
 
@@ -82,6 +82,8 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
 
   chooseLocation(loc: Location) {
     console.log('Select location: ', loc);
+    this.selectedLocation = loc;
+    this.locationService.currentLocation = loc;
   }
 
   addLocation() {
