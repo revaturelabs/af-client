@@ -1,56 +1,86 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
+import { ToastrService } from 'ngx-toastr';
 import { Building } from 'src/app/models/building';
 import { Location } from 'src/app/models/location';
 import { BuildingService } from 'src/app/services/building/building.service';
 import { LocationService } from 'src/app/services/location/location.service';
 import { InspectBuildingComponent } from '../inspect-building/inspect-building.component';
+import { InspectLocationComponent } from '../inspect-location/inspect-location.component';
 import { InspectRoomComponent } from '../inspect-room/inspect-room.component';
 
 @Component({
   selector: 'app-create-location',
   templateUrl: './create-location.component.html',
-  styleUrls: ['./create-location.component.sass']
+  styleUrls: ['./create-location.component.sass'],
 })
 export class CreateLocationComponent implements OnInit {
 
-  @ViewChild(InspectBuildingComponent) buildingChild!:InspectBuildingComponent;
-  @ViewChild(InspectRoomComponent) roomChild!:InspectRoomComponent;
+  @ViewChild(InspectLocationComponent) locationChild!: InspectLocationComponent;
+  @ViewChild(InspectBuildingComponent) buildingChild!: InspectBuildingComponent;
+  @ViewChild(InspectRoomComponent) roomChild!: InspectRoomComponent;
+  @ViewChild('stepper') stepper!: MatStepper;
 
-  firstFormGroup!: FormGroup;
   currentLocation?: Location;
   currentBuilding?: Building;
+  completeLocationSelect: boolean = false;
+  completeBuildingSelect: boolean = false;
 
-  constructor(private locationService: LocationService,
-    private _formBuilder: FormBuilder, 
-    private buildingService: BuildingService) { }
+  constructor(
+    private locationService: LocationService,
+    private _formBuilder: FormBuilder,
+    private buildingService: BuildingService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
     this.getCurrentLocation();
-  }
-
-  test() {
-    console.log(this.locationService.currentLocation);
-    
   }
 
   getCurrentLocation() {
     this.currentLocation = this.locationService.currentLocation;
+    this.completeLocationSelect = !!this.currentLocation?.locationId;
   }
-  
+
   getCurrentBuilding() {
     this.currentBuilding = this.buildingService.currentBuilding;
+    this.completeBuildingSelect = !!this.currentBuilding?.buildingId;
   }
 
-  reInitBuildingPage() {
-    this.buildingChild.ngOnInit();
+  resetCurrentInfo() {
+    this.buildingService.currentBuilding = {};
   }
 
-  reInitRoomPage() {
-    this.roomChild.ngOnInit();
+
+  gotoRoomStep() {
+    if (this.currentBuilding?.locationId) {
+      this.roomChild.ngOnInit();
+    } else {
+      this.toastr.warning('Please choose a building to proceed');
+    }
   }
 
+  gotoBuildingStep(event: any) {
+    // complete the current step
+    if (this.currentLocation?.locationId) {
+      this.buildingChild.ngOnInit();
+      this.completeLocationSelect = true;
+      this.stepper.next();
+    } else {
+      this.toastr.warning('Please choose a location to proceed');
+    }
+  }
+
+  stepperOnChange(event: any) {
+    if(event.selectedIndex == 0) {
+      this.resetCurrentInfo();
+      this.locationChild.resetChooseLocation();
+      this.buildingChild.unChooseBuilding();
+    } else if(event.selectedIndex == 2) {
+      this.gotoRoomStep();
+    }
+    this.getCurrentLocation();
+    this.getCurrentBuilding();
+  }
 }

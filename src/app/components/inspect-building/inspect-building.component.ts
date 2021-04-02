@@ -1,15 +1,21 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { Building } from 'src/app/models/building';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { BuildingService } from 'src/app/services/building/building.service';
 import { LocationService } from 'src/app/services/location/location.service';
 import { RoomService } from 'src/app/services/room/room.service';
 import { AddBuildingComponent } from '../add-building/add-building.component';
-
 
 interface BuildingWithRoomCount {
   buildingId?: number;
@@ -23,7 +29,6 @@ interface BuildingWithRoomCount {
   styleUrls: ['./inspect-building.component.sass'],
 })
 export class InspectBuildingComponent implements OnInit, AfterViewInit {
-
   @Input() locationData?: string;
   selectedBuilding?: Building;
   buildingData?: Building;
@@ -43,7 +48,8 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
     private buildingService: BuildingService,
     private confirmService: AppConfirmService,
     public dialog: MatDialog,
-    private roomService: RoomService
+    private roomService: RoomService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -59,17 +65,26 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
       .getBuildingsByLocationId(
         this.locationService.currentLocation?.locationId!
       )
-      .subscribe((res) => {
-        let arr: BuildingWithRoomCount[] = res;
-        
-        arr.forEach( building => {
-          this.roomService.getRoomByBuilding(building).subscribe( res => 
-            building.roomCount =  res.length )
-          })
-        this.dataSource = new MatTableDataSource(arr);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
+      .subscribe(
+        (res) => {
+          let arr: BuildingWithRoomCount[] = res;
+
+          arr.forEach((building) => {
+            this.roomService.getRoomByBuilding(building).subscribe(
+              (res) => (building.roomCount = res.length),
+              (error) => {
+                this.toastr.error(error?.error?.message || error?.error?.error);
+              }
+            );
+          });
+          this.dataSource = new MatTableDataSource(arr);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        (error) => {
+          this.toastr.error(error?.error?.message || error?.error?.error);
+        }
+      );
   }
 
   applyFilter(event: Event) {
@@ -83,7 +98,7 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
 
   editBuilding(building: Building) {
     this.buildingData = building;
-    this.openDialog("Edit location");
+    this.openDialog('Edit location');
   }
 
   deleteBuilding(building: Building) {
@@ -97,9 +112,14 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
           console.log('Delete ', location);
           this.buildingService
             .deleteBuildingById(building.buildingId!)
-            .subscribe((res) => {
-              console.log('res from delete building', res);
-            });
+            .subscribe(
+              (res) => {
+                this.toastr.success("Building deleted");
+              },
+              (error) => {
+                this.toastr.error(error?.error?.message || error?.error?.error);
+              }
+            );
         }
       });
   }
@@ -109,9 +129,16 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
     this.buildingService.currentBuilding = building;
   }
 
+  unChooseBuilding() {
+    this.selectedBuilding = {};
+  }
+
   addBuilding() {
-    this.buildingData = { locationId: this.locationService.currentLocation?.locationId };
-    this.openDialog("Add location");
+    this.buildingData = {
+      locationId: this.locationService.currentLocation?.locationId,
+      buildingId: 0,
+    };
+    this.openDialog('Add location');
   }
 
   openDialog(title: string) {
@@ -119,7 +146,26 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
       data: { ...this.buildingData, title },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("dialog return", result);
+
+      if (result?.buildingId == 0) {
+        this.buildingService.createBuilding(result).subscribe(
+          (res) => {
+            this.toastr.success('Created new building');
+          },
+          (error) => {
+            this.toastr.error(error?.error?.message || error?.error?.error);
+          }
+        );
+      } else if (result?.buildingId) {
+        this.buildingService.updateBuilding(result).subscribe(
+          (res) => {
+            this.toastr.success('Updated building');
+          },
+          (error) => {
+            this.toastr.error(error?.error?.message || error?.error?.error);
+          }
+        );
+      }
     });
   }
 }
