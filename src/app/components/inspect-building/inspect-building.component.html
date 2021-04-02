@@ -47,6 +47,6 @@
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
-<button mat-button color='accent' *ngIf="selectedBuilding" class="w-100 mt-3">
+<button mat-button color='accent' *ngIf="selectedBuilding?.buildingId" class="w-100 mt-3">
     <h2><b>Current selected Building: {{selectedBuilding?.buildingId}}</b> </h2>
 </button>

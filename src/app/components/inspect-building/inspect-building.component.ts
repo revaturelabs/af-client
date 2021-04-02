@@ -129,6 +129,10 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
     this.buildingService.currentBuilding = building;
   }
 
+  unChooseBuilding() {
+    this.selectedBuilding = {};
+  }
+
   addBuilding() {
     this.buildingData = {
       locationId: this.locationService.currentLocation?.locationId,
