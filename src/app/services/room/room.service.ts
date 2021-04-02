@@ -24,6 +24,8 @@ export class RoomService {
 
   ]
 
+
+  currentRoom?:Room = {};
   constructor() { }
 
   getRoomByBuilding(building: Building): Observable<Room[]> {

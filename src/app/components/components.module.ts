@@ -19,6 +19,9 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninPageComponent } from './signin-page/signin-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
 import { ReservationPageComponent } from './reservation-page/reservation-page.component';
+import { BuildingTableComponent } from './building-table/building-table.component';
+import { LocationTableComponent } from './location-table/location-table.component';
+import { RoomTableComponent } from './room-table/room-table.component';
 
 const components = [
   HeaderComponent,
@@ -35,11 +38,12 @@ const components = [
   LandingPageComponent,
   SigninPageComponent,
   SignupPageComponent,
-  ReservationPageComponent
+  ReservationPageComponent,
+  BuildingTableComponent
 ];
 
 @NgModule({
-  declarations: [components],
+  declarations: [components, LocationTableComponent, RoomTableComponent],
   imports: [CommonModule, MaterialModule, RouterModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   exports: [components],
 })
