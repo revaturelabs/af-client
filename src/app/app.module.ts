@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,7 +8,6 @@ import { MaterialModule } from './shared/material/material.module';
 import { AppConfirmService } from './services/app-confirm/app-confirm.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ToastrModule } from 'ngx-toastr';
-import { NgxLoadingModule } from 'ngx-loading';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +18,7 @@ import { NgxLoadingModule } from 'ngx-loading';
     ComponentsModule,
     MaterialModule,
     FlexLayoutModule,
-    NgxLoadingModule.forRoot({}),
+    // rather than using ngx-loading we can use mat-spinner
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',
