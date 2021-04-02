@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,19 +7,30 @@ import { ComponentsModule } from './components/components.module';
 import { MaterialModule } from './shared/material/material.module';
 import { AppConfirmService } from './services/app-confirm/app-confirm.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ToastrModule } from 'ngx-toastr';
+
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ComponentsModule,
-    MaterialModule
+    MaterialModule,
+    FlexLayoutModule,
+  // rather than using ngx-loading we can use mat-spinner
+    ToastrModule.forRoot()
+  //  {  -- previous settings
+  //    timeOut: 5000,
+  //    positionClass: 'toast-top-right',
+  //    progressBar: true,
+  //    newestOnTop: false,
+  //    maxOpened: 4
+  //  }
+  
   ],
   providers: [AppConfirmService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
