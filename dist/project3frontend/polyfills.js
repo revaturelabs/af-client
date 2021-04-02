@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/Lip/lipcoDev/project3/assignforce/src/polyfills.ts */"hN/g");
+module.exports = __webpack_require__(/*! /Users/Lip/lipcoDev/project3/project3client/src/polyfills.ts */"hN/g");
 
 
 /***/ }),
