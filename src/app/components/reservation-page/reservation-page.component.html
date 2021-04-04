@@ -49,7 +49,7 @@
       <ng-container [ngSwitch]="calendarModes[calendarChoice]">
         <app-calendar-dce *ngSwitchCase="'DCE'"></app-calendar-dce>
         <app-calendar-ks *ngSwitchCase="'KS'"></app-calendar-ks>
-        <app-calendar-dce *ngSwitchDefault="'DCE'"></app-calendar-dce>
+        <app-calendar-dce *ngSwitchDefault></app-calendar-dce>
       </ng-container>
 
       <div>
