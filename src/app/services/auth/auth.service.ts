@@ -15,7 +15,7 @@ export interface DecodedJwtDTO {
   providedIn: 'root',
 })
 export class AuthService {
-  url: string = 'http://localhost:8080/';
+  url: string = 'http://35.232.107.40:8080/';
   decodedJwtDTO?: DecodedJwtDTO;
 
   constructor(private httpClient: HttpClient) {}
@@ -71,5 +71,4 @@ export class AuthService {
       }
     }
   }
-
 }

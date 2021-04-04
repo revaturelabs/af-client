@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -16,13 +18,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 
 const modules = [
-  MatButtonModule,
   MatCardModule,
   MatDividerModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
   MatTabsModule,
-  MatToolbarModule,
-  MatIconModule,
-  MatMenuModule,
   MatTableModule,
   MatInputModule,
   MatPaginatorModule,

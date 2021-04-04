@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from '../shared/material/material.module';
+import { CalendarModule } from './calendar/calendar.module';
 import { LocationPageComponent } from './location-page/location-page.component';
 import { InspectLocationComponent } from './inspect-location/inspect-location.component';
 import { InspectBuildingComponent } from './inspect-building/inspect-building.component';
@@ -18,6 +19,10 @@ import { AddRoomComponent } from './add-room/add-room.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninPageComponent } from './signin-page/signin-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
+import { ReservationPageComponent } from './reservation-page/reservation-page.component';
+import { BuildingTableComponent } from './building-table/building-table.component';
+import { LocationTableComponent } from './location-table/location-table.component';
+import { RoomTableComponent } from './room-table/room-table.component';
 
 const components = [
   HeaderComponent,
@@ -34,6 +39,10 @@ const components = [
   LandingPageComponent,
   SigninPageComponent,
   SignupPageComponent,
+  ReservationPageComponent,
+  BuildingTableComponent,
+  LocationTableComponent,
+  RoomTableComponent,
 ];
 
 @NgModule({
@@ -45,6 +54,7 @@ const components = [
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    CalendarModule,
   ],
   exports: [components],
 })
