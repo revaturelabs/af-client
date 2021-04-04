@@ -7,6 +7,7 @@ import { InspectRoomComponent } from './components/inspect-room/inspect-room.com
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { LocationPageComponent } from './components/location-page/location-page.component';
 import { SigninPageComponent } from './components/signin-page/signin-page.component';
+import { AdminGuardService } from './services/route-guard/admin-guard.service';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   {
     path: 'location',
     component: LocationPageComponent,
+    canActivate: [AdminGuardService],
     children: [
       { path: '', redirectTo: 'create-location', pathMatch: 'full' },
       // { path: 'inspect-location', component: InspectLocationComponent },
@@ -22,7 +24,7 @@ const routes: Routes = [
       { path: 'create-location', component: CreateLocationComponent },
     ],
   },
-  {path: "**", component: LandingPageComponent}
+  { path: '**', component: LandingPageComponent },
 ];
 
 @NgModule({
