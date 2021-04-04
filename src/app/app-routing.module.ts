@@ -10,6 +10,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { LocationPageComponent } from './components/location-page/location-page.component';
 import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
 import { SigninPageComponent } from './components/signin-page/signin-page.component';
+import { AdminGuardService } from './services/route-guard/admin-guard.service';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   {
     path: 'location',
     component: LocationPageComponent,
+    canActivate: [AdminGuardService],
     children: [
       { path: '', redirectTo: 'create-location', pathMatch: 'full' },
       // { path: 'inspect-location', component: InspectLocationComponent },
