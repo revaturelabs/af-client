@@ -1,23 +1,24 @@
 <mat-toolbar>
-    <button mat-icon-button aria-label="menu" [matMenuTriggerFor]="menu">
-        <mat-icon>menu</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item [routerLink]="['/location']" routerLinkActive="router-link-active" >
-          <mat-icon>location_city</mat-icon>
-            <span>Create New Location</span>
-        </button>
-        <button mat-menu-item [routerLink]="['/reservation']" routerLinkActive="router-link-active">
-          <mat-icon>calendar_today</mat-icon>
-          <span>Reserve a Room</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon>date_range</mat-icon>
-          <span>View My Reservations</span>
-        </button>
-      </mat-menu>
-    <span><a [routerLink]="['']" routerLinkActive="router-link-active" >AssignForce</a></span>
-    <span class="spacer"></span>
-    <button mat-raised-button color="primary" *ngIf="loggedIn" (click)="logout()">Logout</button>
-    <button mat-raised-button color="primary" *ngIf="!loggedIn" [routerLink]="['/signin']" routerLinkActive="router-link-active">Sign In</button>
+  <button mat-icon-button aria-label="menu" [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/location']" routerLinkActive="router-link-active">
+      <mat-icon>location_city</mat-icon>
+      <span>Create New Location</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/reservation']" routerLinkActive="router-link-active">
+      <mat-icon>calendar_today</mat-icon>
+      <span>Reserve a Room</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>date_range</mat-icon>
+      <span>View My Reservations</span>
+    </button>
+  </mat-menu>
+  <span><a [routerLink]="['']" routerLinkActive="router-link-active">AssignForce</a></span>
+  <span class="spacer"></span>
+  <button mat-raised-button color="primary" *ngIf="loggedIn" (click)="logout()">Logout</button>
+  <button mat-raised-button color="primary" *ngIf="!loggedIn" [routerLink]="['/signin']"
+    routerLinkActive="router-link-active">Sign In</button>
 </mat-toolbar>

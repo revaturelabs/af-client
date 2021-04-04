@@ -3,5 +3,10 @@ export class Room{
     name?: string;
     capacity?: number;
     buildingId?: number;
-    type?: number;
+    type?: RoomType;
+}
+
+export enum RoomType {
+    ONLINE, 
+    CLASSROOM
 }

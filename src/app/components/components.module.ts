@@ -39,12 +39,21 @@ const components = [
   SigninPageComponent,
   SignupPageComponent,
   ReservationPageComponent,
-  BuildingTableComponent
+  BuildingTableComponent,
+  LocationTableComponent,
+  RoomTableComponent,
 ];
 
 @NgModule({
-  declarations: [components, LocationTableComponent, RoomTableComponent],
-  imports: [CommonModule, MaterialModule, RouterModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
+  declarations: [components],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    RouterModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   exports: [components],
 })
 export class ComponentsModule {}
