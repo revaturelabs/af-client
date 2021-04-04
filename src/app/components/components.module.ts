@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from '../shared/material/material.module';
+import { CalendarModule } from './calendar/calendar.module';
 import { LocationPageComponent } from './location-page/location-page.component';
 import { InspectLocationComponent } from './inspect-location/inspect-location.component';
 import { InspectBuildingComponent } from './inspect-building/inspect-building.component';
@@ -53,6 +54,7 @@ const components = [
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    CalendarModule,
   ],
   exports: [components],
 })

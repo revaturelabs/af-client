@@ -1,30 +1,32 @@
 <div class="container">
   <mat-horizontal-stepper linear #stepper>
     <mat-step completed="false">
-        <ng-template matStepLabel>
-            Select Location
-        </ng-template>
-        
-        <app-location-table (click)= "stepper.reset(); getCurrentLocation(); resetBuildingRoom();"></app-location-table>
+      <ng-template matStepLabel>
+        Select Location
+      </ng-template>
 
-        <div>
-          <button mat-button matStepperNext *ngIf="selectedLocation">Next</button>
-        </div>
+      <app-location-table (click)="stepper.reset(); getCurrentLocation(); resetBuildingRoom();"></app-location-table>
+
+      <div>
+        <button mat-button matStepperNext *ngIf="selectedLocation">Next</button>
+      </div>
     </mat-step>
 
     <mat-step label="Select Building" completed="false">
-       <app-building-table [locationData]="selectedLocation?.name" (click)="getCurrentBuilding(); resetRoom()"></app-building-table>
+      <app-building-table [locationData]="selectedLocation?.name" (click)="getCurrentBuilding(); resetRoom()">
+      </app-building-table>
 
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext *ngIf="selectedBuilding">Next</button>
-        </div>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext *ngIf="selectedBuilding">Next</button>
+      </div>
     </mat-step>
 
     <mat-step completed="false" #roomStep>
       <ng-template matStepLabel>Select Room</ng-template>
 
-      <app-room-table [buildingData]="selectedBuilding?.address" [locationData]="selectedLocation?.name" (click)="getCurrentRoom();"></app-room-table>
+      <app-room-table [buildingData]="selectedBuilding?.address" [locationData]="selectedLocation?.name"
+        (click)="getCurrentRoom();"></app-room-table>
 
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -35,31 +37,20 @@
     <mat-step completed="false">
       <mat-card>
         <p>{{selectedLocation?.name}} </p>
-          <p>{{selectedBuilding?.address}}</p> 
-          <p>{{selectedRoom?.name}}</p>
+        <p>{{selectedBuilding?.address}}</p>
+        <p>{{selectedRoom?.name}}</p>
       </mat-card>
 
 
       <ng-template matStepLabel>Select Date and Time</ng-template>
 
-      <mat-form-field appearance="fill">
-        <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+      <button mat-button color="warn" (click)="switchCalendar()">Switch Calendar Mode</button>
 
-      <br>
-      <mat-form-field>
-        <mat-label>Start Time</mat-label>
-        <input matInput type="time">
-      </mat-form-field>
-      <br>
-
-      <mat-form-field>
-        <mat-label>Stop Time</mat-label>
-        <input matInput type="time">
-      </mat-form-field>
+      <ng-container [ngSwitch]="calendarModes[calendarChoice]">
+        <app-calendar-dce *ngSwitchCase="'DCE'"></app-calendar-dce>
+        <app-calendar-ks *ngSwitchCase="'KS'"></app-calendar-ks>
+        <app-calendar-dce *ngSwitchDefault="'DCE'"></app-calendar-dce>
+      </ng-container>
 
       <div>
         <button mat-button matStepperPrevious>Back</button>

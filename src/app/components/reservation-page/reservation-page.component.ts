@@ -19,19 +19,22 @@ import { RoomTableComponent } from '../room-table/room-table.component';
   templateUrl: './reservation-page.component.html',
   styleUrls: ['./reservation-page.component.sass'],
 })
-export class ReservationPageComponent implements OnInit{
+export class ReservationPageComponent implements OnInit {
   isLinear: boolean = false;
-  
+
+  calendarModes: string[] = ['DCE', 'KS'];
+  calendarChoice: number = 0;
+
   selectedLocation?: Location;
   selectedBuilding?: Building;
   selectedRoom?: Room;
 
-  @ViewChild(LocationTableComponent) locationChild!:LocationTableComponent;
-  @ViewChild(BuildingTableComponent) buildingChild!:BuildingTableComponent;
-  @ViewChild(RoomTableComponent) roomChild!:RoomTableComponent;
-  @ViewChild(MatStepper) stepper!:MatStepper;
+  @ViewChild(LocationTableComponent) locationChild!: LocationTableComponent;
+  @ViewChild(BuildingTableComponent) buildingChild!: BuildingTableComponent;
+  @ViewChild(RoomTableComponent) roomChild!: RoomTableComponent;
+  @ViewChild(MatStepper) stepper!: MatStepper;
 
-  @ViewChild('roomStep') roomStep!:MatStep;
+  @ViewChild('roomStep') roomStep!: MatStep;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -42,17 +45,15 @@ export class ReservationPageComponent implements OnInit{
     private confirmService: AppConfirmService
   ) {}
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
-  resetBuildingRoom(){
+  resetBuildingRoom() {
     this.buildingService.currentBuilding = undefined;
     this.selectedBuilding = undefined;
     this.buildingChild.selectedBuilding = undefined;
     this.resetRoom();
   }
-  resetRoom(){
+  resetRoom() {
     this.roomService.currentRoom = undefined;
     this.selectedRoom = undefined;
     this.roomChild.selectedRoom = undefined;
@@ -64,15 +65,21 @@ export class ReservationPageComponent implements OnInit{
     this.buildingChild.ngOnInit();
     this.stepper.selected.completed = true;
   }
-  
+
   getCurrentBuilding() {
     this.selectedBuilding = this.buildingService.currentBuilding;
     this.roomChild.ngOnInit();
     this.stepper.selected.completed = true;
   }
+
   getCurrentRoom() {
-    this. selectedRoom = this.roomService.currentRoom
+    this.selectedRoom = this.roomService.currentRoom;
     this.stepper.selected.completed = true;
   }
 
+  switchCalendar() {
+    if (++this.calendarChoice % this.calendarModes.length === 0) {
+      this.calendarChoice = 0;
+    }
+  }
 }

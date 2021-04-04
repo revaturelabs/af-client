@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CalendarDceComponent } from './components/calendar/calendar-dce/calendar-dce.component';
+import { CalendarKsComponent } from './components/calendar/calendar-ks/calendar-ks.component';
 import { CreateLocationComponent } from './components/create-location/create-location.component';
 import { InspectBuildingComponent } from './components/inspect-building/inspect-building.component';
 import { InspectLocationComponent } from './components/inspect-location/inspect-location.component';
@@ -13,6 +15,7 @@ const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'signin', component: SigninPageComponent },
   { path: 'reservation', component: ReservationPageComponent },
+  { path: 'calendar', component: CalendarKsComponent },
   {
     path: 'location',
     component: LocationPageComponent,
@@ -24,7 +27,7 @@ const routes: Routes = [
       { path: 'create-location', component: CreateLocationComponent },
     ],
   },
-  {path: "**", component: LandingPageComponent}
+  { path: '**', component: LandingPageComponent },
 ];
 
 @NgModule({

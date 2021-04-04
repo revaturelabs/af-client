@@ -18,15 +18,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 
 const modules = [
-  MatButtonModule,
   MatCardModule,
   MatDividerModule,
   MatDatepickerModule,
   MatNativeDateModule,
   MatTabsModule,
-  MatToolbarModule,
-  MatIconModule,
-  MatMenuModule,
   MatTableModule,
   MatInputModule,
   MatPaginatorModule,
