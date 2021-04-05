@@ -1,0 +1,9 @@
+<h1 class="my-3 text-center">Trainer dashboard</h1>
+<div class="d-flex flex-wrap align-items-center justify-content-around container">
+    <app-trainer-profile></app-trainer-profile>
+    <div>
+        <app-trainer-current-reservations></app-trainer-current-reservations>
+        <button mat-button color='accent' [routerLink]="['../reservation']"
+        routerLinkActive="router-link-active">Make a new reservation</button>
+    </div>
+</div>
