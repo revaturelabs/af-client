@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -57,6 +63,8 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
   createTable(): void {
     this.locationService.getAllLocation().subscribe((res) => {
       this.dataSource = new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
@@ -115,6 +123,7 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
       if (result?.locationId == 0) {
         this.locationService.createLocation(result).subscribe(
           (res) => {
+            this.ngOnInit();
             this.toastr.success('Created new location');
           },
           (error) => {
@@ -124,6 +133,7 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
       } else if (result?.locationId) {
         this.locationService.updateLocation(result).subscribe(
           (res) => {
+            this.ngOnInit();
             this.toastr.success('Updated location');
           },
           (error) => {

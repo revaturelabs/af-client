@@ -54,6 +54,8 @@ export class InspectRoomComponent implements OnInit, AfterViewInit {
   createTable(): void {
     this.roomService.getRoomByBuilding(this.buildingService.currentBuilding!).subscribe((res) => {
       this.dataSource = new MatTableDataSource(res);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 
@@ -78,6 +80,7 @@ export class InspectRoomComponent implements OnInit, AfterViewInit {
         if (confirm) {
           this.roomService.deleteRoom(room).subscribe(
             (res) => {
+              this.ngOnInit();
               this.toastr.success('Deleted room');
             },
             (error) => {
@@ -102,6 +105,7 @@ export class InspectRoomComponent implements OnInit, AfterViewInit {
       if (result?.roomId == 0) {
         this.roomService.createRoom(result).subscribe(
           (res) => {
+            this.ngOnInit();
             this.toastr.success('Created new room');
           },
           (error) => {
@@ -111,6 +115,7 @@ export class InspectRoomComponent implements OnInit, AfterViewInit {
       } else if (result?.roomId) {
         this.roomService.updateRoom(result).subscribe(
           (res) => {
+            this.ngOnInit();
             this.toastr.success('Updated room');
           },
           (error) => {
