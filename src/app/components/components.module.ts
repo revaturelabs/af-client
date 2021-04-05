@@ -24,6 +24,7 @@ import { BuildingTableComponent } from './building-table/building-table.componen
 import { LocationTableComponent } from './location-table/location-table.component';
 import { RoomTableComponent } from './room-table/room-table.component';
 
+
 const components = [
   HeaderComponent,
   FooterComponent,
