@@ -114,6 +114,7 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
             .deleteBuildingById(building.buildingId!)
             .subscribe(
               (res) => {
+                this.ngOnInit();
                 this.toastr.success("Building deleted");
               },
               (error) => {
@@ -150,6 +151,7 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
       if (result?.buildingId == 0) {
         this.buildingService.createBuilding(result).subscribe(
           (res) => {
+            this.ngOnInit();
             this.toastr.success('Created new building');
           },
           (error) => {
@@ -159,6 +161,7 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
       } else if (result?.buildingId) {
         this.buildingService.updateBuilding(result).subscribe(
           (res) => {
+            this.ngOnInit();
             this.toastr.success('Updated building');
           },
           (error) => {

@@ -33,6 +33,7 @@ export class RoomService {
   }
 
   createRoom(room: Room): Observable<Room> {
+    this.rooms.push(room);
     return of(room);
   }
 

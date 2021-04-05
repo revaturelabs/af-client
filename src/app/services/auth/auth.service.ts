@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from 'src/app/models/user';
 import jwt_decode from 'jwt-decode';
+import { Observable, of } from 'rxjs';
 
 export interface JwtDTO {
   data?: string;
@@ -16,7 +17,18 @@ export interface DecodedJwtDTO {
 })
 export class AuthService {
   url: string = 'http://35.232.107.40:8080/';
-  decodedJwtDTO?: DecodedJwtDTO;
+  decodedJwtDTO?: DecodedJwtDTO = { id: 1, email: 'test@test.com', role: 'trainer'};
+
+  pendingUsers: User[] = [
+    {userId: 1, email: 'user1@g.com', password: '', status: 'PENDING', role: 'trainer'},
+    {userId: 2, email: 'user2@g.com', password: '', status: 'PENDING', role: 'trainer'},
+    {userId: 3, email: 'user3@g.com', password: '', status: 'PENDING', role: 'trainer'},
+    {userId: 4, email: 'user4@g.com', password: '', status: 'PENDING', role: 'trainer'},
+    {userId: 5, email: 'user5@g.com', password: '', status: 'PENDING', role: 'trainer'},
+    {userId: 6, email: 'user6@g.com', password: '', status: 'PENDING', role: 'trainer'},
+    {userId: 7, email: 'user7@g.com', password: '', status: 'PENDING', role: 'trainer'},
+    {userId: 8, email: 'user8@g.com', password: '', status: 'PENDING', role: 'trainer'},
+  ]
 
   constructor(private httpClient: HttpClient) {}
 
@@ -40,6 +52,14 @@ export class AuthService {
       .post<{ data: string }>(this.url + 'login', user)
       .toPromise();
     return jwt.data;
+  }
+
+  getAllPendingUsers(): Observable<User[]> {
+    return of(this.pendingUsers);
+  }
+
+  resolveUser(user: User):Observable<User> {
+    return of(user);
   }
 
   isLoggedIn(): boolean {
@@ -71,4 +91,6 @@ export class AuthService {
       }
     }
   }
+
+
 }

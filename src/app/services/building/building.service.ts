@@ -9,7 +9,7 @@ export class BuildingService {
 
   currentBuilding?: Building = {};
 
-  buildings = [
+  buildings: Building[] = [
     { buildingId: 10, address: 'address 0', locationId: 1 },
     { buildingId: 1, address: 'address 1', locationId: 1 },
     { buildingId: 2, address: 'address 2', locationId: 2 },
@@ -47,6 +47,7 @@ export class BuildingService {
   }
 
   createBuilding(building: Building): Observable<Building> {
+    this.buildings.push(building);
     return of(building);
   }
 
