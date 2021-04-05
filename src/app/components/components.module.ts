@@ -25,6 +25,7 @@ import { RoomTableComponent } from './room-table/room-table.component';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AdminResolveComponent } from './admin-resolve/admin-resolve.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { SetPasswordComponent } from './set-password/set-password.component';
 
 const components = [
   HeaderComponent,
@@ -50,7 +51,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [components],
+  declarations: [components, SetPasswordComponent],
   imports: [
     CommonModule,
     MaterialModule,

@@ -8,6 +8,7 @@ import { CalendarKsComponent } from './components/calendar/calendar-ks/calendar-
 import { CreateLocationComponent } from './components/create-location/create-location.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
+import { SetPasswordComponent } from './components/set-password/set-password.component';
 import { SigninPageComponent } from './components/signin-page/signin-page.component';
 import { AdminGuardService } from './services/route-guard/admin-guard.service';
 
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'signin', component: SigninPageComponent },
   { path: 'reservation', component: ReservationPageComponent },
   { path: 'calendar', component: CalendarKsComponent },
+  { path: 'change-password', component: SetPasswordComponent },
   {
     path: 'admin-page',
     component: AdminPageComponent,

@@ -54,6 +54,13 @@ export class AuthService {
     return jwt.data;
   }
 
+  async setPassword(password: string) {
+    const jwt: {data : string} = await this.httpClient
+      .post<{data: string}>(this.url+"/password", password)
+      .toPromise();
+    return jwt.data;
+  }
+
   getAllPendingUsers(): Observable<User[]> {
     return of(this.pendingUsers);
   }
@@ -86,6 +93,7 @@ export class AuthService {
       try {
         user = JSON.parse(value!);
         this.decodedJwtDTO = jwt_decode(user?.data!);
+        console.log(this.decodedJwtDTO);
       } catch (e) {
         user = undefined;
       }
