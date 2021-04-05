@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/models/user';
+import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
@@ -20,7 +21,8 @@ export class AdminResolveComponent implements OnInit, AfterViewInit {
 
   constructor(
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private confirmService: AppConfirmService
   ) {}
 
   ngOnInit(): void {
@@ -55,28 +57,34 @@ export class AdminResolveComponent implements OnInit, AfterViewInit {
   }
 
   approveAction(user: User) {
-    user.status = 'APPROVE';
-    this.authService.resolveUser(user).subscribe(
-      (res) => {
-        this.toastr.success('Approve success');
-        this.setTable();
-      },
-      (error) => {
-        this.toastr.error(error?.error?.message || error?.error?.error);
+    this.confirmService.confirm().subscribe((confirm) => {
+      if (confirm) {
+        user.status = 'APPROVE';
+        this.authService.resolveUser(user).subscribe(
+          (res) => {
+            this.toastr.success('Approve success');
+            this.setTable();
+          },
+          (error) => {
+            this.toastr.error(error?.error?.message || error?.error?.error);
+          }
+        );
       }
-    );
+    });
   }
 
   denyAction(user: User) {
-    user.status = 'DENY';
-    this.authService.resolveUser(user).subscribe(
-      (res) => {
-        this.toastr.success('Denied a user');
-        this.setTable();
-      },
-      (error) => {
-        this.toastr.error(error?.error?.message || error?.error?.error);
-      }
-    );
+    this.confirmService.confirm().subscribe((confirm) => {
+      user.status = 'DENY';
+      this.authService.resolveUser(user).subscribe(
+        (res) => {
+          this.toastr.success('Denied a user');
+          this.setTable();
+        },
+        (error) => {
+          this.toastr.error(error?.error?.message || error?.error?.error);
+        }
+      );
+    });
   }
 }
