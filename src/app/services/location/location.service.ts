@@ -69,7 +69,6 @@ export class LocationService {
   }
 
   updateLocation(location: Location): Observable<Location> {
-    location.locationId = 9999;
     return of(location);
   }
 
