@@ -75,16 +75,18 @@ export class AdminResolveComponent implements OnInit, AfterViewInit {
 
   denyAction(user: User) {
     this.confirmService.confirm().subscribe((confirm) => {
-      user.status = 'DENY';
-      this.authService.resolveUser(user).subscribe(
-        (res) => {
-          this.toastr.success('Denied a user');
-          this.setTable();
-        },
-        (error) => {
-          this.toastr.error(error?.error?.message || error?.error?.error);
-        }
-      );
+      if (confirm) {
+        user.status = 'DENY';
+        this.authService.resolveUser(user).subscribe(
+          (res) => {
+            this.toastr.success('Denied a user');
+            this.setTable();
+          },
+          (error) => {
+            this.toastr.error(error?.error?.message || error?.error?.error);
+          }
+        );
+      }
     });
   }
 }
