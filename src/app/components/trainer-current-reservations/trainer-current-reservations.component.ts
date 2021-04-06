@@ -20,7 +20,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
       startTime: 1617652628,
       endTime: 1617661628,
       roomId: 1,
-      status: 0,
+      status: 'reserved',
     },
     {
       reservationId: 2,
@@ -28,7 +28,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
       startTime: 1617657628,
       endTime: 1617661628,
       roomId: 1,
-      status: 0,
+      status: 'reserved',
     },
     {
       reservationId: 3,
@@ -36,7 +36,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
       startTime: 1617651628,
       endTime: 1617651628,
       roomId: 1,
-      status: 0,
+      status: 'reserved',
     },
     {
       reservationId: 4,
@@ -44,7 +44,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
       startTime: 1617651628,
       endTime: 1617651628,
       roomId: 1,
-      status: 1,
+      status: 'cancelled',
     },
     {
       reservationId: 5,
@@ -52,7 +52,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
       startTime: 1617651628,
       endTime: 1617651628,
       roomId: 1,
-      status: 1,
+      status: 'cancelled',
     },
     {
       reservationId: 6,
@@ -60,7 +60,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
       startTime: 1617651628,
       endTime: 1617651628,
       roomId: 1,
-      status: 1,
+      status: 'cancelled',
     },
     {
       reservationId: 7,
@@ -68,7 +68,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
       startTime: 1617651628,
       endTime: 1617651628,
       roomId: 1,
-      status: 1,
+      status: 'reserved',
     },
   ];
 
