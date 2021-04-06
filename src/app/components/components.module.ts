@@ -31,6 +31,7 @@ import { TrainerDashboardComponent } from './trainer-dashboard/trainer-dashboard
 import { TrainerCurrentReservationsComponent } from './trainer-current-reservations/trainer-current-reservations.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
 
+
 const components = [
   HeaderComponent,
   FooterComponent,

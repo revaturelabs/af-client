@@ -4,5 +4,5 @@ export class Reservation{
     startTime?: number;
     endTime?: number;
     roomId?: number;
-    status?: number;
+    status?: string;
 }
