@@ -8,7 +8,6 @@ import { MaterialModule } from './shared/material/material.module';
 import { AppConfirmService } from './services/app-confirm/app-confirm.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ToastrModule } from 'ngx-toastr';
-import { GoogleMapRevModule } from './components/landing-page/google-map-rev.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,7 +18,6 @@ import { GoogleMapRevModule } from './components/landing-page/google-map-rev.mod
     ComponentsModule,
     MaterialModule,
     FlexLayoutModule,
-    GoogleMapRevModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',

@@ -18,6 +18,7 @@ import { AddRoomComponent } from './add-room/add-room.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninPageComponent } from './signin-page/signin-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
+import {GoogleMapRevModule} from '../components/landing-page/google-map/google-map-rev.module';
 
 const components = [
   HeaderComponent,
@@ -33,7 +34,7 @@ const components = [
   AddRoomComponent,
   LandingPageComponent,
   SigninPageComponent,
-  SignupPageComponent,
+  SignupPageComponent
 ];
 
 @NgModule({
@@ -44,7 +45,8 @@ const components = [
     RouterModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule  
+    ReactiveFormsModule,
+    GoogleMapRevModule  
   ],
   exports: [
     components
