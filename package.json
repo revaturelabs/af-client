@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "config": "ts-node ./scripts/setenv.ts",
+    "prestart": "npm run config -- --environment=dev",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "npm run config -- --environment=prod && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -31,6 +33,7 @@
     "angularx-flatpickr": "^6.5.2",
     "bootstrap": "^4.6.0",
     "date-fns": "^2.19.0",
+    "dotenv": "^8.2.0",
     "flatpickr": "^4.6.9",
     "jwt-decode": "^3.1.2",
     "ngx-toastr": "^13.2.1",
