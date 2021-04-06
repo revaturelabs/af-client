@@ -31,6 +31,7 @@ import { Reservation } from 'src/app/models/reservation';
 import { MatDialog } from '@angular/material/dialog';
 import { EditReservationComponent } from '../edit-reservation/edit-reservation.component';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
+import { ToastrService } from 'ngx-toastr';
 
 const colors: any = {
   red: {
@@ -58,7 +59,8 @@ export class CalendarKsComponent implements OnInit {
     private dialog: MatDialog,
     private reservationService: ReservationService,
     private confirmService: AppConfirmService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private toastr: ToastrService
   ) {}
 
   // @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
@@ -121,6 +123,7 @@ export class CalendarKsComponent implements OnInit {
       .subscribe((confirm) => {
         if (confirm) {
           this.handleEvent('Cancel', event);
+          this.refresh.next();
         }
       });
   }
@@ -133,8 +136,8 @@ export class CalendarKsComponent implements OnInit {
           return {
             start: new Date(r.startTime! * 1000),
             end: new Date(r.endTime! * 1000),
-            title: `${r.reservationId}`,
-            actions: this.actions,
+            title: `${r.reservationId}: Reserved by ${r.reserver}`,
+            actions: r.status === 'canceled' ? undefined : this.actions,
             color: r.status === 'canceled' ? colors.red : colors.blue,
             id: r.reservationId,
             reserver: r.reserver,
@@ -241,14 +244,14 @@ export class CalendarKsComponent implements OnInit {
   handleEvent(action: string, event: any): void {
     console.log(event);
     if (action === 'Edit') {
-      const updatedReservation: Reservation = {
-        reservationId: Number(event.id),
-        reserver: event.reserver,
-        startTime: event.start.getTime() / 1000,
-        endTime: event.end.getTime() / 1000,
-        roomId: event.roomId,
-        status: event.status,
-      };
+      for(let e of this.events){
+        if(e.id !== event.id && e.start <= event.end && e.end! >= event.start){
+          this.toastr.error("Date input overlaps with an existing event.");
+          return;
+        }
+      }
+      const updatedReservation: Reservation = this.eventToReservation(event);
+  
       this.reservationService.updateReservation(updatedReservation, '');
 
       this.events = this.events.map((e) => {
@@ -259,6 +262,26 @@ export class CalendarKsComponent implements OnInit {
       });
       console.log(this.events);
     } else if (action === 'Add') {
+      for(let e of this.events){
+        if(e.id !== event.id && e.start <= event.end && e.end! >= event.start){
+          this.toastr.error("Date input overlaps with an existing event.");
+          return;
+        }
+      }
+      event.reserver = 'TestReserver';
+      event.roomId = this.roomData!.roomId;
+      this.reservationService.createReservation(this.eventToReservation(event),'').subscribe((result) => {
+        if(result){
+          event.id = result.reservationId
+          event.title = `${result.reservationId}: Reserved by ${event.reserver}`
+          event.actions = this.actions
+          event.color = colors.blue
+          event.status = 'reserved'   
+        }
+      },(error) =>{
+        console.log(error);
+      });
+      
       this.events = [...this.events, event];
     } else if (action === 'Cancel') {
       this.reservationService.cancelReservation(
@@ -267,6 +290,7 @@ export class CalendarKsComponent implements OnInit {
       );
       event.status = 'canceled';
       event.color = colors.red;
+      event.actions = undefined;
 
       this.events = this.events.map((e) => {
         if (e.id === event.id) {
@@ -289,7 +313,7 @@ export class CalendarKsComponent implements OnInit {
   }
 
   addEvent(): void {
-    this.eventData = { id: 0, start: new Date(), title: '' };
+    this.eventData = { id: 0, start: new Date(), title: ''};
     this.openDialog('Add', this.eventData);
   }
 

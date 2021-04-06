@@ -1,6 +1,6 @@
 <h1 matDialogTitle class="mb-05">{{ data.title }}</h1>
 <div mat-dialog-content class="mb-1">{{ data.message }}</div>
 <div mat-dialog-actions class="d-flex flex-wrap justify-content-around">
-    <button type="button" mat-raised-button color="primary" (click)="dialogRef.close(true)">OK</button>
-    <button type="button" color="accent" mat-raised-button (click)="dialogRef.close(false)">Cancel</button>
+    <button type="button" mat-raised-button color="primary" (click)="dialogRef.close(true)"><mat-icon color="accent">check</mat-icon>Confirm</button>
+    <button type="button" color="accent" mat-raised-button (click)="dialogRef.close(false)"><mat-icon color="warn">undo</mat-icon>Exit</button>
 </div>
