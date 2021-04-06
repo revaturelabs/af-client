@@ -11,6 +11,7 @@ import { BuildingService } from 'src/app/services/building/building.service';
 import { LocationService } from 'src/app/services/location/location.service';
 import { RoomService } from 'src/app/services/room/room.service';
 import { BuildingTableComponent } from '../building-table/building-table.component';
+import { CalendarKsComponent } from '../calendar/calendar-ks/calendar-ks.component';
 import { LocationTableComponent } from '../location-table/location-table.component';
 import { RoomTableComponent } from '../room-table/room-table.component';
 
@@ -33,6 +34,7 @@ export class ReservationPageComponent implements OnInit {
   @ViewChild(BuildingTableComponent) buildingChild!: BuildingTableComponent;
   @ViewChild(RoomTableComponent) roomChild!: RoomTableComponent;
   @ViewChild(MatStepper) stepper!: MatStepper;
+  @ViewChild(CalendarKsComponent) calendarChild!: CalendarKsComponent;
 
   @ViewChild('roomStep') roomStep!: MatStep;
 
@@ -47,6 +49,13 @@ export class ReservationPageComponent implements OnInit {
 
   ngOnInit() {}
 
+  initCalendarChild(){
+    console.log("Init calendar");
+    
+    this.calendarChild.roomData = this.selectedRoom;
+    this.calendarChild.ngOnInit();
+  }
+
   resetBuildingRoom() {
     this.buildingService.currentBuilding = undefined;
     this.selectedBuilding = undefined;
@@ -59,6 +68,7 @@ export class ReservationPageComponent implements OnInit {
     this.roomChild.selectedRoom = undefined;
     this.roomStep.reset();
   }
+
 
   getCurrentLocation() {
     this.selectedLocation = this.locationService.currentLocation;
@@ -75,6 +85,7 @@ export class ReservationPageComponent implements OnInit {
   getCurrentRoom() {
     this.selectedRoom = this.roomService.currentRoom;
     this.stepper.selected.completed = true;
+    this.initCalendarChild();
   }
 
   switchCalendar() {

@@ -17,7 +17,7 @@ export interface DecodedJwtDTO {
 })
 export class AuthService {
   url: string = 'http://35.232.107.40:8080/';
-  decodedJwtDTO?: DecodedJwtDTO;
+  decodedJwtDTO?: DecodedJwtDTO = { id: 1, email: 'test@test.com', role: 'trainer'};
 
   pendingUsers: User[] = [
     {userId: 1, email: 'user1@g.com', password: '', status: 'PENDING', role: 'trainer'},

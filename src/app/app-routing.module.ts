@@ -10,7 +10,11 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
 import { SetPasswordComponent } from './components/set-password/set-password.component';
 import { SigninPageComponent } from './components/signin-page/signin-page.component';
+import { TrainerDashboardComponent } from './components/trainer-dashboard/trainer-dashboard.component';
+import { TrainerPageComponent } from './components/trainer-page/trainer-page.component';
+import { TrainerProfileComponent } from './components/trainer-profile/trainer-profile.component';
 import { AdminGuardService } from './services/route-guard/admin-guard.service';
+import { TrainerGuardService } from './services/route-guard/trainer-guard.service';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -27,6 +31,17 @@ const routes: Routes = [
       { path: 'resolve', component: AdminResolveComponent },
       { path: 'create-location', component: CreateLocationComponent },
       { path: 'admin-dashboard', component: AdminDashboardComponent },
+    ],
+  },
+  {
+    path: 'trainer-page',
+    component: TrainerPageComponent,
+    canActivate: [TrainerGuardService],
+    children: [
+      { path: '', redirectTo: 'trainer-dashboard', pathMatch: 'full' },
+      { path: 'trainer-profile', component: TrainerProfileComponent },
+      { path: 'reservation', component: ReservationPageComponent },
+      { path: 'trainer-dashboard', component: TrainerDashboardComponent },
     ],
   },
   { path: '**', component: LandingPageComponent },

@@ -26,6 +26,12 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
 import { AdminResolveComponent } from './admin-resolve/admin-resolve.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { SetPasswordComponent } from './set-password/set-password.component';
+import { TrainerPageComponent } from './trainer-page/trainer-page.component';
+import { TrainerProfileComponent } from './trainer-profile/trainer-profile.component';
+import { TrainerDashboardComponent } from './trainer-dashboard/trainer-dashboard.component';
+import { TrainerCurrentReservationsComponent } from './trainer-current-reservations/trainer-current-reservations.component';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
+
 
 const components = [
   HeaderComponent,
@@ -48,6 +54,10 @@ const components = [
   AdminDashboardComponent,
   AdminResolveComponent,
   AdminPageComponent,
+  TrainerPageComponent,
+  TrainerProfileComponent,
+  TrainerDashboardComponent,
+  TrainerCurrentReservationsComponent,
 ];
 
 @NgModule({
@@ -60,6 +70,7 @@ const components = [
     FormsModule,
     ReactiveFormsModule,
     CalendarModule,
+    IvyCarouselModule,
   ],
   exports: [components],
 })

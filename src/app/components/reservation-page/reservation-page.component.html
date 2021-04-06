@@ -26,7 +26,7 @@
       <ng-template matStepLabel>Select Room</ng-template>
 
       <app-room-table [buildingData]="selectedBuilding?.address" [locationData]="selectedLocation?.name"
-        (click)="getCurrentRoom();"></app-room-table>
+        (click)="getCurrentRoom()"></app-room-table>
 
       <div>
         <button mat-button matStepperPrevious>Back</button>
@@ -46,11 +46,13 @@
 
       <button mat-button color="warn" (click)="switchCalendar()">Switch Calendar Mode</button>
 
-      <ng-container [ngSwitch]="calendarModes[calendarChoice]">
-        <app-calendar-dce *ngSwitchCase="'DCE'"></app-calendar-dce>
-        <app-calendar-ks *ngSwitchCase="'KS'"></app-calendar-ks>
+      <app-calendar-ks *ngIf="selectedRoom" [roomData]="selectedRoom!"></app-calendar-ks>
+
+      <!-- <ng-container [ngSwitch]="calendarModes[calendarChoice]">
+        <app-calendar-dce  *ngSwitchCase="'DCE'"></app-calendar-dce>
+        <app-calendar-ks [roomData]="selectedRoom!" *ngSwitchCase="'KS'"></app-calendar-ks>
         <app-calendar-dce *ngSwitchDefault></app-calendar-dce>
-      </ng-container>
+      </ng-container> -->
 
       <div>
         <button mat-button matStepperPrevious>Back</button>
