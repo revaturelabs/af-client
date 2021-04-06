@@ -56,6 +56,7 @@ export class AuthService {
 
   getAllPendingUsers(): Observable<User[]> {
     return of(this.pendingUsers);
+    return this.httpClient.get<User[]>(this.url + 'resovle');
   }
 
   resolveUser(user: User):Observable<User> {

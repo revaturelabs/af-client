@@ -30,6 +30,7 @@ import { TrainerProfileComponent } from './trainer-profile/trainer-profile.compo
 import { TrainerDashboardComponent } from './trainer-dashboard/trainer-dashboard.component';
 import { TrainerCurrentReservationsComponent } from './trainer-current-reservations/trainer-current-reservations.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { SecondsHoursPipe } from '../pipes/seconds-hours.pipe';
 
 
 const components = [
@@ -60,7 +61,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [components],
+  declarations: [components, SecondsHoursPipe],
   imports: [
     CommonModule,
     MaterialModule,

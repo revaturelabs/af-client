@@ -48,11 +48,16 @@ export class ReservationService {
   getReservationsByRoom(room: Room): Observable<Reservation[]>{
     return of(this.reservations.filter(e => e.roomId == room.roomId));
   }
+
   updateReservation(reservation: Reservation, token:string): Observable<Reservation>{
     console.log("Updated: " , reservation);
     
     //reservation = this.http.put<Reservation>(`${this.baseUrl}/reservation/${reservation.reservationId}`, reservation, {headers: { Authorization: `${token}`}})
     return of(reservation);
+  }
+
+  getReservationByReserver(): Observable<Reservation[]> {
+    return of(this.reservations)
   }
 
 }
