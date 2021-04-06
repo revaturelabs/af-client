@@ -14,7 +14,8 @@
 package-lock.json
 
 # env
-/environments
+environment.ts
+environment.stage.ts
 
 # profiling files
 chrome-profiler-events*.json

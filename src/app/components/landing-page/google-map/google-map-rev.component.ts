@@ -1,8 +1,8 @@
 import { Component} from '@angular/core';
-import {environment} from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'google-map-rev',
@@ -10,7 +10,6 @@ import { catchError, map } from 'rxjs/operators';
     styleUrls: ['./google-map-rev.component.sass']
 })
 export class GoogleMapRevComponent {
-  private API_KEY:string = environment.API_KEY;
   // using lat and lng for revature headquarters
   center: google.maps.LatLngLiteral = {lat: 38.9533438, lng: -77.3526221}
   zoom = 4;
@@ -37,7 +36,15 @@ export class GoogleMapRevComponent {
   apiLoaded: Observable<boolean>;
 
   constructor(httpClient: HttpClient) {
-    this.apiLoaded = httpClient.jsonp(`https://maps.googleapis.com/maps/api/js?key=${this.API_KEY}`, 'callback')
+    let mapApi:string;
+    if(!environment.production){
+      mapApi=`https://maps.googleapis.com/maps/api/js?key=${environment.API_KEY}`
+    }
+    else{
+      mapApi="https://maps.googleapis.com/maps/api/js?key=API_KEY"
+    }
+
+    this.apiLoaded = httpClient.jsonp(mapApi, 'callback')
         .pipe(
           map(() => true),
           catchError(() => of(false)),
