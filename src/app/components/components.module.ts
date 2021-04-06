@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from '../shared/material/material.module';
-import { LocationPageComponent } from './location-page/location-page.component';
+import { CalendarModule } from './calendar/calendar.module';
 import { InspectLocationComponent } from './inspect-location/inspect-location.component';
 import { InspectBuildingComponent } from './inspect-building/inspect-building.component';
 import { InspectRoomComponent } from './inspect-room/inspect-room.component';
@@ -19,11 +19,23 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninPageComponent } from './signin-page/signin-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
 import {GoogleMapRevModule} from '../components/landing-page/google-map/google-map-rev.module';
+import { ReservationPageComponent } from './reservation-page/reservation-page.component';
+import { BuildingTableComponent } from './building-table/building-table.component';
+import { LocationTableComponent } from './location-table/location-table.component';
+import { RoomTableComponent } from './room-table/room-table.component';
+import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
+import { AdminResolveComponent } from './admin-resolve/admin-resolve.component';
+import { AdminPageComponent } from './admin-page/admin-page.component';
+import { TrainerPageComponent } from './trainer-page/trainer-page.component';
+import { TrainerProfileComponent } from './trainer-profile/trainer-profile.component';
+import { TrainerDashboardComponent } from './trainer-dashboard/trainer-dashboard.component';
+import { TrainerCurrentReservationsComponent } from './trainer-current-reservations/trainer-current-reservations.component';
+import { IvyCarouselModule } from 'angular-responsive-carousel';
+
 
 const components = [
   HeaderComponent,
   FooterComponent,
-  LocationPageComponent,
   InspectLocationComponent,
   InspectBuildingComponent,
   InspectRoomComponent,
@@ -34,7 +46,18 @@ const components = [
   AddRoomComponent,
   LandingPageComponent,
   SigninPageComponent,
-  SignupPageComponent
+  SignupPageComponent,
+  ReservationPageComponent,
+  BuildingTableComponent,
+  LocationTableComponent,
+  RoomTableComponent,
+  AdminDashboardComponent,
+  AdminResolveComponent,
+  AdminPageComponent,
+  TrainerPageComponent,
+  TrainerProfileComponent,
+  TrainerDashboardComponent,
+  TrainerCurrentReservationsComponent,
 ];
 
 @NgModule({
@@ -46,7 +69,9 @@ const components = [
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    GoogleMapRevModule  
+    GoogleMapRevModule,  
+    CalendarModule,
+    IvyCarouselModule
   ],
   exports: [
     components

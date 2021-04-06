@@ -1,22 +1,28 @@
-<mat-horizontal-stepper linear #stepper>
-    <mat-step>
-        <app-inspect-location (click)="getCurrentLocation()"></app-inspect-location>
-        <div class="d-flex">
-            <button class="w-100" color="primary" mat-raised-button matStepperNext *ngIf="currentLocation" (click)="reInitBuildingPage()">Next</button>
-        </div>
-    </mat-step>
-    <mat-step>
-        <app-inspect-building [locationData]="currentLocation?.name" (click)="getCurrentBuilding()"></app-inspect-building>
-        <div class="d-flex mt-3">
-            <button mat-raised-button color='primary' matStepperPrevious class="w-100 mr-2">Back</button>
-            <button mat-raised-button color='primary' matStepperNext *ngIf="currentBuilding" class="w-100" (click)="reInitRoomPage()">Next</button>
-        </div>
-    </mat-step>
-    <mat-step>
-        <app-inspect-room [buildingDataInput]="currentBuilding?.buildingId + ''"></app-inspect-room>
-        <div>
-            <button mat-raised-button color="primary" class="w-100 mt-3" matStepperPrevious>Back</button>
-        </div>
-    </mat-step>
+<div class="container">
+    <h1 class="text-center mt-3">Add location/building/room</h1>
+    <mat-horizontal-stepper linear #stepper (selectionChange)="stepperOnChange($event)">
+        <mat-step label="Inspect Location Page" [completed]='completeLocationSelect'>
+            <app-inspect-location (click)="getCurrentLocation()"></app-inspect-location>
+            <div class="d-flex">
+                <button class="w-100" color="primary" mat-raised-button matStepperNext
+                    (click)="gotoBuildingStep($event)">Next</button>
+            </div>
+        </mat-step>
+        <mat-step label="Inspect Building Page" [completed]="completeBuildingSelect">
+            <app-inspect-building [locationData]="currentLocation?.name" (click)="getCurrentBuilding()">
+            </app-inspect-building>
+            <div class="d-flex mt-3">
+                <button mat-raised-button color='primary' matStepperPrevious class="w-100 mr-2">Back</button>
+                <button mat-raised-button color='primary' matStepperNext class="w-100"
+                    (click)="gotoRoomStep()">Next</button>
+            </div>
+        </mat-step>
+        <mat-step label="Inspect Room Page">
+            <app-inspect-room [buildingDataInput]="currentBuilding?.buildingId + ''"></app-inspect-room>
+            <div>
+                <button mat-raised-button color="primary" class="w-100 mt-3" matStepperPrevious>Back</button>
+            </div>
+        </mat-step>
 
-</mat-horizontal-stepper>
+    </mat-horizontal-stepper>
+</div>

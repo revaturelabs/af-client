@@ -7,6 +7,7 @@ import { ComponentsModule } from './components/components.module';
 import { MaterialModule } from './shared/material/material.module';
 import { AppConfirmService } from './services/app-confirm/app-confirm.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -18,6 +19,8 @@ import { ToastrModule } from 'ngx-toastr';
     ComponentsModule,
     MaterialModule,
     FlexLayoutModule,
+    HttpClientModule,
+    // rather than using ngx-loading we can use mat-spinner
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',
