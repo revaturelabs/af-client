@@ -13,13 +13,6 @@
                [altInput]="true" [convertModelValue]="true" [enableTime]="true"
               dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set">
     </mat-form-field>
-    <mat-form-field>
-        <mat-label>Event Status</mat-label>
-        <mat-select formControlName="status">
-            <mat-option value='reserved'>Active</mat-option>
-            <mat-option value='cancelled'>Cancelled</mat-option>
-        </mat-select>
-    </mat-form-field>
 
     <div class="d-flex gap-2 align-items-center">
         <button mat-raised-button color="primary" cdkFocusInitial type="submit">Update Event</button>

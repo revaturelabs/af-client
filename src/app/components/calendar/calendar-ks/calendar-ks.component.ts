@@ -17,7 +17,7 @@ import {
   addHours,
 } from 'date-fns';
 import { Subject } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   CalendarEvent,
   CalendarEventAction,
@@ -30,7 +30,7 @@ import { Room } from 'src/app/models/room';
 import { Reservation } from 'src/app/models/reservation';
 import { MatDialog } from '@angular/material/dialog';
 import { EditReservationComponent } from '../edit-reservation/edit-reservation.component';
-
+import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 
 const colors: any = {
   red: {
@@ -54,9 +54,14 @@ const colors: any = {
   styleUrls: ['./calendar-ks.component.sass'],
 })
 export class CalendarKsComponent implements OnInit {
- 
-  constructor(private dialog: MatDialog, private reservationService: ReservationService,private modal: NgbModal, private sanitizer: DomSanitizer) {}
-  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
+  constructor(
+    private dialog: MatDialog,
+    private reservationService: ReservationService,
+    private confirmService: AppConfirmService,
+    private sanitizer: DomSanitizer
+  ) {}
+
+  // @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
   view: CalendarView = CalendarView.Month;
 
@@ -64,17 +69,16 @@ export class CalendarKsComponent implements OnInit {
 
   viewDate: Date = new Date();
 
-  eventData?:CalendarEvent;
+  eventData?: CalendarEvent;
 
-  modalData!: {
-    action: string;
-    event: CalendarEvent;
-  };
+  // modalData!: {
+  //   action: string;
+  //   event: CalendarEvent;
+  // };
 
   @Input() roomData?: Room;
 
-
-  ngOnInit():void{
+  ngOnInit(): void {
     this.populateEvents();
     this.refresh.next();
   }
@@ -103,31 +107,46 @@ export class CalendarKsComponent implements OnInit {
       ),
       a11yLabel: 'Delete',
       onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
+        this.confirmDelete(event);
       },
     },
   ];
 
   refresh: Subject<any> = new Subject();
 
-  // Populates Events on calendar based on what room you selected
-  populateEvents(){
-    this.reservationService.getReservationsByRoom(this.roomData!).subscribe((res)=>{
-      this.events = res.map(r => {
-        return {
-          start: new Date(r.startTime!*1000),
-          end: new Date(r.endTime!*1000),
-          title: `${r.reservationId}`,
-          actions: this.actions,
-          color: colors.red,
-          id: r.reservationId,
-          reserver: r.reserver,
-          roomId: r.roomId,
-          status: r.status
+  confirmDelete(event: any) {
+    const msg: string = `Are you sure you want to cancel event with id ${event.reservationId}?`;
+    this.confirmService
+      .confirm({ title: 'Confirm Cancel', message: msg })
+      .subscribe((confirm) => {
+        if (confirm) {
+          this.handleEvent('Cancel', event);
         }
-      })
-    })
+      });
+  }
+
+  // Populates Events on calendar based on what room you selected
+  populateEvents() {
+    this.reservationService.getReservationsByRoom(this.roomData!).subscribe(
+      (res) => {
+        this.events = res.map((r) => {
+          return {
+            start: new Date(r.startTime! * 1000),
+            end: new Date(r.endTime! * 1000),
+            title: `${r.reservationId}`,
+            actions: this.actions,
+            color: r.status === 'canceled' ? colors.red : colors.blue,
+            id: r.reservationId,
+            reserver: r.reserver,
+            roomId: r.roomId,
+            status: r.status,
+          };
+        });
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   events: CalendarEvent[] = [
@@ -174,7 +193,6 @@ export class CalendarKsComponent implements OnInit {
 
   activeDayIsOpen: boolean = true;
 
-
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       if (
@@ -207,53 +225,71 @@ export class CalendarKsComponent implements OnInit {
     this.handleEvent('Dropped or resized', event);
   }
 
-  openDialog(action:string, event: CalendarEvent){
-    
+  openDialog(action: string, event: CalendarEvent) {
     const dialogRef = this.dialog.open(EditReservationComponent, {
-      data: {...event, action}
-    })
+      data: { ...event, action },
+    });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result)
-      if(result){
+      console.log(result);
+      if (result) {
         this.handleEvent(action, result);
         this.refresh.next();
-      } 
-    })
+      }
+    });
   }
 
   handleEvent(action: string, event: any): void {
     console.log(event);
-    if(action === 'Edit'){
+    if (action === 'Edit') {
       const updatedReservation: Reservation = {
         reservationId: Number(event.id),
         reserver: event.reserver,
-        startTime: event.start.getTime()/1000,
-        endTime: event.end.getTime()/1000,
+        startTime: event.start.getTime() / 1000,
+        endTime: event.end.getTime() / 1000,
         roomId: event.roomId,
-        status: event.status
-      }
+        status: event.status,
+      };
       this.reservationService.updateReservation(updatedReservation, '');
-      
-      this.events = this.events.map(e => {
-        if(e.id === event.id){
+
+      this.events = this.events.map((e) => {
+        if (e.id === event.id) {
           return event;
         }
         return e;
-      })
+      });
       console.log(this.events);
+    } else if (action === 'Add') {
+      this.events = [...this.events, event];
+    } else if (action === 'Cancel') {
+      this.reservationService.cancelReservation(
+        this.eventToReservation(event),
+        ''
+      );
+      event.status = 'canceled';
+      event.color = colors.red;
+
+      this.events = this.events.map((e) => {
+        if (e.id === event.id) {
+          return event;
+        }
+        return e;
+      });
     }
-    if(action === 'Add'){
-      this.events = [
-        ...this.events,
-        event
-      ]
-    }
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
+  }
+
+  eventToReservation(event: any): any {
+    return {
+      reservationId: Number(event.id),
+      reserver: event.reserver,
+      startTime: event.start.getTime() / 1000,
+      endTime: event.end.getTime() / 1000,
+      roomId: event.roomId,
+      status: event.status,
+    };
   }
 
   addEvent(): void {
-    this.eventData = { id: 0, start: new Date, title: ''}
+    this.eventData = { id: 0, start: new Date(), title: '' };
     this.openDialog('Add', this.eventData);
   }
 
