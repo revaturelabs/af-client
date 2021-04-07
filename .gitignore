@@ -13,8 +13,7 @@
 /node_modules
 
 # env
-environment.ts
-environment.prod.ts
+/environments
 .env
 
 # profiling files
