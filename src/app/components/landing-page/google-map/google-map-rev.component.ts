@@ -10,7 +10,6 @@ import { environment } from '../../../../environments/environment';
     styleUrls: ['./google-map-rev.component.sass']
 })
 export class GoogleMapRevComponent {
-  private mapApi:string=`https://maps.googleapis.com/maps/api/js?key=${environment.API_KEY}`;
   // using lat and lng for revature headquarters
   center: google.maps.LatLngLiteral = {lat: 38.9533438, lng: -77.3526221}
   zoom = 4;
@@ -37,8 +36,8 @@ export class GoogleMapRevComponent {
   apiLoaded: Observable<boolean>;
 
   constructor(httpClient: HttpClient) {
-
-    this.apiLoaded = httpClient.jsonp(this.mapApi, 'callback')
+    const mapApi:string=`https://maps.googleapis.com/maps/api/js?key=${environment.API_KEY}`;
+    this.apiLoaded = httpClient.jsonp(mapApi, 'callback')
         .pipe(
           map(() => true),
           catchError(() => of(false)),
