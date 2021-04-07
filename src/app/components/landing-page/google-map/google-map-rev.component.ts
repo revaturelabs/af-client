@@ -2,7 +2,8 @@ import { Component} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { environment } from '../../../../environments/environment';
+import { environment } from 'src/environments/environment.prod';
+import { stageEnvironment } from 'src/environments/environment.stage';
 
 @Component({
     selector: 'google-map-rev',
@@ -11,9 +12,8 @@ import { environment } from '../../../../environments/environment';
 })
 export class GoogleMapRevComponent {
   public envSet:boolean = environment.production;
-  private apiKey:string= environment.API_KEY;
-  private hostedMapApi:string='https://maps.googleapis.com/maps/api/js?key=API_KEY';
-  private mapUrl = this.envSet? this.hostedMapApi : `https://maps.googleapis.com/maps/api/js?key=${this.apiKey}`;
+  private apiKey:string = this.envSet ? environment.API_KEY : stageEnvironment.API_KEY;
+  private mapUrl = `https://maps.googleapis.com/maps/api/js?key=${this.apiKey}`;
   apiLoaded: Observable<boolean>;
   // using lat and lng for revature headquarters
   center: google.maps.LatLngLiteral = {lat: 38.9533438, lng: -77.3526221}
