@@ -1,5 +1,10 @@
 # Github Actions Workflows
 
+## Add your .env file
+``` .env in root
+API_URI=serverURI
+API_KEY=secretFromFirebase_or_GCP
+```
 ## Front-Dev Branch
 To run the dev workflow
 - pull and merge with main branch

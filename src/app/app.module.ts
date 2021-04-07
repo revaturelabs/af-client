@@ -27,7 +27,7 @@ import { ToastrModule } from 'ngx-toastr';
       progressBar: true,
       newestOnTop: false,
       maxOpened: 4,
-    }),
+    })
   ],
   providers: [AppConfirmService],
   bootstrap: [AppComponent],

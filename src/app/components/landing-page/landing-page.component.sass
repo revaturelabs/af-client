@@ -1,8 +1,18 @@
-app-landing-page div#landingPage
+div#landingPage
+  display: flex
+  flex-direction: column
+  width: 100%
+  height: 100%
+  align-items: center
+  text-align: center
+
+div#landingPage section#landingWelcome, div#landingPage section#landingAbout
+  margin: 1vh 1vw
+  padding: 1vh 2vw
   height: 100%
 
-section
-  text-align: center
-  margin: 1vh 2vw
-  border: 1px solid black
-  min-height: 50vh
+div#landingPage section#landingWelcome aside
+  margin: 1vh 0
+
+div#landingPage section#landingAbout p
+  text-align: justify
