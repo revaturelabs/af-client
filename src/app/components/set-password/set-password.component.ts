@@ -16,10 +16,18 @@ export class SetPasswordComponent implements OnInit {
 
 
   changePassword() {
+    console.log("New Password:", this.newPassword);
+    console.log("New Password Confirmation:", this.newPasswordConfirm);
     if(this.newPassword !== this.newPasswordConfirm) {
       console.log("Passwords must match");
       return;
     }
-    const jwt = this.authService.setPassword(this.newPassword);
+    this.authService.setPassword(this.newPassword).subscribe(
+    data => {
+      console.log(data);
+    }, 
+    error => {
+      console.log(error.message);
+    });
   }
 }

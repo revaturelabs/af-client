@@ -54,11 +54,9 @@ export class AuthService {
     return jwt.data;
   }
 
-  async setPassword(password: string) {
-    const jwt: {data : string} = await this.httpClient
-      .post<{data: string}>(this.url+"/password", password)
-      .toPromise();
-    return jwt.data;
+  setPassword(password: string) {
+    return this.httpClient
+      .post<{data: string}>(this.url+"password", password)
   }
 
   getAllPendingUsers(): Observable<User[]> {
