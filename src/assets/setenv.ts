@@ -26,14 +26,14 @@ if(!existsSync(envDirectory)){
 }
 
 // creates empty files if they don't exist already
-writeFileUsingFS('./src/environments/environment.prod.ts', '');
-writeFileUsingFS(`./src/environments/environment.prod.ts`, '');
+writeFileUsingFS(`${envDirectory}/environment.prod.ts`, '');
+writeFileUsingFS(`${envDirectory}/environment.ts`, '');
 
 const isProduction = environment === 'prod';
 
 const targetPath = isProduction
-    ? `./src/environments/environment.prod.ts`
-    : `./src/environments/environment.ts`;
+    ? `${envDirectory}/environment.prod.ts`
+    : `${envDirectory}/environment.ts`;
 
 const environmentFileContent = `
 export const environment = {
