@@ -15,15 +15,17 @@ import {
   isSameDay,
   isSameMonth,
   addHours,
+  addMinutes,
+  endOfWeek,
 } from 'date-fns';
-import { Subject } from 'rxjs';
-// import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subject, fromEvent } from 'rxjs';
 import {
   CalendarEvent,
   CalendarEventAction,
   CalendarEventTimesChangedEvent,
   CalendarView,
 } from 'angular-calendar';
+import { WeekViewHourSegment } from 'calendar-utils';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ReservationService } from 'src/app/services/reservation/reservation.service';
 import { Room } from 'src/app/models/room';
@@ -33,6 +35,7 @@ import { EditReservationComponent } from '../edit-reservation/edit-reservation.c
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { ToastrService } from 'ngx-toastr';
 import { error } from 'selenium-webdriver';
+import { finalize, takeUntil } from 'rxjs/operators';
 
 const colors: any = {
   red: {
@@ -53,6 +56,14 @@ const colors: any = {
   }
 };
 
+function floorToNearest(amount: number, precision: number) {
+  return Math.floor(amount / precision) * precision;
+}
+
+function ceilToNearest(amount: number, precision: number) {
+  return Math.ceil(amount / precision) * precision;
+}
+
 @Component({
   selector: 'app-calendar-ks',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -68,8 +79,6 @@ export class CalendarKsComponent implements OnInit {
     private toastr: ToastrService
   ) {}
 
-  // @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
-
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -77,11 +86,8 @@ export class CalendarKsComponent implements OnInit {
   viewDate: Date = new Date();
 
   eventData?: CalendarEvent;
-
-  // modalData!: {
-  //   action: string;
-  //   event: CalendarEvent;
-  // };
+  
+  showCanceled: boolean = false;
 
   @Input() roomData?: Room;
 
@@ -140,12 +146,16 @@ export class CalendarKsComponent implements OnInit {
         this.events = res.map((r) => {
           let actions = undefined;
           let color = colors.gray;
+          let draggable = false;
+          let resizable = false;
           if(r.reserver === 'Jimmy'){
             if(r.status === 'canceled'){
               color = colors.red;
             }else{
               color = colors.blue;
               actions = this.actions;
+              draggable = true;
+              resizable = true;
             }
           }
 
@@ -154,8 +164,13 @@ export class CalendarKsComponent implements OnInit {
             end: new Date(r.endTime! * 1000),
             title: `${r.reservationId}: Reserved by ${r.reserver}`,
             // Only add actions for USER's reservations
-            actions: actions,
-            color: color,
+            actions,
+            resizable: {
+              beforeStart: resizable,
+              afterEnd: resizable,
+            },
+            draggable,
+            color,
             id: r.reservationId,
             reserver: r.reserver,
             roomId: r.roomId,
@@ -214,6 +229,7 @@ export class CalendarKsComponent implements OnInit {
   activeDayIsOpen: boolean = true;
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    console.log('dayClicked', date,events);
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -225,6 +241,14 @@ export class CalendarKsComponent implements OnInit {
       }
       this.viewDate = date;
     }
+    
+    if (events.length > 0) {
+      return;
+    }
+    
+    date.setHours(8);
+    this.eventData = { id: 0, start: date, title: 'Clicked on date'};
+    this.openDialog('Add', this.eventData);
   }
 
   eventTimesChanged({
@@ -242,18 +266,49 @@ export class CalendarKsComponent implements OnInit {
       }
       return iEvent;
     });
-    this.handleEvent('Dropped or resized', event);
+    
+    const oldStart = event.start;
+    const oldEnd = event.end;
+    
+    event.start = newStart;
+    event.end = newEnd;
+    
+    // this.handleEvent('Dropped or resized', event);
+    this.openDialog('Edit', event, {cancelCB: () => {
+      console.log('User canceled');
+      this.events = this.events.map((e) => {
+        if (e.id === event.id) {
+          console.log('setting things back');
+          return {
+            ...event,
+            start: oldStart,
+            end: oldEnd,
+          };
+        }
+        return e;
+      });
+     this.refresh.next();
+    }});
+    
   }
 
-  openDialog(action: string, event: CalendarEvent) {
+  openDialog(action: string, event: CalendarEvent, callbacks?: {cancelCB?: any, cb?: any}): void {
     const dialogRef = this.dialog.open(EditReservationComponent, {
       data: { ...event, action },
     });
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
+      console.log('openDialog: result=',result);
       if (result) {
         this.handleEvent(action, result);
         this.refresh.next();
+      } else {
+        if (callbacks?.cancelCB) {
+          console.log('openDialog: cancelCB');
+          callbacks.cancelCB();
+        }
+      }
+      if (callbacks?.cb) {
+        callbacks.cb();
       }
     });
   }
@@ -292,8 +347,10 @@ export class CalendarKsComponent implements OnInit {
           event.title = `${result.reservationId}: Reserved by ${event.reserver}`
           event.actions = this.actions
           event.color = colors.blue
-          event.status = 'reserved'  
-          this.events = [...this.events, event]; 
+          event.status = 'reserved'
+          event.draggable = true,
+          event.resizable = {beforeStart: true, afterEnd: true},
+          this.events = [...this.events, event];
         }
       },(error) =>{
         let message = 'Failed to create reservation.';
@@ -312,7 +369,9 @@ export class CalendarKsComponent implements OnInit {
         event.status = 'canceled';
         event.color = colors.red;
         event.actions = undefined;
-  
+        event.draggable = false;
+        event.resizable = {beforeStart: false, afterEnd: false},
+        
         this.events = this.events.map((e) => {
           if (e.id === event.id) {
             return event;
@@ -352,5 +411,76 @@ export class CalendarKsComponent implements OnInit {
 
   closeOpenMonthViewDay() {
     this.activeDayIsOpen = false;
+  }
+  
+  toggleCanceled(){}
+  
+  
+  dragToCreateActive = false;
+  weekStartsOn: 0 = 0;
+  
+  
+  startDragToCreate(
+    segment: WeekViewHourSegment,
+    mouseDownEvent: MouseEvent,
+    segmentElement: HTMLElement
+  ) {
+    const dragToSelectEvent: CalendarEvent = {
+      // id: this.events.length,
+      id: 0,
+      title: 'New event',
+      start: segment.date,
+      meta: {
+        tmpEvent: true,
+      },
+    };
+    this.events = [...this.events, dragToSelectEvent];
+    const segmentPosition = segmentElement.getBoundingClientRect();
+    this.dragToCreateActive = true;
+    const endOfView = endOfWeek(this.viewDate, {
+      weekStartsOn: this.weekStartsOn,
+    });
+
+    fromEvent(document, 'mousemove')
+      .pipe(
+        finalize(() => {
+          console.log('finalize dragToSelectEvent=', dragToSelectEvent);
+          
+          this.eventData = {
+            id: 0,
+            start: dragToSelectEvent.start,
+            end: dragToSelectEvent.end,
+            title: 'Drag on date'
+          };
+          this.openDialog('Add', this.eventData, {cb: () => {
+            this.events = this.events.filter(e => e.id !== dragToSelectEvent.id);
+            this.refresh.next();
+          }});
+          
+          delete dragToSelectEvent.meta.tmpEvent;
+          this.dragToCreateActive = false;
+          this.refresh.next();
+        }),
+        takeUntil(fromEvent(document, 'mouseup'))
+      )
+      .subscribe((mouseMoveEvent: MouseEvent | any) => {
+        const minutesDiff = ceilToNearest(
+          mouseMoveEvent.clientY - segmentPosition.top,
+          30
+        );
+
+        const daysDiff =
+          floorToNearest(
+            mouseMoveEvent.clientX - segmentPosition.left,
+            segmentPosition.width
+          ) / segmentPosition.width;
+
+        const newEnd = addDays(addMinutes(segment.date, minutesDiff), daysDiff);
+        if (newEnd > segment.date && newEnd < endOfView) {
+          dragToSelectEvent.end = newEnd;
+        }
+        this.refresh.next();
+      });
+      console.log('startDragToCreate: dragToSelectEvent=', dragToSelectEvent);
   }
 }

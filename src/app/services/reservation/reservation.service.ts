@@ -54,7 +54,8 @@ export class ReservationService {
   createReservation(
     reservation: Reservation,
     token: string
-  ): Observable<any> {
+  ): Observable<Reservation> {
+    console.log('reservation.service.createReservation:', reservation);
     // return this.http
     //   .post<Reservation>(`${this.BASE_URL}/rooms/${reservation.roomId}/reservations`, reservation, {
     //     headers: {

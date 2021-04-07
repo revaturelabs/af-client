@@ -51,7 +51,7 @@ export class ReservationPageComponent implements OnInit {
 
   initCalendarChild(){
     console.log("Init calendar");
-    if(this.calendarChild){
+    if (this.calendarChild) {
       this.calendarChild.roomData = this.selectedRoom;
       this.calendarChild.ngOnInit();
     }
@@ -63,13 +63,13 @@ export class ReservationPageComponent implements OnInit {
     this.buildingChild.selectedBuilding = undefined;
     this.resetRoom();
   }
+
   resetRoom() {
     this.roomService.currentRoom = undefined;
     this.selectedRoom = undefined;
     this.roomChild.selectedRoom = undefined;
     this.roomStep.reset();
   }
-
 
   getCurrentLocation() {
     this.selectedLocation = this.locationService.currentLocation;
