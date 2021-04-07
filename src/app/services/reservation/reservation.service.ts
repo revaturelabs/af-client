@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { error } from 'selenium-webdriver';
 import { Reservation } from '../../models/reservation';
 import { Room } from '../../models/room';
 
@@ -52,14 +54,13 @@ export class ReservationService {
   createReservation(
     reservation: Reservation,
     token: string
-  ): Observable<Reservation> {
+  ): Observable<any> {
     // return this.http
     //   .post<Reservation>(`${this.BASE_URL}/rooms/${reservation.roomId}/reservations`, reservation, {
     //     headers: {
     //       Authorization: token,
     //     },
     //   });
-    // return reservation;
 
     reservation.reservationId = this.reservations.length + 1;
     this.reservations = [...this.reservations, reservation];

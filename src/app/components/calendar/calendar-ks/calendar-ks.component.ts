@@ -32,6 +32,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditReservationComponent } from '../edit-reservation/edit-reservation.component';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { ToastrService } from 'ngx-toastr';
+import { error } from 'selenium-webdriver';
 
 const colors: any = {
   red: {
@@ -46,6 +47,10 @@ const colors: any = {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
+  gray: {
+    primary: 'gray',
+    secondary: 'gray'
+  }
 };
 
 @Component({
@@ -133,12 +138,24 @@ export class CalendarKsComponent implements OnInit {
     this.reservationService.getReservationsByRoom(this.roomData!).subscribe(
       (res) => {
         this.events = res.map((r) => {
+          let actions = undefined;
+          let color = colors.gray;
+          if(r.reserver === 'Jimmy'){
+            if(r.status === 'canceled'){
+              color = colors.red;
+            }else{
+              color = colors.blue;
+              actions = this.actions;
+            }
+          }
+
           return {
             start: new Date(r.startTime! * 1000),
             end: new Date(r.endTime! * 1000),
             title: `${r.reservationId}: Reserved by ${r.reserver}`,
-            actions: r.status === 'canceled' ? undefined : this.actions,
-            color: r.status === 'canceled' ? colors.red : colors.blue,
+            // Only add actions for USER's reservations
+            actions: actions,
+            color: color,
             id: r.reservationId,
             reserver: r.reserver,
             roomId: r.roomId,
@@ -244,59 +261,67 @@ export class CalendarKsComponent implements OnInit {
   handleEvent(action: string, event: any): void {
     console.log(event);
     if (action === 'Edit') {
-      for(let e of this.events){
-        if(e.id !== event.id && e.start <= event.end && e.end! >= event.start){
-          this.toastr.error("Date input overlaps with an existing event.");
-          return;
-        }
-      }
+      
       const updatedReservation: Reservation = this.eventToReservation(event);
   
-      this.reservationService.updateReservation(updatedReservation, '');
-
-      this.events = this.events.map((e) => {
-        if (e.id === event.id) {
-          return event;
+      this.reservationService.updateReservation(updatedReservation, '').subscribe((result)=>{
+        this.events = this.events.map((e) => {
+          if (e.id === event.id) {
+            return event;
+          }
+          return e;
+        });
+        console.log(this.events);
+      },(error)=>{
+        let message = 'Failed to update reservation.';
+        let title = '';
+        if(error.status === 409){
+          title = 'Time conflict';
         }
-        return e;
+        this.toastr.error(message, title);
       });
-      console.log(this.events);
+ 
     } else if (action === 'Add') {
-      for(let e of this.events){
-        if(e.id !== event.id && e.start <= event.end && e.end! >= event.start){
-          this.toastr.error("Date input overlaps with an existing event.");
-          return;
-        }
-      }
+      // Should get reserver name from current user
       event.reserver = 'TestReserver';
       event.roomId = this.roomData!.roomId;
       this.reservationService.createReservation(this.eventToReservation(event),'').subscribe((result) => {
+        console.log(result);
         if(result){
           event.id = result.reservationId
           event.title = `${result.reservationId}: Reserved by ${event.reserver}`
           event.actions = this.actions
           event.color = colors.blue
-          event.status = 'reserved'   
+          event.status = 'reserved'  
+          this.events = [...this.events, event]; 
         }
       },(error) =>{
-        console.log(error);
+        let message = 'Failed to create reservation.';
+        let title = '';
+        if(error.status === 409){
+          title = 'Time conflict';
+        }
+        this.toastr.error(message, title);
       });
       
-      this.events = [...this.events, event];
     } else if (action === 'Cancel') {
       this.reservationService.cancelReservation(
         this.eventToReservation(event),
         ''
-      );
-      event.status = 'canceled';
-      event.color = colors.red;
-      event.actions = undefined;
-
-      this.events = this.events.map((e) => {
-        if (e.id === event.id) {
-          return event;
-        }
-        return e;
+      ).subscribe((result)=>{
+        event.status = 'canceled';
+        event.color = colors.red;
+        event.actions = undefined;
+  
+        this.events = this.events.map((e) => {
+          if (e.id === event.id) {
+            return event;
+          }
+          return e;
+        });
+      }, (error)=>{
+        let message = 'Failed to cancel reservation.';
+        this.toastr.error(message);
       });
     }
   }

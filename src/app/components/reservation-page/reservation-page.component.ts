@@ -51,9 +51,10 @@ export class ReservationPageComponent implements OnInit {
 
   initCalendarChild(){
     console.log("Init calendar");
-    
-    this.calendarChild.roomData = this.selectedRoom;
-    this.calendarChild.ngOnInit();
+    if(this.calendarChild){
+      this.calendarChild.roomData = this.selectedRoom;
+      this.calendarChild.ngOnInit();
+    }
   }
 
   resetBuildingRoom() {

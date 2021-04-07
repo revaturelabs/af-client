@@ -35,15 +35,14 @@
     </mat-step>
 
     <mat-step completed="false">
-      <mat-card>
-        <p>{{selectedLocation?.name}} </p>
-        <p>{{selectedBuilding?.address}}</p>
-        <p>{{selectedRoom?.name}}</p>
-      </mat-card>
-
-
       <ng-template matStepLabel>Select Date and Time</ng-template>
-
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Location: {{selectedLocation?.name}}</li>
+          <li class="breadcrumb-item">Building: {{selectedBuilding?.address}}</li>
+          <li class="breadcrumb-item active" aria-current="page">Room: {{selectedRoom?.name}}</li>
+        </ol>
+      </nav>
       <app-calendar-ks *ngIf="selectedRoom" [roomData]="selectedRoom!"></app-calendar-ks>
 
       <div>
