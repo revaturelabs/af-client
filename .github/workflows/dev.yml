@@ -21,15 +21,14 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-     - name: setting env
-        env:
-          API_URI: ${{ secrets.API_URI }}
-          API_KEY: ${{ secrets.API_KEY }}
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     - uses: actions/checkout@v2
 
     # Runs a single command using the runners shell
     - name: Firebase Deploy
+      env:
+        API_URI: ${{ secrets.API_URI }}
+        API_KEY: ${{ secrets.API_KEY }}
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       run: |
         sudo npm install
         sudo npm install -g firebase-tools
