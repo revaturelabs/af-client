@@ -57,7 +57,7 @@ const components = [
   TrainerPageComponent,
   TrainerProfileComponent,
   TrainerDashboardComponent,
-  TrainerCurrentReservationsComponent,
+  TrainerCurrentReservationsComponent
 ];
 
 @NgModule({
