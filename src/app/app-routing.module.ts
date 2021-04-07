@@ -21,7 +21,6 @@ const routes: Routes = [
   { path: 'signin', component: SigninPageComponent },
   { path: 'reservation', component: ReservationPageComponent },
   { path: 'calendar', component: CalendarKsComponent },
-  { path: 'change-password', component: SetPasswordComponent },
   {
     path: 'admin-page',
     component: AdminPageComponent,
@@ -42,6 +41,7 @@ const routes: Routes = [
       { path: 'trainer-profile', component: TrainerProfileComponent },
       { path: 'reservation', component: ReservationPageComponent },
       { path: 'trainer-dashboard', component: TrainerDashboardComponent },
+      { path: 'change-password', component: SetPasswordComponent },
     ],
   },
   { path: '**', component: LandingPageComponent },
