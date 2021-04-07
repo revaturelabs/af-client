@@ -10,6 +10,11 @@ import { environment } from '../../../../environments/environment';
     styleUrls: ['./google-map-rev.component.sass']
 })
 export class GoogleMapRevComponent {
+  public envSet:boolean = environment.production;
+  private apiKey:string= environment.API_KEY;
+  private hostedMapApi:string='https://maps.googleapis.com/maps/api/js?key=API_KEY';
+  private mapUrl = this.envSet? this.hostedMapApi : `https://maps.googleapis.com/maps/api/js?key=${this.apiKey}`;
+  apiLoaded: Observable<boolean>;
   // using lat and lng for revature headquarters
   center: google.maps.LatLngLiteral = {lat: 38.9533438, lng: -77.3526221}
   zoom = 4;
@@ -17,7 +22,7 @@ export class GoogleMapRevComponent {
     draggable: false,
     opacity: 0.75,
     title: "Office Location"
-  }
+  };
   markerPositions: google.maps.LatLngLiteral[] = [
     //Reston,VA
     {lat: 38.9555767, lng: -77.3840807},
@@ -31,17 +36,14 @@ export class GoogleMapRevComponent {
     {lat: 28.4810971, lng: -81.5089198},
     //Morgantown, WV
     {lat: 39.6350857, lng: -79.9784846}
-  ]
-
-  apiLoaded: Observable<boolean>;
+  ];
 
   constructor(httpClient: HttpClient) {
-    const mapApi:string=`https://maps.googleapis.com/maps/api/js?key=${environment.API_KEY}`;
-    this.apiLoaded = httpClient.jsonp(mapApi, 'callback')
-        .pipe(
-          map(() => true),
-          catchError(() => of(false)),
-        );
+    this.apiLoaded = httpClient.jsonp(`${this.mapUrl}`, 'callback')
+      .pipe(
+        map(() => true),
+        catchError(() => of(false)),
+      );
   }
 
 }
