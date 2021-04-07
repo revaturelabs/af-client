@@ -18,6 +18,7 @@ import { AddRoomComponent } from './add-room/add-room.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninPageComponent } from './signin-page/signin-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
+import {GoogleMapRevModule} from '../components/landing-page/google-map/google-map-rev.module';
 import { ReservationPageComponent } from './reservation-page/reservation-page.component';
 import { BuildingTableComponent } from './building-table/building-table.component';
 import { LocationTableComponent } from './location-table/location-table.component';
@@ -56,7 +57,7 @@ const components = [
   TrainerPageComponent,
   TrainerProfileComponent,
   TrainerDashboardComponent,
-  TrainerCurrentReservationsComponent,
+  TrainerCurrentReservationsComponent
 ];
 
 @NgModule({
@@ -68,9 +69,12 @@ const components = [
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    GoogleMapRevModule,  
     CalendarModule,
-    IvyCarouselModule,
+    IvyCarouselModule
   ],
-  exports: [components],
+  exports: [
+    components
+  ]
 })
-export class ComponentsModule {}
+export class ComponentsModule { }
