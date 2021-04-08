@@ -7,8 +7,8 @@
 
       <app-location-table (click)="stepper.reset(); getCurrentLocation(); resetBuildingRoom();"></app-location-table>
 
-      <div>
-        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedLocation">Next</button>
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedLocation" class="w-100">Next</button>
       </div>
     </mat-step>
 
@@ -16,9 +16,9 @@
       <app-building-table [locationData]="selectedLocation?.name" (click)="getCurrentBuilding(); resetRoom()">
       </app-building-table>
 
-      <div>
-        <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedBuilding">Next</button>
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedBuilding" class="w-100">Next</button>
       </div>
     </mat-step>
 
@@ -28,9 +28,9 @@
       <app-room-table [buildingData]="selectedBuilding?.address" [locationData]="selectedLocation?.name"
         (click)="getCurrentRoom()"></app-room-table>
 
-      <div>
-        <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedRoom">Next</button>
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedRoom" class="w-100">Next</button>
       </div>
     </mat-step>
 
@@ -45,9 +45,9 @@
       </nav>
       <app-calendar-ks *ngIf="selectedRoom" [roomData]="selectedRoom!"></app-calendar-ks>
 
-      <div>
-        <button mat-raised-button color="accent" matStepperPrevious>Back</button>
-        <button mat-raised-button color="accent"(click)="stepper.reset()">Reset</button>
+      <div class="d-flex btnDiv">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="accent"(click)="stepper.reset()" class="w-100">Reset</button>
       </div>
     </mat-step>
 

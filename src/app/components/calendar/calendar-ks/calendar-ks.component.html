@@ -48,21 +48,21 @@
     (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)" [hourSegmentTemplate]="weekViewHourSegmentTemplate">
   </mwl-calendar-week-view>
   <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)" [hourSegmentTemplate]="weekViewHourSegmentTemplate">
   </mwl-calendar-day-view>
 </div>
 <!-- End div [ngSwitch]="view" -->
 
 <!-- Everything below is for demo -->
 <br /><br /><br />
-
-  <button mat-raised-button color="primary" class="float-right" (click)="addEvent()">
-    Add new reservation
-  </button>
-  <button mat-raised-button color="accent" class="float-right" (click)="toggleCanceled()">
-    Toggle Canceled Events
-  </button>
-
+  <div class="d-flex float-right btnDiv">
+    <button mat-raised-button color="accent" class="mr-2 w-100" (click)="toggleCanceled()">
+      Toggle Canceled Events
+    </button>
+    <button mat-raised-button color="primary" class="w-100" (click)="addEvent()">
+      Add new reservation
+    </button>
+  </div>
   <ng-template #weekViewHourSegmentTemplate let-segment="segment" let-locale="locale" let-segmentHeight="segmentHeight"
   let-isTimeLabel="isTimeLabel">
   <div #segmentElement class="cal-hour-segment" [style.height.px]="segmentHeight"
