@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { error } from 'selenium-webdriver';
+import { Observable, of } from 'rxjs';
 import { Reservation } from '../../models/reservation';
 import { Room } from '../../models/room';
 

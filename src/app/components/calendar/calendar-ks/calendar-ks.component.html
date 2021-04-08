@@ -16,8 +16,9 @@
     <!-- </mat-button-toggle-group> -->
   </div>
 
-  <div class="col-md-4">
+  <div class="col-md-4 loading-container">
     <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+    <mat-spinner *ngIf="loading" class="loading-spinner"></mat-spinner>
   </div>
 
   <div class="col-md-4">

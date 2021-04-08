@@ -1,8 +1,6 @@
 import {
   Component,
   ChangeDetectionStrategy,
-  ViewChild,
-  TemplateRef,
   Input,
   OnInit,
 } from '@angular/core';
@@ -34,7 +32,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditReservationComponent } from '../edit-reservation/edit-reservation.component';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { ToastrService } from 'ngx-toastr';
-import { error } from 'selenium-webdriver';
 import { finalize, takeUntil } from 'rxjs/operators';
 
 const colors: any = {
@@ -90,6 +87,8 @@ export class CalendarKsComponent implements OnInit {
   showCanceled: boolean = false;
 
   @Input() roomData?: Room;
+  
+  loading: boolean = false;
 
   ngOnInit(): void {
     this.populateEvents();
@@ -315,6 +314,7 @@ export class CalendarKsComponent implements OnInit {
 
   handleEvent(action: string, event: any): void {
     console.log(event);
+    this.loading = true;
     if (action === 'Edit') {
       
       const updatedReservation: Reservation = this.eventToReservation(event);
@@ -327,6 +327,7 @@ export class CalendarKsComponent implements OnInit {
           return e;
         });
         console.log(this.events);
+        this.loading = false;
       },(error)=>{
         let message = 'Failed to update reservation.';
         let title = '';
@@ -334,6 +335,7 @@ export class CalendarKsComponent implements OnInit {
           title = 'Time conflict';
         }
         this.toastr.error(message, title);
+        this.loading = false;
       });
  
     } else if (action === 'Add') {
@@ -352,6 +354,7 @@ export class CalendarKsComponent implements OnInit {
           event.resizable = {beforeStart: true, afterEnd: true},
           this.events = [...this.events, event];
         }
+        this.loading = false;
       },(error) =>{
         let message = 'Failed to create reservation.';
         let title = '';
@@ -359,6 +362,7 @@ export class CalendarKsComponent implements OnInit {
           title = 'Time conflict';
         }
         this.toastr.error(message, title);
+        this.loading = false;
       });
       
     } else if (action === 'Cancel') {
@@ -378,9 +382,11 @@ export class CalendarKsComponent implements OnInit {
           }
           return e;
         });
+        this.loading = false;
       }, (error)=>{
         let message = 'Failed to cancel reservation.';
         this.toastr.error(message);
+        this.loading = false;
       });
     }
   }
@@ -415,10 +421,8 @@ export class CalendarKsComponent implements OnInit {
   
   toggleCanceled(){}
   
-  
   dragToCreateActive = false;
   weekStartsOn: 0 = 0;
-  
   
   startDragToCreate(
     segment: WeekViewHourSegment,
