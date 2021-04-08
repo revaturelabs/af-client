@@ -3,10 +3,10 @@
   <div class="col-md-4">
     <!-- <mat-button-toggle-group> -->
       <button mat-flat-button color="primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()">
+        (viewDateChange)="closeOpenMonthViewDay()" class="mr-1">
         Previous
       </button>
-      <button mat-stroked-button color="accent" mwlCalendarToday [(viewDate)]="viewDate">
+      <button mat-stroked-button color="accent" mwlCalendarToday [(viewDate)]="viewDate" class="mr-1">
         Today
       </button>
       <button mat-flat-button color="primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
@@ -22,10 +22,10 @@
 
   <div class="col-md-4">
     <div class="btn-group">
-      <button mat-raised-button color="primary" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+      <button mat-raised-button color="primary" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month" class="mr-1">
         Month
       </button>
-      <button mat-raised-button color="primary" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
+      <button mat-raised-button color="primary" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week" class="mr-1">
         Week
       </button>
       <button mat-raised-button color="primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
