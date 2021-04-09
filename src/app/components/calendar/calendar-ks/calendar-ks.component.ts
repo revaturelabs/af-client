@@ -6,14 +6,9 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import {
-  startOfDay,
-  endOfDay,
-  subDays,
   addDays,
-  endOfMonth,
   isSameDay,
   isSameMonth,
-  addHours,
   addMinutes,
   endOfWeek,
 } from 'date-fns';
@@ -29,11 +24,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ReservationService } from 'src/app/services/reservation/reservation.service';
 import { Room } from 'src/app/models/room';
 import { Reservation } from 'src/app/models/reservation';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EditReservationComponent } from '../edit-reservation/edit-reservation.component';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { ToastrService } from 'ngx-toastr';
 import { finalize, takeUntil } from 'rxjs/operators';
+import { DisplayReservationComponent } from '../display-reservation/display-reservation.component';
+import { Router } from '@angular/router';
+import { AppLoaderService } from 'src/app/services/app-loader/app-loader.service';
 
 const colors: any = {
   red: {
@@ -69,28 +67,27 @@ function ceilToNearest(amount: number, precision: number) {
   styleUrls: ['./calendar-ks.component.sass'],
 })
 export class CalendarKsComponent implements OnInit {
+  @Input() roomData?: Room;
+
+  view: CalendarView = CalendarView.Month;
+  CalendarView = CalendarView;
+  viewDate: Date = new Date();
+  refresh: Subject<any> = new Subject();
+  events: CalendarEvent[] = [];
+  canceledEvents: CalendarEvent[] = [];
+  activeDayIsOpen: boolean = true;
+  showCanceled: boolean = true;
+
   constructor(
     private dialog: MatDialog,
     private reservationService: ReservationService,
     private confirmService: AppConfirmService,
     private sanitizer: DomSanitizer,
     private toastr: ToastrService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private loader: AppLoaderService
   ) {}
-
-  view: CalendarView = CalendarView.Month;
-
-  CalendarView = CalendarView;
-
-  viewDate: Date = new Date();
-
-  eventData?: CalendarEvent;
-
-  showCanceled: boolean = true;
-
-  @Input() roomData?: Room;
-
-  loading: boolean = false;
 
   ngOnInit(): void {
     this.populateEvents();
@@ -126,12 +123,10 @@ export class CalendarKsComponent implements OnInit {
     },
   ];
 
-  refresh: Subject<any> = new Subject();
-
   confirmDelete(event: any) {
-    const msg: string = `Are you sure you want to cancel event with id ${event.reservationId}?`;
+    const message: string = `Are you sure you want to cancel event with id ${event.reservationId}?`;
     this.confirmService
-      .confirm({ title: 'Confirm Cancel', message: msg })
+      .confirm({ title: 'Confirm Cancel', message })
       .subscribe((confirm) => {
         if (confirm) {
           this.handleEvent('Cancel', event);
@@ -142,12 +137,12 @@ export class CalendarKsComponent implements OnInit {
 
   // Populates Events on calendar based on what room you selected
   populateEvents() {
-    this.loading = true;
+    this.loader.open();
     this.reservationService
       .getReservationsByRoom(this.roomData!)
       .pipe(
         finalize(() => {
-          this.loading = false;
+          this.loader.close();
           this.cdr.detectChanges();
         })
       )
@@ -199,17 +194,12 @@ export class CalendarKsComponent implements OnInit {
         },
         (error) => {
           console.log(error);
+          this.toastr.error('Failed to load reservations');
         }
       );
   }
 
-  events: CalendarEvent[] = [];
-  canceledEvents: CalendarEvent[] = [];
-
-  activeDayIsOpen: boolean = true;
-
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    console.log('dayClicked', date, events);
     if (isSameMonth(date, this.viewDate)) {
       if (
         (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
@@ -225,10 +215,33 @@ export class CalendarKsComponent implements OnInit {
     if (events.length > 0) {
       return;
     }
+    // Try to suggest a workable time range.
+    const now = new Date();
+    let start = new Date(date);
+    let end;
+    if (
+      date.getFullYear() === now.getFullYear() &&
+      date.getMonth() === now.getMonth() &&
+      date.getDay() === now.getDay()
+    ) {
+      if (now.getHours() < 8) {
+        start.setHours(8);
+      } else if (now.getHours() < 13) {
+        start.setHours(13);
+      } else {
+        start.setHours(now.getHours() + 1);
+      }
+    } else if (date < now) {
+      // Skip if date clicked is in the past.
+      return;
+    } else {
+      start.setHours(8, 0, 0, 0);
+    }
 
-    date.setHours(8);
-    this.eventData = { id: 0, start: date, title: 'Clicked on date' };
-    this.openDialog('Add', this.eventData);
+    end = new Date(start);
+    end.setHours(start.getHours() + 4);
+    const eventData = { id: 0, start, end, title: 'Clicked on date' };
+    this.openDialog('Add', eventData);
   }
 
   eventTimesChanged({
@@ -253,13 +266,10 @@ export class CalendarKsComponent implements OnInit {
     event.start = newStart;
     event.end = newEnd;
 
-    // this.handleEvent('Dropped or resized', event);
     this.openDialog('Edit', event, {
       cancelCB: () => {
-        console.log('User canceled');
         this.events = this.events.map((e) => {
           if (e.id === event.id) {
-            console.log('setting things back');
             return {
               ...event,
               start: oldStart,
@@ -278,9 +288,16 @@ export class CalendarKsComponent implements OnInit {
     event: CalendarEvent,
     callbacks?: { cancelCB?: any; cb?: any }
   ): void {
-    const dialogRef = this.dialog.open(EditReservationComponent, {
-      data: { ...event, action },
-    });
+    let dialogRef: MatDialogRef<any>;
+    if (action !== 'Clicked') {
+      dialogRef = this.dialog.open(EditReservationComponent, {
+        data: { ...event, action },
+      });
+    } else {
+      dialogRef = this.dialog.open(DisplayReservationComponent, {
+        data: { ...event, action },
+      });
+    }
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.handleEvent(action, result, callbacks);
@@ -291,23 +308,38 @@ export class CalendarKsComponent implements OnInit {
     });
   }
 
+  // Run some time related validation checks.
+  validateTime(action: string, event: CalendarEvent): boolean {
+    let errTitle: string = '';
+    if (this.hasTimeConflict(event)) {
+      errTitle = 'Time Conflict';
+    } else if (!this.isValidTimeRange(event)) {
+      errTitle = 'Bad Time Range';
+    }
+    if (!errTitle) {
+      return true;
+    }
+    this.toastr.error(
+      `Failed to ${action.toLowerCase()} reservation`,
+      errTitle
+    );
+    return false;
+  }
+
   handleEvent(action: string, event: any, cb?: any): void {
-    console.log('handleEvent', action, event);
     if (action === 'Edit') {
-      // Check for time conflict.
-      if (this.hasTimeConflict(event)) {
-        this.toastr.error('Failed to update reservation', 'Time conflict');
+      // Validation checks.
+      if (!this.validateTime(action, event)) {
         cb?.cancelCB && cb?.cancelCB();
-        this.cdr.detectChanges();
         return;
       }
       const updatedReservation: Reservation = this.eventToReservation(event);
-      this.loading = true;
+      this.loader.open();
       this.reservationService
         .updateReservation(updatedReservation, '')
         .pipe(
           finalize(() => {
-            this.loading = false;
+            this.loader.close();
             cb?.cb && cb?.cb();
             this.cdr.detectChanges();
           })
@@ -329,29 +361,32 @@ export class CalendarKsComponent implements OnInit {
           (error) => {
             let message = 'Failed to update reservation.';
             let title = '';
+            if (error.status === 404) {
+              this.toastr.error(message, 'Resource Not Found');
+              this.router.navigateByUrl('/not-found');
+              return;
+            }
             if (error.status === 409) {
-              title = 'Time conflict';
+              title = 'Time Conflict';
             }
             this.toastr.error(message, title);
           }
         );
     } else if (action === 'Add') {
-      // Check for time conflict.
-      if (this.hasTimeConflict(event)) {
-        this.toastr.error('Failed to add reservation', 'Time conflict');
+      // Validation checks.
+      if (!this.validateTime(action, event)) {
         cb?.cancelCB && cb?.cancelCB();
-        this.cdr.detectChanges();
         return;
       }
       // Should get reserver name from current user
       event.reserver = 'TestReserver';
       event.roomId = this.roomData!.roomId;
-      this.loading = true;
+      this.loader.open();
       this.reservationService
         .createReservation(this.eventToReservation(event), '')
         .pipe(
           finalize(() => {
-            this.loading = false;
+            this.loader.close();
             cb?.cb && cb?.cb();
             this.cdr.detectChanges();
           })
@@ -369,13 +404,20 @@ export class CalendarKsComponent implements OnInit {
               event.status = 'reserved';
               event.draggable = true;
               event.resizable = { beforeStart: true, afterEnd: true };
-              this.events = [...this.events, event];
+              if (!this.events.find((e) => e.id === event.id)) {
+                this.events = [...this.events, event];
+              }
             }
             this.toastr.success('Reservation added');
           },
           (error) => {
             let message = 'Failed to create reservation.';
             let title = '';
+            if (error.status === 404) {
+              this.toastr.error(message, 'Resource Not Found');
+              this.router.navigateByUrl('/not-found');
+              return;
+            }
             if (error.status === 409) {
               title = 'Time conflict';
             }
@@ -383,12 +425,12 @@ export class CalendarKsComponent implements OnInit {
           }
         );
     } else if (action === 'Cancel') {
-      this.loading = true;
+      this.loader.open();
       this.reservationService
         .cancelReservation(this.eventToReservation(event), '')
         .pipe(
           finalize(() => {
-            this.loading = false;
+            this.loader.close();
             cb?.cb && cb?.cb();
             this.cdr.detectChanges();
           })
@@ -399,19 +441,26 @@ export class CalendarKsComponent implements OnInit {
             event.color = colors.red;
             event.actions = undefined;
             event.draggable = false;
-            (event.resizable = { beforeStart: false, afterEnd: false }),
-              (this.events = this.events.map((e) => {
-                if (e.id === event.id) {
-                  return event;
-                }
-                return e;
-              }));
-            this.canceledEvents = [...this.canceledEvents, event];
+            event.resizable = { beforeStart: false, afterEnd: false };
+            this.events = this.events.map((e) => {
+              if (e.id === event.id) {
+                return event;
+              }
+              return e;
+            });
+            if (!this.canceledEvents.find((e) => e.id === event.id)) {
+              this.canceledEvents = [...this.canceledEvents, event];
+            }
             this.filterCanceled();
             this.toastr.warning('Reservation canceled');
           },
           (error) => {
             let message = 'Failed to cancel reservation.';
+            if (error.status === 404) {
+              this.toastr.error(message, 'Resource Not Found');
+              this.router.navigateByUrl('/not-found');
+              return;
+            }
             this.toastr.error(message);
           }
         );
@@ -430,8 +479,13 @@ export class CalendarKsComponent implements OnInit {
   }
 
   addEvent(): void {
-    this.eventData = { id: 0, start: new Date(), title: '' };
-    this.openDialog('Add', this.eventData);
+    // Set new event to start at the next hour mark with a 4-hour block.
+    const start = new Date();
+    start.setHours(start.getHours() + 1, 0, 0, 0);
+    const end: Date = new Date(start);
+    end.setHours(end.getHours() + 4);
+    const eventData = { id: 0, start, end, title: '' };
+    this.openDialog('Add', eventData);
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
@@ -480,6 +534,14 @@ export class CalendarKsComponent implements OnInit {
         );
       }) !== undefined
     );
+  }
+
+  isValidTimeRange(event: CalendarEvent): boolean {
+    if (event.end! < event.start) {
+      return false;
+    }
+    const now = new Date();
+    return event.start >= now;
   }
 
   dragToCreateActive = false;
