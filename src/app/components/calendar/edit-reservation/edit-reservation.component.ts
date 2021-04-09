@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { FlatpickrModule } from 'angularx-flatpickr';
 
 export interface ReservationDialogData {
   start: number;
@@ -42,6 +41,7 @@ export class EditReservationComponent implements OnInit {
       end,
     });
   }
+
   closeDialog(): void {
     this.dialogRef.close();
   }
@@ -54,6 +54,7 @@ export class EditReservationComponent implements OnInit {
       this.toastr.warning('Invalid input');
     }
   }
+
   readFormData(): boolean {
     const valid = this.editReservationForm.valid;
     const start = this.editReservationForm.value.start;

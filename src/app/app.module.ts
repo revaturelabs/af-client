@@ -20,7 +20,6 @@ import { ToastrModule } from 'ngx-toastr';
     MaterialModule,
     FlexLayoutModule,
     HttpClientModule,
-    // rather than using ngx-loading we can use mat-spinner
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',

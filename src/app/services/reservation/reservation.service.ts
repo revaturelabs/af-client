@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { Reservation } from '../../models/reservation';
 import { Room } from '../../models/room';
 
@@ -44,6 +45,14 @@ export class ReservationService {
       roomId: 1,
       status: 'reserved',
     },
+    {
+      reservationId: 5,
+      reserver: 'Jimmy',
+      startTime: 1617636382 + 550000,
+      endTime: 1617636382 + 560000,
+      roomId: 1,
+      status: 'canceled',
+    },
   ];
 
   constructor(private http: HttpClient) {}
@@ -64,12 +73,14 @@ export class ReservationService {
     reservation.reservationId = this.reservations.length + 1;
     this.reservations = [...this.reservations, reservation];
     console.log('reservation.service.createReservation:', reservation);
-    return of(reservation);
+    return of(reservation).pipe(delay(1500));
   }
 
   // Read
   getReservationsByRoom(room: Room): Observable<Reservation[]> {
-    return of(this.reservations.filter((e) => e.roomId == room.roomId));
+    return of(this.reservations.filter((e) => e.roomId == room.roomId)).pipe(
+      delay(1500)
+    );
   }
 
   // Update
@@ -97,7 +108,7 @@ export class ReservationService {
       return r;
     });
 
-    return of(reservation);
+    return of(reservation).pipe(delay(1500));
   }
 
   // Cancel
@@ -122,6 +133,6 @@ export class ReservationService {
       (r) => r.reservationId !== reservation.reservationId
     );
 
-    return of(reservation);
+    return of(reservation).pipe(delay(1500));
   }
 }

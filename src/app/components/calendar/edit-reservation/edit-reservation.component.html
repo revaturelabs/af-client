@@ -1,13 +1,13 @@
 <h2>{{data.action}} Reservation</h2>
 <form [formGroup]="editReservationForm" (ngSubmit)="submitForm()" class="d-flex flex-column gap-2">
-    <mat-form-field>
+    <mat-form-field floatLabel="always">
         <mat-label>Choose Start Time</mat-label>
         <input matInput type="text" class="form-control" mwlFlatpickr formControlName="start"
                [altInput]="true" [convertModelValue]="true" [enableTime]="true"
               dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set">
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field floatLabel="always">
         <mat-label>Choose End Time</mat-label>
         <input matInput type="text" class="form-control" mwlFlatpickr formControlName="end"
                [altInput]="true" [convertModelValue]="true" [enableTime]="true"
