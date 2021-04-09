@@ -30,6 +30,7 @@ import { TrainerProfileComponent } from './trainer-profile/trainer-profile.compo
 import { TrainerDashboardComponent } from './trainer-dashboard/trainer-dashboard.component';
 import { TrainerCurrentReservationsComponent } from './trainer-current-reservations/trainer-current-reservations.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 const components = [
@@ -57,6 +58,7 @@ const components = [
   TrainerProfileComponent,
   TrainerDashboardComponent,
   TrainerCurrentReservationsComponent,
+  NotFoundComponent
 ];
 
 @NgModule({
