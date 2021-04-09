@@ -29,11 +29,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ReservationService } from 'src/app/services/reservation/reservation.service';
 import { Room } from 'src/app/models/room';
 import { Reservation } from 'src/app/models/reservation';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { EditReservationComponent } from '../edit-reservation/edit-reservation.component';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { ToastrService } from 'ngx-toastr';
 import { finalize, takeUntil } from 'rxjs/operators';
+import { DisplayReservationComponent } from '../display-reservation/display-reservation.component';
 
 const colors: any = {
   red: {
@@ -278,9 +279,16 @@ export class CalendarKsComponent implements OnInit {
     event: CalendarEvent,
     callbacks?: { cancelCB?: any; cb?: any }
   ): void {
-    const dialogRef = this.dialog.open(EditReservationComponent, {
-      data: { ...event, action },
-    });
+    let dialogRef:MatDialogRef<any>;
+    if(action !== 'Clicked'){
+      dialogRef = this.dialog.open(EditReservationComponent, {
+        data: { ...event, action },
+      });
+    }else{
+      dialogRef = this.dialog.open(DisplayReservationComponent, {
+        data: {...event, action}
+      })
+    }
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.handleEvent(action, result, callbacks);
@@ -415,7 +423,7 @@ export class CalendarKsComponent implements OnInit {
             this.toastr.error(message);
           }
         );
-    }
+    } 
   }
 
   eventToReservation(event: any): any {
