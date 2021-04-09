@@ -72,7 +72,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
     },
   ];
 
-  constructor(private conformService: AppConfirmService, private toastr: ToastrService) {}
+  constructor(private confirmService: AppConfirmService, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.currentReservation = this.reservations[this.reservationIndex];
@@ -98,7 +98,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
 
   deleteReservation() {
     //TODO make http request to delete the current reservation
-    this.conformService.confirm().subscribe( confirm => {
+    this.confirmService.confirm().subscribe( confirm => {
       if(confirm) {
         // will delete
         this.toastr.success("Deleted reservation");

@@ -5,12 +5,12 @@
     </mat-card-header>
     <img mat-card-image src="assets/images/admin2.jpg" alt="Photo of a Shiba Inu">
     <mat-card-content>
-        <p>Start time: {{currentReservation?.startTime}}</p>
-        <p>End time: {{currentReservation?.endTime}}</p>
+        <p>Start time: {{currentReservation?.startTime | date: 'medium'}}</p>
+        <p>End time: {{currentReservation?.endTime | date: 'medium'}}</p>
     </mat-card-content>
     <mat-card-actions>
         <button mat-button color='primary' (click)="previousReservation()">Prev</button>
         <button mat-button color='primary' (click)="nextReservation()">Next</button>
-        <button mat-raised-button color='warn' (click)="deleteReservation()">Delete current reservation</button>
+        <button mat-raised-button color='warn' (click)="deleteReservation()">Cancel current reservation</button>
     </mat-card-actions>
 </mat-card>
