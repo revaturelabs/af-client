@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Building } from 'src/app/models/building';
 import { Room, RoomType } from 'src/app/models/room';
-
+import { delay } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -29,20 +29,20 @@ export class RoomService {
   constructor() { }
 
   getRoomByBuilding(building: Building): Observable<Room[]> {
-    return of(this.rooms.filter( e => e.buildingId == building.buildingId));
+    return of(this.rooms.filter( e => e.buildingId == building.buildingId)).pipe(delay(1000));
   }
 
   createRoom(room: Room): Observable<Room> {
     this.rooms.push(room);
-    return of(room);
+    return of(room).pipe(delay(1000));
   }
 
   updateRoom(room: Room): Observable<Room> {
-    return of(room);
+    return of(room).pipe(delay(1000));
   }
 
   deleteRoom(room: Room): Observable<boolean> {
-    return of(false);
+    return of(false).pipe(delay(1000));
   }
 
 

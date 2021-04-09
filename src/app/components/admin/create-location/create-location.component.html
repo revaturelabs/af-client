@@ -18,7 +18,8 @@
             </div>
         </mat-step>
         <mat-step label="Inspect Room Page">
-            <app-inspect-room [buildingDataInput]="currentBuilding?.buildingId + ''"></app-inspect-room>
+            <app-inspect-room [buildingData]="currentBuilding?.buildingId + ''" [locationData]="currentLocation?.name">
+            </app-inspect-room>
             <div>
                 <button mat-raised-button color="primary" class="w-100 mt-3" matStepperPrevious>Back</button>
             </div>
