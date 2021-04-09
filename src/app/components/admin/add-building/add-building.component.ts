@@ -54,7 +54,6 @@ export class AddBuildingComponent implements OnInit {
     const valid = this.addBuildingForm.valid;
     const address = this.addBuildingForm.value.address;
     this.data = { ...this.data, address };
-    console.log('data', this.data);
     return valid;
   }
 }

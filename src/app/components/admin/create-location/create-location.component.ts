@@ -65,7 +65,7 @@ export class CreateLocationComponent implements OnInit {
   gotoBuildingStep(event: any) {
     // complete the current step
     if (this.currentLocation?.locationId) {
-      this.buildingChild.ngOnInit();
+      this.buildingChild.createTable();
       this.completeLocationSelect = true;
       this.stepper.next();
     } else {
@@ -79,10 +79,10 @@ export class CreateLocationComponent implements OnInit {
       this.locationChild.resetChooseLocation();
       this.buildingChild.unChooseBuilding();
     } else if(event.selectedIndex == 1) {
-      this.buildingChild.ngOnInit();
+      // this.buildingChild.ngOnInit();
     } 
     else if(event.selectedIndex == 2) {
-      this.gotoRoomStep();
+      this.roomChild.createTable();
     }
     this.getCurrentLocation();
     this.getCurrentBuilding();
