@@ -1,5 +1,10 @@
-<h3 *ngIf="locationData" class="text-muted">Current location: {{ locationData }}</h3>
-<h3 *ngIf="buildingData" class="text-muted">Current building address: {{ buildingData }}</h3>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">Location: {{ locationData }}</li>
+      <li class="breadcrumb-item active" aria-current="page">Building: {{ buildingData }}</li>
+    </ol>
+  </nav>
+
 <div class="d-flex align-items-center mt-4">
     <mat-form-field class="w-100 mr-3">
         <mat-label>Search</mat-label>
