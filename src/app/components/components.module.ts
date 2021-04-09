@@ -4,17 +4,13 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MaterialModule } from '../shared/material/material.module';
 import { CalendarModule } from './calendar/calendar.module';
-import { InspectLocationComponent } from './inspect-location/inspect-location.component';
-import { InspectBuildingComponent } from './inspect-building/inspect-building.component';
-import { InspectRoomComponent } from './inspect-room/inspect-room.component';
-import { CreateLocationComponent } from './create-location/create-location.component';
+import { InspectBuildingComponent } from './admin/inspect-building/inspect-building.component';
+import { CreateLocationComponent } from './admin/create-location/create-location.component';
 import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from '../app-routing.module';
-import { AddLocationComponent } from './add-location/add-location.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComfirmComponent } from '../services/app-confirm/app-confirm.component';
-import { AddBuildingComponent } from './add-building/add-building.component';
-import { AddRoomComponent } from './add-room/add-room.component';
+import { AddBuildingComponent } from './admin/add-building/add-building.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninPageComponent } from './signin-page/signin-page.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
@@ -23,14 +19,19 @@ import { ReservationPageComponent } from './reservation-page/reservation-page.co
 import { BuildingTableComponent } from './building-table/building-table.component';
 import { LocationTableComponent } from './location-table/location-table.component';
 import { RoomTableComponent } from './room-table/room-table.component';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { AdminResolveComponent } from './admin-resolve/admin-resolve.component';
-import { AdminPageComponent } from './admin-page/admin-page.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { AdminResolveComponent } from './admin/admin-resolve/admin-resolve.component';
+import { AdminPageComponent } from './admin/admin-page/admin-page.component';
 import { TrainerPageComponent } from './trainer-page/trainer-page.component';
 import { TrainerProfileComponent } from './trainer-profile/trainer-profile.component';
 import { TrainerDashboardComponent } from './trainer-dashboard/trainer-dashboard.component';
 import { TrainerCurrentReservationsComponent } from './trainer-current-reservations/trainer-current-reservations.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { SecondsHoursPipe } from '../pipes/seconds-hours.pipe';
+import { AddLocationComponent } from './admin/add-location/add-location.component';
+import { AddRoomComponent } from './admin/add-room/add-room.component';
+import { InspectLocationComponent } from './admin/inspect-location/inspect-location.component';
+import { InspectRoomComponent } from './admin/inspect-room/inspect-room.component';
 
 
 const components = [
@@ -61,7 +62,7 @@ const components = [
 ];
 
 @NgModule({
-  declarations: [components],
+  declarations: [components, SecondsHoursPipe],
   imports: [
     CommonModule,
     MaterialModule,
