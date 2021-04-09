@@ -26,6 +26,7 @@ export class CreateLocationComponent implements OnInit {
   currentBuilding?: Building;
   completeLocationSelect: boolean = false;
   completeBuildingSelect: boolean = false;
+  
 
   constructor(
     private locationService: LocationService,

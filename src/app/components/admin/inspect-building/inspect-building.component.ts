@@ -32,7 +32,6 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
   @Input() locationData?: string;
   selectedBuilding?: Building;
   buildingData?: Building;
-
   displayedColumns: string[] = [
     'buildingId',
     'address',
@@ -109,7 +108,6 @@ export class InspectBuildingComponent implements OnInit, AfterViewInit {
       })
       .subscribe((confirm) => {
         if (confirm) {
-          console.log('Delete ', location);
           this.buildingService
             .deleteBuildingById(building.buildingId!)
             .subscribe(

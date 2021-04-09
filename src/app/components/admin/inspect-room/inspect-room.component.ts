@@ -31,7 +31,9 @@ export class InspectRoomComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  @Input() buildingDataInput?: string;
+  @Input() buildingData?: string;
+  @Input() locationData?: string;
+
 
   constructor(
     private locationService: LocationService,

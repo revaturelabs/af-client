@@ -83,6 +83,10 @@ export class ReservationService {
     );
   }
 
+  getReservationByReserver(): Observable<Reservation[]> {
+    return of(this.reservations);
+  }
+
   // Update
   updateReservation(
     reservation: Reservation,

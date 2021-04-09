@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { Location } from 'src/app/models/location';
 
 @Injectable({
@@ -56,20 +57,20 @@ export class LocationService {
   constructor() {}
 
   getAllLocation(): Observable<Location[]> {
-    return of(this.locations);
+    return of(this.locations).pipe(delay(1500));
   }
 
   deleteLocation(localtion: Location): Observable<boolean> {
-    return of(false);
+    return of(false).pipe(delay(1500));
   }
 
   createLocation(location: Location): Observable<Location> {
     this.locations.push(location);
-    return of(location);
+    return of(location).pipe(delay(1500));
   }
 
   updateLocation(location: Location): Observable<Location> {
-    return of(location);
+    return of(location).pipe(delay(1500));
   }
 
 }

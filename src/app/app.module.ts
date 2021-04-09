@@ -9,9 +9,11 @@ import { AppConfirmService } from './services/app-confirm/app-confirm.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { AppLoaderComponent } from './services/app-loader/app-loader.component';
+import { AppLoaderService } from './services/app-loader/app-loader.service';
 
 @NgModule({
-  declarations: [AppComponent, ],
+  declarations: [AppComponent, AppLoaderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -28,7 +30,7 @@ import { ToastrModule } from 'ngx-toastr';
       maxOpened: 4,
     })
   ],
-  providers: [AppConfirmService],
+  providers: [AppConfirmService, AppLoaderService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
