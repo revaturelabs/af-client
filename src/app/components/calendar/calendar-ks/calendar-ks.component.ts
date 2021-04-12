@@ -31,6 +31,7 @@ import { ToastrService } from 'ngx-toastr';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { DisplayReservationComponent } from '../display-reservation/display-reservation.component';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 const colors: any = {
   red: {
@@ -73,9 +74,9 @@ export class CalendarKsComponent implements OnInit {
   viewDate: Date = new Date();
   refresh: Subject<any> = new Subject();
   events: CalendarEvent[] = [];
-  canceledEvents: CalendarEvent[] = [];
+  cancelledEvents: CalendarEvent[] = [];
   activeDayIsOpen: boolean = true;
-  showCanceled: boolean = true;
+  showCancelled: boolean = true;
 
   constructor(
     private dialog: MatDialog,
@@ -84,7 +85,8 @@ export class CalendarKsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private toastr: ToastrService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -144,13 +146,14 @@ export class CalendarKsComponent implements OnInit {
       )
       .subscribe(
         (res) => {
+          console.log(res);
           this.events = res.map((r) => {
             let actions = undefined;
             let color = colors.gray;
             let draggable = false;
             let resizable = false;
-            if (r.reserver === 'Jimmy') {
-              if (r.status === 'canceled') {
+            if (r.reserver === this.authService.decodedJwtDTO?.email) {
+              if (r.status === 'cancelled') {
                 color = colors.red;
               } else {
                 color = colors.blue;
@@ -165,9 +168,7 @@ export class CalendarKsComponent implements OnInit {
             let event = {
               start,
               end,
-              title: `${r.reservationId}: Reserved by ${
-                r.reserver
-              }: ${start.toLocaleString()} - ${end.toLocaleString()}`,
+              title: `${r.title}: : ${start.toLocaleString()} - ${end.toLocaleString()}`,
               actions,
               resizable: {
                 beforeStart: resizable,
@@ -176,13 +177,14 @@ export class CalendarKsComponent implements OnInit {
               draggable,
               color,
               id: r.reservationId,
+              reservationTitle: r.title,
               reserver: r.reserver,
               roomId: r.roomId,
               status: r.status,
             };
-            if (event.status === 'canceled') {
-              if (!this.canceledEvents.find((e) => e.id === event.id)) {
-                this.canceledEvents = [...this.canceledEvents, event];
+            if (event.status === 'cancelled') {
+              if (!this.cancelledEvents.find((e) => e.id === event.id)) {
+                this.cancelledEvents = [...this.cancelledEvents, event];
               }
             }
             return event;
@@ -236,7 +238,7 @@ export class CalendarKsComponent implements OnInit {
 
     end = new Date(start);
     end.setHours(start.getHours() + 4);
-    const eventData = { id: 0, start, end, title: 'Clicked on date' };
+    const eventData = { id: 0, start, end, title: '' };
     this.openDialog('Add', eventData);
   }
 
@@ -331,7 +333,7 @@ export class CalendarKsComponent implements OnInit {
       }
       const updatedReservation: Reservation = this.eventToReservation(event);
       this.reservationService
-        .updateReservation(updatedReservation, '')
+        .updateReservation(updatedReservation)
         .pipe(
           finalize(() => {
             cb?.cb && cb?.cb();
@@ -341,9 +343,7 @@ export class CalendarKsComponent implements OnInit {
         .subscribe(
           (result) => {
             const { reserver, start, end } = event;
-            event.title = `${
-              result.reservationId
-            }: Reserved by ${reserver}: ${start.toLocaleString()} - ${end.toLocaleString()}`;
+            event.title = `${result.title}: ${start.toLocaleString()} - ${end.toLocaleString()}`;
             this.events = this.events.map((e) => {
               if (e.id === event.id) {
                 return event;
@@ -373,10 +373,10 @@ export class CalendarKsComponent implements OnInit {
         return;
       }
       // Should get reserver name from current user
-      event.reserver = 'TestReserver';
+      event.reserver = '';
       event.roomId = this.roomData!.roomId;
       this.reservationService
-        .createReservation(this.eventToReservation(event), '')
+        .createReservation(this.eventToReservation(event))
         .pipe(
           finalize(() => {
             cb?.cb && cb?.cb();
@@ -388,9 +388,7 @@ export class CalendarKsComponent implements OnInit {
             if (result) {
               const { reserver, start, end } = event;
               event.id = result.reservationId;
-              event.title = `${
-                result.reservationId
-              }: Reserved by ${reserver}: ${start.toLocaleString()} - ${end.toLocaleString()}`;
+              event.title = `${result.title}: ${start.toLocaleString()} - ${end.toLocaleString()}`;
               event.actions = this.actions;
               event.color = colors.blue;
               event.status = 'reserved';
@@ -418,7 +416,7 @@ export class CalendarKsComponent implements OnInit {
         );
     } else if (action === 'Cancel') {
       this.reservationService
-        .cancelReservation(this.eventToReservation(event), '')
+        .cancelReservation(this.eventToReservation(event))
         .pipe(
           finalize(() => {
             cb?.cb && cb?.cb();
@@ -427,7 +425,7 @@ export class CalendarKsComponent implements OnInit {
         )
         .subscribe(
           (result) => {
-            event.status = 'canceled';
+            event.status = 'cancelled';
             event.color = colors.red;
             event.actions = undefined;
             event.draggable = false;
@@ -438,11 +436,11 @@ export class CalendarKsComponent implements OnInit {
               }
               return e;
             });
-            if (!this.canceledEvents.find((e) => e.id === event.id)) {
-              this.canceledEvents = [...this.canceledEvents, event];
+            if (!this.cancelledEvents.find((e) => e.id === event.id)) {
+              this.cancelledEvents = [...this.cancelledEvents, event];
             }
-            this.filterCanceled();
-            this.toastr.warning('Reservation canceled');
+            this.filterCancelled();
+            this.toastr.warning('Reservation cancelled');
           },
           (error) => {
             let message = 'Failed to cancel reservation.';
@@ -458,6 +456,7 @@ export class CalendarKsComponent implements OnInit {
   }
 
   eventToReservation(event: any): any {
+    console.log(event.reservationTitle)
     return {
       reservationId: Number(event.id),
       reserver: event.reserver,
@@ -465,6 +464,7 @@ export class CalendarKsComponent implements OnInit {
       endTime: event.end.getTime() / 1000,
       roomId: event.roomId,
       status: event.status,
+      title: event.reservationTitle? event.reservationTitle : event.title
     };
   }
 
@@ -490,20 +490,20 @@ export class CalendarKsComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
 
-  toggleCanceled(): void {
-    this.showCanceled = !this.showCanceled;
-    this.filterCanceled();
+  toggleCancelled(): void {
+    this.showCancelled = !this.showCancelled;
+    this.filterCancelled();
   }
 
-  filterCanceled(): void {
-    if (!this.showCanceled) {
+  filterCancelled(): void {
+    if (!this.showCancelled) {
       this.events = this.events.filter((e: any) => {
-        return e.status !== 'canceled';
+        return e.status !== 'cancelled';
       });
     } else {
-      this.canceledEvents.forEach((canceledEvent) => {
-        if (!this.events.find((e) => e.id === canceledEvent.id)) {
-          this.events = [...this.events, canceledEvent];
+      this.cancelledEvents.forEach((cancelledEvent) => {
+        if (!this.events.find((e) => e.id === cancelledEvent.id)) {
+          this.events = [...this.events, cancelledEvent];
         }
       });
     }
@@ -517,7 +517,7 @@ export class CalendarKsComponent implements OnInit {
       this.events.find((e: any) => {
         return (
           e.id !== event.id &&
-          e.status !== 'canceled' &&
+          e.status !== 'cancelled' &&
           ((event.start >= e.start && event.start <= e.end) || // new event starts in existing
             (event.end! >= e.start && event.end! <= e.end) || // new event ends in existing
             (e.start > event.start && e.end < event.end!)) // existing within new

@@ -65,7 +65,7 @@ export class LocationService {
   constructor(private authService: AuthService, private httpClient: HttpClient) {}
 
   getAllLocation(): Observable<Location[]> {
-    return of(this.locations).pipe(delay(1500));
+    //return of(this.locations).pipe(delay(1500));
     return this.httpClient.get<Location[]>(`${this.baseUrl}/locations`, this.options);
   }
 

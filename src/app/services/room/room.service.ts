@@ -3,6 +3,10 @@ import { Observable, of } from 'rxjs';
 import { Building } from 'src/app/models/building';
 import { Room, RoomType } from 'src/app/models/room';
 import { delay } from 'rxjs/operators';
+import { LocationService } from '../location/location.service';
+import { AuthService } from '../auth/auth.service';
+import { HttpClient } from '@angular/common/http';
+import { BuildingService } from '../building/building.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,10 +30,17 @@ export class RoomService {
 
 
   currentRoom?:Room = {};
-  constructor() { }
+  constructor(private buildingService:BuildingService, private locationService:LocationService,private authService: AuthService, private httpClient: HttpClient) { }
+  baseUrl = 'http://104.154.225.237:80';
+  options = {
+    headers: {
+      Authorization: this.authService.jwt!
+    }
+  }
 
   getRoomByBuilding(building: Building): Observable<Room[]> {
-    return of(this.rooms.filter( e => e.buildingId == building.buildingId)).pipe(delay(1000));
+    //return of(this.rooms.filter( e => e.buildingId == building.buildingId)).pipe(delay(1000));
+    return this.httpClient.get<Building[]>(`${this.baseUrl}/locations/${this.locationService.currentLocation?.locationId}/buildings/${this.buildingService.currentBuilding?.buildingId}/rooms`, this.options);
   }
 
   createRoom(room: Room): Observable<Room> {

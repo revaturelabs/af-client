@@ -1,5 +1,9 @@
 <h2>{{data.action}} Reservation</h2>
 <form [formGroup]="editReservationForm" (ngSubmit)="submitForm()" class="d-flex flex-column gap-2">
+    <mat-form-field>
+        <mat-label>Event Title</mat-label>
+        <input matInput type="text" class="form-control" formControlName="title">
+    </mat-form-field>
     <mat-form-field floatLabel="always">
         <mat-label>Choose Start Time</mat-label>
         <input matInput type="text" class="form-control" mwlFlatpickr formControlName="start"

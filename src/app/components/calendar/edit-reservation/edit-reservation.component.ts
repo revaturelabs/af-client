@@ -13,6 +13,8 @@ export interface ReservationDialogData {
   end: number;
   id: number;
   reserver: string;
+  title: string;
+  reservationTitle: string;
   roomId: number;
   status: string;
   action?: string;
@@ -34,9 +36,11 @@ export class EditReservationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const title = new FormControl(this.data.reservationTitle, Validators.required);
     const start = new FormControl(this.data.start, Validators.required);
     const end = new FormControl(this.data.end, Validators.required);
     this.editReservationForm = this.fb.group({
+      title,
       start,
       end,
     });
@@ -57,9 +61,10 @@ export class EditReservationComponent implements OnInit {
 
   readFormData(): boolean {
     const valid = this.editReservationForm.valid;
+    const reservationTitle = this.editReservationForm.value.title;
     const start = this.editReservationForm.value.start;
     const end = this.editReservationForm.value.end;
-    this.data = { ...this.data, start, end };
+    this.data = { ...this.data, reservationTitle, start, end };
     return valid;
   }
 }
