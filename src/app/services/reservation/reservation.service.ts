@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { delay, tap } from 'rxjs/operators';
 import { Reservation } from '../../models/reservation';
 import { Room } from '../../models/room';
 
@@ -55,7 +56,10 @@ export class ReservationService {
     },
   ];
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private loadingBar: LoadingBarService
+  ) {}
 
   // Create
   createReservation(
@@ -64,27 +68,51 @@ export class ReservationService {
   ): Observable<Reservation> {
     console.log('reservation.service.createReservation:', reservation);
     // return this.http
-    //   .post<Reservation>(`${this.BASE_URL}/rooms/${reservation.roomId}/reservations`, reservation, {
-    //     headers: {
-    //       Authorization: token,
-    //     },
-    //   });
+    //   .post<Reservation>(
+    //     `${this.BASE_URL}/rooms/${reservation.roomId}/reservations`,
+    //     reservation,
+    //     {
+    //       headers: {
+    //         Authorization: token,
+    //       },
+    //     }
+    //   );
 
     reservation.reservationId = this.reservations.length + 1;
     this.reservations = [...this.reservations, reservation];
     console.log('reservation.service.createReservation:', reservation);
-    return of(reservation).pipe(delay(1500));
+    return of(reservation).pipe(
+      tap(() => this.loadingBar.start()),
+      delay(1000),
+      tap(() => this.loadingBar.complete())
+    );
   }
 
   // Read
-  getReservationsByRoom(room: Room): Observable<Reservation[]> {
+  getReservationsByRoom(room: Room, token: string): Observable<Reservation[]> {
+    // return this.http
+    //   .get<Reservation[]>(
+    //     `${this.BASE_URL}/rooms/${room.roomId}/reservations`,
+    //     {
+    //       headers: {
+    //         Authorization: token,
+    //       },
+    //     }
+    //   );
+
     return of(this.reservations.filter((e) => e.roomId == room.roomId)).pipe(
-      delay(1500)
+      tap(() => this.loadingBar.start()),
+      delay(1000),
+      tap(() => this.loadingBar.complete())
     );
   }
 
   getReservationByReserver(): Observable<Reservation[]> {
-    return of(this.reservations);
+    return of(this.reservations).pipe(
+      tap(() => this.loadingBar.start()),
+      delay(1000),
+      tap(() => this.loadingBar.complete())
+    );
   }
 
   // Update
@@ -103,8 +131,6 @@ export class ReservationService {
     //     }
     //   );
 
-    console.log('reservation.service.updateReservation:', reservation);
-
     this.reservations = this.reservations.map((r) => {
       if (r.reservationId === reservation.reservationId) {
         return { ...reservation };
@@ -112,7 +138,11 @@ export class ReservationService {
       return r;
     });
 
-    return of(reservation).pipe(delay(1500));
+    return of(reservation).pipe(
+      tap(() => this.loadingBar.start()),
+      delay(1000),
+      tap(() => this.loadingBar.complete())
+    );
   }
 
   // Cancel
@@ -120,15 +150,15 @@ export class ReservationService {
     reservation: Reservation,
     token: string
   ): Observable<Reservation> {
-    // const res: string = await this.http.request(
-    //   'DELETE',
-    //   `${this.BASE_URL}/rooms/${reservation.roomId}/reservations/${reservation.reservationId}`, {
-    //     headers: {
-    //       Authorization: token,
-    //     },
-    //     responseType: 'text',
-    //   }).toPromise();
-    // return (res === 'success');
+    // return this.http
+    //   .delete<Reservation>(
+    //     `${this.BASE_URL}/rooms/${reservation.roomId}/reservations/${reservation.reservationId}`,
+    //     {
+    //       headers: {
+    //         Authorization: token,
+    //       },
+    //     }
+    //   );
 
     reservation.status = 'canceled';
     console.log('reservation.service.deleteReservation:', reservation);
@@ -137,6 +167,10 @@ export class ReservationService {
       (r) => r.reservationId !== reservation.reservationId
     );
 
-    return of(reservation).pipe(delay(1500));
+    return of(reservation).pipe(
+      tap(() => this.loadingBar.start()),
+      delay(1000),
+      tap(() => this.loadingBar.complete())
+    );
   }
 }

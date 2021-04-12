@@ -8,10 +8,9 @@ import { LocationService } from 'src/app/services/location/location.service';
 @Component({
   selector: 'app-location-table',
   templateUrl: './location-table.component.html',
-  styleUrls: ['./location-table.component.sass']
+  styleUrls: ['./location-table.component.sass'],
 })
 export class LocationTableComponent implements OnInit {
-
   selectedLocation?: Location;
 
   locationId?: number;
@@ -27,16 +26,18 @@ export class LocationTableComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor( private locationService: LocationService) { }
+  constructor(private locationService: LocationService) {}
 
   ngOnInit(): void {
     this.createTable();
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    //TODO sorting has problem
-    this.dataSource.sort = this.sort;
+    if (this.dataSource) {
+      this.dataSource.paginator = this.paginator;
+      //TODO sorting has problem
+      this.dataSource.sort = this.sort;
+    }
   }
 
   createTable(): void {
@@ -54,14 +55,9 @@ export class LocationTableComponent implements OnInit {
     }
   }
 
-
   chooseLocation(loc: Location) {
     console.log('Select location: ', loc);
     this.selectedLocation = loc;
     this.locationService.currentLocation = loc;
   }
-
-
-
-
 }
