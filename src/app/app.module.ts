@@ -9,10 +9,13 @@ import { AppConfirmService } from './services/app-confirm/app-confirm.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { AppLoaderComponent } from './services/app-loader/app-loader.component';
+import { AppLoaderService } from './services/app-loader/app-loader.service';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, AppLoaderComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,16 +24,16 @@ import { ToastrModule } from 'ngx-toastr';
     MaterialModule,
     FlexLayoutModule,
     HttpClientModule,
-    // rather than using ngx-loading we can use mat-spinner
+    LoadingBarHttpClientModule,
     ToastrModule.forRoot({
       timeOut: 5000,
       positionClass: 'toast-top-right',
-      progressBar: true,
+      progressBar: false,
       newestOnTop: false,
       maxOpened: 4,
     }),
   ],
-  providers: [AppConfirmService],
+  providers: [AppConfirmService, AppLoaderService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

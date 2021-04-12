@@ -1,4 +1,11 @@
-<h3 *ngIf="locationData" class="text-muted">Current location: {{ locationData }}</h3>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">
+        Location: {{ locationData }}
+      </li>
+    </ol>
+  </nav>
+
 <div class="d-flex align-items-center mt-4">
     <mat-form-field class="w-100 mr-3">
         <mat-label>Search</mat-label>

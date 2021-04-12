@@ -1,19 +1,19 @@
 <div class="row text-center">
 
   <div class="col-md-4">
-    <div class="btn-group">
-      <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()">
-        Previous
-      </div>
-      <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
-        Today
-      </div>
-      <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-        (viewDateChange)="closeOpenMonthViewDay()">
-        Next
-      </div>
-    </div>
+    <!-- <mat-button-toggle-group> -->
+    <button mat-flat-button color="primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+      (viewDateChange)="closeOpenMonthViewDay()" class="mr-1">
+      Previous
+    </button>
+    <button mat-stroked-button color="accent" mwlCalendarToday [(viewDate)]="viewDate" class="mr-1">
+      Today
+    </button>
+    <button mat-flat-button color="primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+      (viewDateChange)="closeOpenMonthViewDay()">
+      Next
+    </button>
+    <!-- </mat-button-toggle-group> -->
   </div>
 
   <div class="col-md-4">
@@ -22,15 +22,18 @@
 
   <div class="col-md-4">
     <div class="btn-group">
-      <div class="btn btn-primary" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+      <button mat-raised-button color="primary" (click)="setView(CalendarView.Month)"
+        [class.active]="view === CalendarView.Month" class="mr-1">
         Month
-      </div>
-      <div class="btn btn-primary" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
+      </button>
+      <button mat-raised-button color="primary" (click)="setView(CalendarView.Week)"
+        [class.active]="view === CalendarView.Week" class="mr-1">
         Week
-      </div>
-      <div class="btn btn-primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+      </button>
+      <button mat-raised-button color="primary" (click)="setView(CalendarView.Day)"
+        [class.active]="view === CalendarView.Day">
         Day
-      </div>
+      </button>
     </div>
   </div>
 
@@ -42,23 +45,38 @@
 <div [ngSwitch]="view">
   <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
     [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+    (eventClicked)="openDialog('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
   </mwl-calendar-month-view>
   <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+    (eventClicked)="openDialog('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+    [hourSegmentTemplate]="weekViewHourSegmentTemplate">
   </mwl-calendar-week-view>
   <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
-    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+    (eventClicked)="openDialog('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+    [hourSegmentTemplate]="weekViewHourSegmentTemplate">
   </mwl-calendar-day-view>
 </div>
 <!-- End div [ngSwitch]="view" -->
 
-<!-- Everything below is for demo -->
 <br /><br /><br />
 
-  <button mat-raised-button color="primary" class="float-right" (click)="addEvent()">
+<!-- Bottom Row Buttons -->
+<div class="d-flex float-right btnDiv">
+  <button mat-raised-button color="accent" class="mr-2 w-100" (click)="toggleCanceled()">
+    Toggle Canceled Events
+  </button>
+  <button mat-raised-button color="primary" class="w-100" (click)="addEvent()">
     Add new reservation
   </button>
+</div>
 
-
-
+<ng-template #weekViewHourSegmentTemplate let-segment="segment" let-locale="locale" let-segmentHeight="segmentHeight"
+  let-isTimeLabel="isTimeLabel">
+  <div #segmentElement class="cal-hour-segment" [style.height.px]="segmentHeight"
+    [class.cal-hour-start]="segment.isStart" [class.cal-after-hour-start]="!segment.isStart"
+    [ngClass]="segment.cssClass" (mousedown)="startDragToCreate(segment, $event, segmentElement)">
+    <div class="cal-time" *ngIf="isTimeLabel">
+      {{ segment.date | calendarDate:'weekViewHour':locale }}
+    </div>
+  </div>
+</ng-template>
