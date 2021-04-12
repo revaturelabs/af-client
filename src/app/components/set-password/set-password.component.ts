@@ -27,7 +27,7 @@ export class SetPasswordComponent implements OnInit {
       console.log(data);
     }, 
     error => {
-      console.log(error.message);
+      console.log(error);
     });
   }
 }
