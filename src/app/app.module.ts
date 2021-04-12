@@ -13,6 +13,7 @@ import { AppLoaderComponent } from './services/app-loader/app-loader.component';
 import { AppLoaderService } from './services/app-loader/app-loader.service';
 import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
 
+
 @NgModule({
   declarations: [AppComponent, AppLoaderComponent],
   imports: [
