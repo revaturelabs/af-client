@@ -13,6 +13,7 @@ import { TrainerPageComponent } from './components/trainer-page/trainer-page.com
 import { TrainerProfileComponent } from './components/trainer-profile/trainer-profile.component';
 import { AdminGuardService } from './services/route-guard/admin-guard.service';
 import { TrainerGuardService } from './services/route-guard/trainer-guard.service';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -41,7 +42,10 @@ const routes: Routes = [
       { path: 'trainer-dashboard', component: TrainerDashboardComponent },
     ],
   },
+  { path: 'not-found', component: NotFoundComponent },
   { path: '**', component: LandingPageComponent },
+  
+ 
 ];
 
 @NgModule({
