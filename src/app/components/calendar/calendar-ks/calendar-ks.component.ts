@@ -31,7 +31,6 @@ import { ToastrService } from 'ngx-toastr';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { DisplayReservationComponent } from '../display-reservation/display-reservation.component';
 import { Router } from '@angular/router';
-import { AppLoaderService } from 'src/app/services/app-loader/app-loader.service';
 
 const colors: any = {
   red: {
@@ -85,8 +84,7 @@ export class CalendarKsComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private toastr: ToastrService,
     private cdr: ChangeDetectorRef,
-    private router: Router,
-    private loader: AppLoaderService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -137,12 +135,10 @@ export class CalendarKsComponent implements OnInit {
 
   // Populates Events on calendar based on what room you selected
   populateEvents() {
-    this.loader.open();
     this.reservationService
-      .getReservationsByRoom(this.roomData!)
+      .getReservationsByRoom(this.roomData!, '')
       .pipe(
         finalize(() => {
-          this.loader.close();
           this.cdr.detectChanges();
         })
       )
@@ -334,12 +330,10 @@ export class CalendarKsComponent implements OnInit {
         return;
       }
       const updatedReservation: Reservation = this.eventToReservation(event);
-      this.loader.open();
       this.reservationService
         .updateReservation(updatedReservation, '')
         .pipe(
           finalize(() => {
-            this.loader.close();
             cb?.cb && cb?.cb();
             this.cdr.detectChanges();
           })
@@ -381,12 +375,10 @@ export class CalendarKsComponent implements OnInit {
       // Should get reserver name from current user
       event.reserver = 'TestReserver';
       event.roomId = this.roomData!.roomId;
-      this.loader.open();
       this.reservationService
         .createReservation(this.eventToReservation(event), '')
         .pipe(
           finalize(() => {
-            this.loader.close();
             cb?.cb && cb?.cb();
             this.cdr.detectChanges();
           })
@@ -425,12 +417,10 @@ export class CalendarKsComponent implements OnInit {
           }
         );
     } else if (action === 'Cancel') {
-      this.loader.open();
       this.reservationService
         .cancelReservation(this.eventToReservation(event), '')
         .pipe(
           finalize(() => {
-            this.loader.close();
             cb?.cb && cb?.cb();
             this.cdr.detectChanges();
           })
