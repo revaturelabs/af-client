@@ -10,7 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Room } from 'src/app/models/room';
+import { Room, RoomType } from 'src/app/models/room';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
 import { AppLoaderService } from 'src/app/services/app-loader/app-loader.service';
 import { BuildingService } from 'src/app/services/building/building.service';
@@ -121,12 +121,12 @@ export class InspectRoomComponent implements OnInit {
     const dialogRef = this.dialog.open(AddRoomComponent, {
       data: { ...this.roomData, title },
     });
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result: Room) => {
       if (result?.roomId == 0) {
         this.loader.open();
         this.roomService.createRoom(result).subscribe(
           (res) => {
-            this.resRoom.push(result);
+            this.resRoom.push(res);
             this.setTableData(this.resRoom);
             this.loader.close();
             this.toastr.success('Created new room');

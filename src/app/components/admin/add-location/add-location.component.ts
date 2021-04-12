@@ -14,7 +14,7 @@ export interface LocationDialogData {
   name?: string;
   state?: string;
   city?: string;
-  zipCode?: string;
+  zipcode?: string;
   title?: String;
 }
 @Component({
@@ -36,7 +36,7 @@ export class AddLocationComponent implements OnInit {
     const name = new FormControl(this.data.name, Validators.required);
     const state = new FormControl(this.data.state, Validators.required);
     const city = new FormControl(this.data.city, Validators.required);
-    const zipCode = new FormControl(this.data.zipCode, Validators.required);
+    const zipCode = new FormControl(this.data.zipcode, Validators.required);
 
     this.addLocationForm = this.fb.group({
       name,
@@ -64,8 +64,8 @@ export class AddLocationComponent implements OnInit {
     const name = this.addLocationForm.value.name;
     const state = this.addLocationForm.value.state;
     const city = this.addLocationForm.value.city;
-    const zipCode = this.addLocationForm.value.zipCode;
-    this.data = { ...this.data, name, state, city, zipCode };
+    const zipcode = this.addLocationForm.value.zipCode;
+    this.data = { ...this.data, name, state, city, zipcode };
     return valid;
   }
 }

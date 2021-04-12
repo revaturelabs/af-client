@@ -3,5 +3,5 @@ export class Location{
     name?: string;
     state?: string;
     city?: string;
-    zipCode?: string;
+    zipcode?: string;
 }
