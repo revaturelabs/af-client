@@ -27,6 +27,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.authService.getCurrentUserInfo();
+    this.currentUser = this.authService.decodedJwtDTO;
     if (!this.authService.isLoggedIn()){
       this.router.navigateByUrl("/signin");
       this.loggedIn = false;
