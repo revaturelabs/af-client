@@ -7,8 +7,8 @@
 
       <app-location-table (click)="stepper.reset(); getCurrentLocation(); resetBuildingRoom();"></app-location-table>
 
-      <div>
-        <button mat-button matStepperNext *ngIf="selectedLocation">Next</button>
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedLocation" class="w-100">Next</button>
       </div>
     </mat-step>
 
@@ -16,9 +16,9 @@
       <app-building-table [locationData]="selectedLocation?.name" (click)="getCurrentBuilding(); resetRoom()">
       </app-building-table>
 
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext *ngIf="selectedBuilding">Next</button>
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedBuilding" class="w-100">Next</button>
       </div>
     </mat-step>
 
@@ -28,35 +28,26 @@
       <app-room-table [buildingData]="selectedBuilding?.address" [locationData]="selectedLocation?.name"
         (click)="getCurrentRoom()"></app-room-table>
 
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext *ngIf="selectedRoom">Next</button>
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedRoom" class="w-100">Next</button>
       </div>
     </mat-step>
 
     <mat-step completed="false">
-      <mat-card>
-        <p>{{selectedLocation?.name}} </p>
-        <p>{{selectedBuilding?.address}}</p>
-        <p>{{selectedRoom?.name}}</p>
-      </mat-card>
-
-
       <ng-template matStepLabel>Select Date and Time</ng-template>
-
-      <button mat-button color="warn" (click)="switchCalendar()">Switch Calendar Mode</button>
-
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Location: {{selectedLocation?.name}}</li>
+          <li class="breadcrumb-item">Building: {{selectedBuilding?.address}}</li>
+          <li class="breadcrumb-item active" aria-current="page">Room: {{selectedRoom?.name}}</li>
+        </ol>
+      </nav>
       <app-calendar-ks *ngIf="selectedRoom" [roomData]="selectedRoom!"></app-calendar-ks>
 
-      <!-- <ng-container [ngSwitch]="calendarModes[calendarChoice]">
-        <app-calendar-dce  *ngSwitchCase="'DCE'"></app-calendar-dce>
-        <app-calendar-ks [roomData]="selectedRoom!" *ngSwitchCase="'KS'"></app-calendar-ks>
-        <app-calendar-dce *ngSwitchDefault></app-calendar-dce>
-      </ng-container> -->
-
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
+      <div class="d-flex btnDiv">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="accent"(click)="stepper.reset()" class="w-100">Reset</button>
       </div>
     </mat-step>
 

@@ -1,5 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap'
+
 html, body
   margin: 0
   width: 100%
@@ -12,5 +15,7 @@ app-root
 main
   min-height: 90vh
 
-/* Importing Bootstrap SCSS file. */
-@import '~bootstrap/scss/bootstrap'
+/* ngx-toaster */
+.toast-top-right
+  top: calc(64px + 1em) !important
+

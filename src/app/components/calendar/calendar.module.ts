@@ -14,11 +14,12 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarKsComponent } from './calendar-ks/calendar-ks.component';
 import { CalendarDceComponent } from './calendar-dce/calendar-dce.component';
 import { EditReservationComponent } from './edit-reservation/edit-reservation.component';
+import { DisplayReservationComponent } from './display-reservation/display-reservation.component';
 
 const components = [CalendarKsComponent, CalendarDceComponent, EditReservationComponent];
 
 @NgModule({
-  declarations: [components],
+  declarations: [components, DisplayReservationComponent],
   imports: [
     CommonModule,
     FormsModule,

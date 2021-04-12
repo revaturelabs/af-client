@@ -12,6 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
 import { Location } from 'src/app/models/location';
 import { AppConfirmService } from 'src/app/services/app-confirm/app-confirm.service';
+import { AppLoaderService } from 'src/app/services/app-loader/app-loader.service';
 import { BuildingService } from 'src/app/services/building/building.service';
 import { LocationService } from 'src/app/services/location/location.service';
 import { AddLocationComponent } from '../add-location/add-location.component';
@@ -21,7 +22,7 @@ import { AddLocationComponent } from '../add-location/add-location.component';
   templateUrl: './inspect-location.component.html',
   styleUrls: ['./inspect-location.component.sass'],
 })
-export class InspectLocationComponent implements OnInit, AfterViewInit {
+export class InspectLocationComponent implements OnInit {
   locationId?: number;
   name?: string;
   state?: string;
@@ -29,6 +30,7 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
   zipCode?: string;
   locationData?: Location;
   selectedLocation?: Location;
+  resLocation?: Location[];
 
   displayedColumns: string[] = [
     'locationId',
@@ -48,24 +50,33 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
     public dialog: MatDialog,
     private confirmService: AppConfirmService,
     private toastr: ToastrService,
-    private buildingService: BuildingService
+    private buildingService: BuildingService,
+    private loader: AppLoaderService
   ) {}
 
   ngOnInit(): void {
     this.createTable();
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  createTable(): void {
+    this.loader.open();
+    this.locationService.getAllLocation().subscribe(
+      (res) => {
+        this.resLocation = res;
+        this.setTableData(res);
+        this.loader.close();
+      },
+      (error) => {
+        this.toastr.error(error?.error?.message || error?.error?.error);
+        this.loader.close();
+      }
+    );
   }
 
-  createTable(): void {
-    this.locationService.getAllLocation().subscribe((res) => {
-      this.dataSource = new MatTableDataSource(res);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+  setTableData(data: Location[]) {
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
@@ -87,13 +98,17 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
       .confirm({ message: `Delete ${location.name}`, title: 'Delete location' })
       .subscribe((confirm) => {
         if (confirm) {
-          console.log('Delete ', location);
+          this.loader.open();
           this.locationService.deleteLocation(location).subscribe(
             (res) => {
+              this.resLocation = this.resLocation!.filter( loc => loc.locationId !== location.locationId);
+              this.setTableData(this.resLocation!);
               this.toastr.success('Deleted location');
+              this.loader.close();
             },
             (error) => {
               this.toastr.error(error?.error?.message || error?.error?.error);
+              this.loader.close();
             }
           );
         }
@@ -121,27 +136,34 @@ export class InspectLocationComponent implements OnInit, AfterViewInit {
     });
     dialogRef.afterClosed().subscribe((result) => {
       if (result?.locationId == 0) {
+        this.loader.open();
         this.locationService.createLocation(result).subscribe(
           (res) => {
-            this.ngOnInit();
+            this.resLocation?.push(res);
+            this.setTableData(this.resLocation!);
             this.toastr.success('Created new location');
+            this.loader.close();
           },
           (error) => {
             this.toastr.error(error?.error?.message || error?.error?.error);
+            this.loader.close();
           }
         );
       } else if (result?.locationId) {
+        this.loader.open();
         this.locationService.updateLocation(result).subscribe(
           (res) => {
-            this.ngOnInit();
+            this.resLocation = this.resLocation!.map( loc => loc.locationId == res.locationId ? res : loc);
+            this.setTableData(this.resLocation!);
             this.toastr.success('Updated location');
+            this.loader.close();
           },
           (error) => {
             this.toastr.error(error?.error?.message || error?.error?.error);
+            this.loader.close();
           }
         );
       }
-      console.log('dialog return', result);
     });
   }
 }

@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
-import { AdminPageComponent } from './components/admin-page/admin-page.component';
-import { AdminResolveComponent } from './components/admin-resolve/admin-resolve.component';
-import { CalendarDceComponent } from './components/calendar/calendar-dce/calendar-dce.component';
+import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
+import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
+import { AdminResolveComponent } from './components/admin/admin-resolve/admin-resolve.component';
 import { CalendarKsComponent } from './components/calendar/calendar-ks/calendar-ks.component';
-import { CreateLocationComponent } from './components/create-location/create-location.component';
+import { CreateLocationComponent } from './components/admin/create-location/create-location.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
 import { SigninPageComponent } from './components/signin-page/signin-page.component';

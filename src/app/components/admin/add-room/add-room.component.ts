@@ -65,7 +65,6 @@ export class AddRoomComponent implements OnInit {
     const type = this.addRoomForm.value.type;
     const capacity = this.addRoomForm.value.capacity;
     this.data = { ...this.data, name, type, capacity };
-    console.log("data", this.data, name, type, capacity);
     return valid;
   }
 
