@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Building } from 'src/app/models/building';
-
+import { delay } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
@@ -43,20 +43,20 @@ export class BuildingService {
   constructor() {}
 
   getBuildingsByLocationId(locationId: number): Observable<Building[]> {
-    return of(this.buildings.filter((e) => e.locationId == locationId));
+    return of(this.buildings.filter((e) => e.locationId == locationId)).pipe(delay(1000));
   }
 
   createBuilding(building: Building): Observable<Building> {
     this.buildings.push(building);
-    return of(building);
+    return of(building).pipe(delay(1000));
   }
 
   updateBuilding(building: Building): Observable<Building> {
-    return of(building);
+    return of(building).pipe(delay(1000));
   }
 
   deleteBuildingById(buildingId: number): Observable<boolean> {
-    return of(false);
+    return of(false).pipe(delay(1000));
   }
 
 }
