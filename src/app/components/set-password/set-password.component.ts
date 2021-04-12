@@ -24,7 +24,7 @@ export class SetPasswordComponent implements OnInit {
     }
     this.authService.setPassword(this.newPassword).subscribe(
     data => {
-      console.log(data);
+      this.authService.jwt = data.data;
     }, 
     error => {
       console.log(error);
