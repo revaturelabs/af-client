@@ -62,12 +62,10 @@ export class CreateLocationComponent implements OnInit {
     }
   }
 
-  gotoBuildingStep(event: any) {
+  gotoBuildingStep() {
     // complete the current step
     if (this.currentLocation?.locationId) {
-      this.buildingChild.createTable();
       this.completeLocationSelect = true;
-      this.stepper.next();
     } else {
       this.toastr.warning('Please choose a location to proceed');
     }
@@ -79,7 +77,7 @@ export class CreateLocationComponent implements OnInit {
       this.locationChild.resetChooseLocation();
       this.buildingChild.unChooseBuilding();
     } else if(event.selectedIndex == 1) {
-      // this.buildingChild.ngOnInit();
+      this.buildingChild.createTable();
     } 
     else if(event.selectedIndex == 2) {
       this.roomChild.createTable();

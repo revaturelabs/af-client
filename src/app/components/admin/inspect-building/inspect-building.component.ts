@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   Input,
   OnInit,
@@ -101,7 +100,7 @@ export class InspectBuildingComponent implements OnInit {
 
   editBuilding(building: Building) {
     this.buildingData = building;
-    this.openDialog('Edit location');
+    this.openDialog('Edit building');
   }
 
   deleteBuilding(building: Building) {
@@ -147,7 +146,7 @@ export class InspectBuildingComponent implements OnInit {
       locationId: this.locationService.currentLocation?.locationId,
       buildingId: 0,
     };
-    this.openDialog('Add location');
+    this.openDialog('Add building');
   }
 
   openDialog(title: string) {
