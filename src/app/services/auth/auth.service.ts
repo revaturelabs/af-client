@@ -16,7 +16,7 @@ export interface DecodedJwtDTO {
   providedIn: 'root',
 })
 export class AuthService {
-  url: string = 'http://35.232.107.40:8080/';
+  url: string = 'http://34.123.74.34:80/';
   decodedJwtDTO?: DecodedJwtDTO = { id: 1, email: 'test@test.com', role: 'trainer'};
 
   pendingUsers: User[] = [
@@ -56,7 +56,7 @@ export class AuthService {
 
   setPassword(password: string) {
     return this.httpClient
-      .post<{data: string}>(this.url+"password", password)
+      .patch<{data: string}>(this.url+"password", password);
   }
 
   getAllPendingUsers(): Observable<User[]> {
