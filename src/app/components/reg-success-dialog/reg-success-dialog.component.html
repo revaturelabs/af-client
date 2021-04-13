@@ -1,0 +1,26 @@
+<div class="dialog-container">
+  <h1 mat-dialog-title>Thank You For Registering!</h1>
+
+  <mat-divider class="mb-3"></mat-divider>
+
+  <div mat-dialog-content>
+    <p>Hi {{data.name}},</p>
+    <p>
+      You have successfully submitted your registration.
+    </p>
+    <p>
+      Please note that an administrator will need to review and approve or deny your request.
+      Once approved, you will be notified via email.
+      Please check your email for a link to complete your registration and account setup.
+    </p>
+    <p>
+      - The AssignForce Team
+    </p>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div mat-dialog-actions class="d-flex justify-content-end">
+    <button mat-raised-button color="primary" (click)="closeDialog()" type="button">OK</button>
+  </div>
+</div>
