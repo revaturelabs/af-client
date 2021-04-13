@@ -29,5 +29,5 @@ jobs:
         sudo npm install
         sudo npm install -g firebase-tools
         sudo npm run build
-        firebase use dev --token ${{ secrets.FIREBASE_TOKEN }}
-        firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
+        firebase use dev --token ${{ secrets.DEV_FIREBASE_TOKEN }}
+        firebase deploy --token ${{ secrets.DEV_FIREBASE_TOKEN }}
