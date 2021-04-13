@@ -1,4 +1,4 @@
-<mat-card class="example-card">
+<mat-card class="example-card" *ngIf="currentReservation">
   <mat-card-header>
     <mat-card-title>{{currentReservation?.reserver}}</mat-card-title>
     <mat-card-subtitle>{{currentReservation?.roomId}} </mat-card-subtitle>
