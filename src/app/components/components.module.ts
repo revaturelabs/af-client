@@ -22,6 +22,7 @@ import { RoomTableComponent } from './room-table/room-table.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminResolveComponent } from './admin/admin-resolve/admin-resolve.component';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
+import { SetPasswordComponent } from './set-password/set-password.component';
 import { TrainerPageComponent } from './trainer-page/trainer-page.component';
 import { TrainerProfileComponent } from './trainer-profile/trainer-profile.component';
 import { TrainerDashboardComponent } from './trainer-dashboard/trainer-dashboard.component';
@@ -61,7 +62,8 @@ const components = [
   TrainerProfileComponent,
   TrainerDashboardComponent,
   TrainerCurrentReservationsComponent,
-  NotFoundComponent
+  NotFoundComponent,
+  SetPasswordComponent
 ];
 
 @NgModule({
