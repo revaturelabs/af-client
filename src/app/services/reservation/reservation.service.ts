@@ -99,10 +99,11 @@ export class ReservationService {
   }
 
   // Read
-  getReservationsByRoom(room: Room, token: string): Observable<Reservation[]> {
+  getReservationsByRoom(room: Room): Observable<Reservation[]> {
+    console.log(room.roomId);
     return this.http
       .get<Reservation[]>(
-        `${this.BASE_URL}/reservations?room=${room.roomId}`,this.options
+        `${this.BASE_URL}/reservations?roomId=${room.roomId}`,this.options
       );
 
     // return of(this.reservations.filter((e) => e.roomId == room.roomId)).pipe(
