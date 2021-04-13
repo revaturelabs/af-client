@@ -20,6 +20,7 @@ export class AuthService {
   decodedJwtDTO?: DecodedJwtDTO;
   jwt?: string;
 
+
   pendingUsers: User[] = [
     {
       userId: 1,
@@ -101,6 +102,21 @@ export class AuthService {
       .post<{ data: string }>(this.url + 'login', user)
       .toPromise();
     return jwt.data;
+  }
+
+  setPassword(password: string) {
+    const options = {
+      headers: {
+        Authorization: this.jwt!
+      }
+    }
+    const body = {
+      email:this.decodedJwtDTO?.email,
+      userId:this.decodedJwtDTO?.id,
+      password:password
+    }
+    return this.httpClient
+      .patch<{data: string}>(this.url+"password?id="+this.jwt, body, options);
   }
 
   getAllPendingUsers(): Observable<User[]> {

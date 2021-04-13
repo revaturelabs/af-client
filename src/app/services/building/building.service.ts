@@ -10,7 +10,13 @@ import { LocationService } from '../location/location.service';
 })
 export class BuildingService {
 
+  baseUrl = 'http://104.154.225.237:80';
   currentBuilding?: Building = {};
+  options = {
+    headers: {
+      Authorization: this.authService.jwt!
+    }
+  }
 
   buildings: Building[] = [
     { buildingId: 10, address: 'address 0', locationId: 1 },
@@ -45,13 +51,6 @@ export class BuildingService {
 
   constructor(private locationService:LocationService,private authService: AuthService, private httpClient: HttpClient) {}
 
-  baseUrl = 'http://104.154.225.237:80';
-  options = {
-    headers: {
-      Authorization: this.authService.jwt!
-    }
-  }
-
 
   getBuildingsByLocationId(locationId: number): Observable<Building[]> {
     //return of(this.buildings.filter((e) => e.locationId == locationId)).pipe(delay(1000));
@@ -60,15 +59,18 @@ export class BuildingService {
   }
 
   createBuilding(building: Building): Observable<Building> {
+    return this.httpClient.post<Building>(`${this.baseUrl}/locations/${building.locationId}/buildings`,building, this.options);
     this.buildings.push(building);
     return of(building).pipe(delay(1000));
   }
 
   updateBuilding(building: Building): Observable<Building> {
+    return this.httpClient.put<Building>(`${this.baseUrl}/locations/${building.locationId}/buildings/${building.buildingId}`,building, this.options);
     return of(building).pipe(delay(1000));
   }
 
-  deleteBuildingById(buildingId: number): Observable<boolean> {
+  deleteBuildingById(building: Building): Observable<boolean> {
+    return this.httpClient.delete<boolean>(`${this.baseUrl}/locations/${building.locationId}/buildings/${building.buildingId}`, this.options);
     return of(false).pipe(delay(1000));
   }
 

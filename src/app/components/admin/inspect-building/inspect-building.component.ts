@@ -113,7 +113,7 @@ export class InspectBuildingComponent implements OnInit {
         if (confirm) {
           this.loader.open();
           this.buildingService
-            .deleteBuildingById(building.buildingId!)
+            .deleteBuildingById(building)
             .subscribe(
               (res) => {
                 this.resBuilding = this.resBuilding.filter(
@@ -159,7 +159,7 @@ export class InspectBuildingComponent implements OnInit {
         this.buildingService.createBuilding(result).subscribe(
           (res) => {
             this.loader.close();
-            this.resBuilding.push(result);
+            this.resBuilding.push(res);
             this.setTableData(this.resBuilding);
             this.toastr.success('Created new building');
           },

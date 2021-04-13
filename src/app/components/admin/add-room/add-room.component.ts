@@ -8,7 +8,7 @@ import { AddBuildingComponent, BuildingDialogData } from '../add-building/add-bu
 export interface RoomDialogData {
   roomId?: number;
   name?: string;
-  type?: RoomType;
+  type?: string;
   capacity?: number;
   buildingId?: number;
   title?: String;
@@ -25,8 +25,10 @@ export class AddRoomComponent implements OnInit {
   addRoomForm!: FormGroup;
 
   roomTypes = [
-    { value: RoomType.CLASSROOM, viewValue: 'CLASSROOM' },
-    { value: RoomType.ONLINE, viewValue: 'ONLINE'}
+    { value: 'MEETING', viewValue: 'MEETING' },
+    { value: 'REMOTE', viewValue: 'REMOTE'},
+    { value: 'VIRTUAL', viewValue: 'VIRTUAL'}
+
   ]
 
   constructor(
@@ -64,6 +66,7 @@ export class AddRoomComponent implements OnInit {
     const name = this.addRoomForm.value.name;
     const type = this.addRoomForm.value.type;
     const capacity = this.addRoomForm.value.capacity;
+
     this.data = { ...this.data, name, type, capacity };
     return valid;
   }
