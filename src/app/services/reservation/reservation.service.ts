@@ -100,7 +100,6 @@ export class ReservationService {
 
   // Read
   getReservationsByRoom(room: Room): Observable<Reservation[]> {
-    console.log(room.roomId);
     return this.http
       .get<Reservation[]>(
         `${this.BASE_URL}/reservations?roomId=${room.roomId}`,this.options
@@ -114,11 +113,16 @@ export class ReservationService {
   }
 
   getReservationByReserver(): Observable<Reservation[]> {
-    return of(this.reservations).pipe(
-      tap(() => this.loadingBar.start()),
-      delay(1000),
-      tap(() => this.loadingBar.complete())
-    );
+    return this.http
+      .get<Reservation[]>(
+        `${this.BASE_URL}/reservations?reserver=${this.authService.decodedJwtDTO?.email}`,this.options
+      );
+    
+    // return of(this.reservations).pipe(
+    //   tap(() => this.loadingBar.start()),
+    //   delay(1000),
+    //   tap(() => this.loadingBar.complete())
+    // );
   }
 
   // Update
