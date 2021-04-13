@@ -10,6 +10,7 @@ export interface ReservationDialogData {
   roomId: number;
   status: string;
   action?: string;
+  reservationTitle: string;
 }
 
 

@@ -5,13 +5,14 @@ import { Observable, of } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 import { Reservation } from '../../models/reservation';
 import { Room } from '../../models/room';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ReservationService {
   // Replace with production URL later.
-  BASE_URL: string = 'http://localhost:8080';
+  BASE_URL: string = 'http://23.251.149.85:80';
 
   reservations: Reservation[] = [
     {
@@ -57,54 +58,58 @@ export class ReservationService {
   ];
 
   constructor(
+    private authService: AuthService,
     private http: HttpClient,
     private loadingBar: LoadingBarService
   ) {}
 
+  options = {
+    headers: {
+      Authorization: this.authService.jwt!
+    }
+  }
+
   // Create
   createReservation(
-    reservation: Reservation,
-    token: string
+    reservation: Reservation
   ): Observable<Reservation> {
     console.log('reservation.service.createReservation:', reservation);
-    // return this.http
-    //   .post<Reservation>(
-    //     `${this.BASE_URL}/rooms/${reservation.roomId}/reservations`,
-    //     reservation,
-    //     {
-    //       headers: {
-    //         Authorization: token,
-    //       },
-    //     }
-    //   );
+    let body =  // formatting reservation with fields the backend expects
+    {
+      startTime: reservation.startTime,
+      endTime: reservation.endTime,
+      roomId: reservation.roomId,
+      title: reservation.title
+    }
+    
+    return this.http
+      .post<Reservation>(
+        `${this.BASE_URL}/reservations`,body,
+        this.options
+      );
 
-    reservation.reservationId = this.reservations.length + 1;
-    this.reservations = [...this.reservations, reservation];
-    console.log('reservation.service.createReservation:', reservation);
-    return of(reservation).pipe(
-      tap(() => this.loadingBar.start()),
-      delay(1000),
-      tap(() => this.loadingBar.complete())
-    );
+    // reservation.reservationId = this.reservations.length + 1;
+    // this.reservations = [...this.reservations, reservation];
+    // console.log('reservation.service.createReservation:', reservation);
+    // return of(reservation).pipe(
+    //   tap(() => this.loadingBar.start()),
+    //   delay(1000),
+    //   tap(() => this.loadingBar.complete())
+    // );
   }
 
   // Read
   getReservationsByRoom(room: Room, token: string): Observable<Reservation[]> {
-    // return this.http
-    //   .get<Reservation[]>(
-    //     `${this.BASE_URL}/rooms/${room.roomId}/reservations`,
-    //     {
-    //       headers: {
-    //         Authorization: token,
-    //       },
-    //     }
-    //   );
+    return this.http
+      .get<Reservation[]>(
+        `${this.BASE_URL}/reservations?room=${room.roomId}`,this.options
+      );
 
-    return of(this.reservations.filter((e) => e.roomId == room.roomId)).pipe(
-      tap(() => this.loadingBar.start()),
-      delay(1000),
-      tap(() => this.loadingBar.complete())
-    );
+    // return of(this.reservations.filter((e) => e.roomId == room.roomId)).pipe(
+    //   tap(() => this.loadingBar.start()),
+    //   delay(1000),
+    //   tap(() => this.loadingBar.complete())
+    // );
   }
 
   getReservationByReserver(): Observable<Reservation[]> {
@@ -117,60 +122,57 @@ export class ReservationService {
 
   // Update
   updateReservation(
-    reservation: Reservation,
-    token: string
+    reservation: Reservation
   ): Observable<Reservation> {
-    // return this.http
-    //   .put<Reservation>(
-    //     `${this.BASE_URL}/rooms/${reservation.roomId}/reservations/${reservation.reservationId}`,
-    //     reservation,
-    //     {
-    //       headers: {
-    //         Authorization: token,
-    //       },
-    //     }
-    //   );
+    const body =  // formatting reservation with fields the backend expects
+    {
+      startTime: reservation.startTime,
+      endTime: reservation.endTime,
+      title: reservation.title
+    }
+    return this.http
+      .patch<Reservation>(
+        `${this.BASE_URL}/reservations/${reservation.reservationId}`,
+        body,
+        this.options
+      );
 
-    this.reservations = this.reservations.map((r) => {
-      if (r.reservationId === reservation.reservationId) {
-        return { ...reservation };
-      }
-      return r;
-    });
+    // this.reservations = this.reservations.map((r) => {
+    //   if (r.reservationId === reservation.reservationId) {
+    //     return { ...reservation };
+    //   }
+    //   return r;
+    // });
 
-    return of(reservation).pipe(
-      tap(() => this.loadingBar.start()),
-      delay(1000),
-      tap(() => this.loadingBar.complete())
-    );
+    // return of(reservation).pipe(
+    //   tap(() => this.loadingBar.start()),
+    //   delay(1000),
+    //   tap(() => this.loadingBar.complete())
+    // );
   }
 
   // Cancel
   cancelReservation(
-    reservation: Reservation,
-    token: string
+    reservation: Reservation
   ): Observable<Reservation> {
-    // return this.http
-    //   .delete<Reservation>(
-    //     `${this.BASE_URL}/rooms/${reservation.roomId}/reservations/${reservation.reservationId}`,
-    //     {
-    //       headers: {
-    //         Authorization: token,
-    //       },
-    //     }
-    //   );
+    return this.http
+      .patch<Reservation>(
+        `${this.BASE_URL}/reservations/${reservation.reservationId}?action=cancel`,
+        {},
+        this.options
+      );
 
-    reservation.status = 'canceled';
-    console.log('reservation.service.deleteReservation:', reservation);
+    // reservation.status = 'canceled';
+    // console.log('reservation.service.deleteReservation:', reservation);
 
-    this.reservations = this.reservations.filter(
-      (r) => r.reservationId !== reservation.reservationId
-    );
+    // this.reservations = this.reservations.filter(
+    //   (r) => r.reservationId !== reservation.reservationId
+    // );
 
-    return of(reservation).pipe(
-      tap(() => this.loadingBar.start()),
-      delay(1000),
-      tap(() => this.loadingBar.complete())
-    );
+    // return of(reservation).pipe(
+    //   tap(() => this.loadingBar.start()),
+    //   delay(1000),
+    //   tap(() => this.loadingBar.complete())
+    // );
   }
 }

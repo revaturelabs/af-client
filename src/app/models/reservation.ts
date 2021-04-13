@@ -3,6 +3,7 @@ export class Reservation{
     reserver?: string;
     startTime?: number;
     endTime?: number;
+    title?: string;
     roomId?: number;
     status?: string;
 }
