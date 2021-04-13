@@ -116,18 +116,18 @@ export class AuthService {
       password:password
     }
     return this.httpClient
-      .patch<{data: string}>(this.url+"password?id="+this.jwt, body, options);
+      .patch<{data: string}>(this.url+"password", body, options);
   }
 
   getAllPendingUsers(): Observable<User[]> {
-    // return this.httpClient.get<User[]>(`${this.url}resolve`);
-    return of(this.pendingUsers);
+    return this.httpClient.get<User[]>(`${this.url}resolve`, { headers: {Authorization: this.jwt! } });
+    //return of(this.pendingUsers);
     // return this.httpClient.get<User[]>(this.url + 'resovle');
   }
 
   resolveUser(user: User): Observable<User> {
-    // return this.httpClient.put(`${this.url}resolve`, user);
-    return of(user);
+    return this.httpClient.patch(`${this.url}resolve/${user.userId}`, user, { headers: {Authorization: this.jwt! } });
+    //return of(user);
   }
 
   isLoggedIn(): boolean {

@@ -59,13 +59,14 @@ export class AdminResolveComponent implements OnInit, AfterViewInit {
   approveAction(user: User) {
     this.confirmService.confirm().subscribe((confirm) => {
       if (confirm) {
-        user.status = 'APPROVE';
+        user.status = 'approved';
         this.authService.resolveUser(user).subscribe(
           (res) => {
             this.toastr.success('Approve success');
             this.setTable();
           },
           (error) => {
+            console.log(error);
             this.toastr.error(error?.error?.message || error?.error?.error);
           }
         );
@@ -76,7 +77,7 @@ export class AdminResolveComponent implements OnInit, AfterViewInit {
   denyAction(user: User) {
     this.confirmService.confirm().subscribe((confirm) => {
       if (confirm) {
-        user.status = 'DENY';
+        user.status = 'denied';
         this.authService.resolveUser(user).subscribe(
           (res) => {
             this.toastr.success('Denied a user');
