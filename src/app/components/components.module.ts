@@ -22,16 +22,19 @@ import { RoomTableComponent } from './room-table/room-table.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminResolveComponent } from './admin/admin-resolve/admin-resolve.component';
 import { AdminPageComponent } from './admin/admin-page/admin-page.component';
+import { SetPasswordComponent } from './set-password/set-password.component';
 import { TrainerPageComponent } from './trainer-page/trainer-page.component';
 import { TrainerProfileComponent } from './trainer-profile/trainer-profile.component';
 import { TrainerDashboardComponent } from './trainer-dashboard/trainer-dashboard.component';
 import { TrainerCurrentReservationsComponent } from './trainer-current-reservations/trainer-current-reservations.component';
 import { IvyCarouselModule } from 'angular-responsive-carousel';
+import { NotFoundComponent } from './not-found/not-found.component';
 import { SecondsHoursPipe } from '../pipes/seconds-hours.pipe';
 import { AddLocationComponent } from './admin/add-location/add-location.component';
 import { AddRoomComponent } from './admin/add-room/add-room.component';
 import { InspectLocationComponent } from './admin/inspect-location/inspect-location.component';
 import { InspectRoomComponent } from './admin/inspect-room/inspect-room.component';
+
 
 
 const components = [
@@ -58,7 +61,9 @@ const components = [
   TrainerPageComponent,
   TrainerProfileComponent,
   TrainerDashboardComponent,
-  TrainerCurrentReservationsComponent
+  TrainerCurrentReservationsComponent,
+  NotFoundComponent,
+  SetPasswordComponent
 ];
 
 @NgModule({

@@ -151,12 +151,16 @@ export class InspectLocationComponent implements OnInit {
         );
       } else if (result?.locationId) {
         this.loader.open();
+        console.log("update location", result);
+        
         this.locationService.updateLocation(result).subscribe(
           (res) => {
             this.resLocation = this.resLocation!.map( loc => loc.locationId == res.locationId ? res : loc);
             this.setTableData(this.resLocation!);
             this.toastr.success('Updated location');
             this.loader.close();
+            console.log("res update", res);
+            
           },
           (error) => {
             this.toastr.error(error?.error?.message || error?.error?.error);

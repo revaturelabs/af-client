@@ -5,7 +5,7 @@
             <app-inspect-location (click)="getCurrentLocation()"></app-inspect-location>
             <div class="d-flex">
                 <button class="w-100" color="primary" mat-raised-button matStepperNext
-                    (click)="gotoBuildingStep($event)">Next</button>
+                    (click)="gotoBuildingStep()">Next</button>
             </div>
         </mat-step>
         <mat-step label="Inspect Building Page" [completed]="completeBuildingSelect">

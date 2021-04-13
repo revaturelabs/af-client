@@ -2,6 +2,9 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap'
+@import '~bootstrap-icons/font/bootstrap-icons'
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Montserrat:wght@400;600;700;800;900&family=Playfair+Display:wght@400;500;800&family=Poppins&display=swap')
 
 html, body
   margin: 0
@@ -15,7 +18,21 @@ app-root
 main
   min-height: 90vh
 
+.font-poppins
+  font-family: 'Poppins', sans-serif
+
+.font-montserrat
+  font-family: 'Montserrat', sans-serif
+
+.font-dancing
+  font-family: 'Dancing Script', cursive
+
+.font-playfair
+  font-family: 'Playfair Display', serif
+
 /* ngx-toaster */
 .toast-top-right
   top: calc(64px + 1em) !important
 
+.spacer
+  flex: 1 1 auto

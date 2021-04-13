@@ -16,19 +16,69 @@ export interface DecodedJwtDTO {
   providedIn: 'root',
 })
 export class AuthService {
-  url: string = 'http://35.232.107.40:8080/';
-  decodedJwtDTO?: DecodedJwtDTO = { id: 1, email: 'test@test.com', role: 'trainer'};
+  url: string = 'http://34.123.74.34:80/';
+  decodedJwtDTO?: DecodedJwtDTO;
+  jwt?: string;
+
 
   pendingUsers: User[] = [
-    {userId: 1, email: 'user1@g.com', password: '', status: 'PENDING', role: 'trainer'},
-    {userId: 2, email: 'user2@g.com', password: '', status: 'PENDING', role: 'trainer'},
-    {userId: 3, email: 'user3@g.com', password: '', status: 'PENDING', role: 'trainer'},
-    {userId: 4, email: 'user4@g.com', password: '', status: 'PENDING', role: 'trainer'},
-    {userId: 5, email: 'user5@g.com', password: '', status: 'PENDING', role: 'trainer'},
-    {userId: 6, email: 'user6@g.com', password: '', status: 'PENDING', role: 'trainer'},
-    {userId: 7, email: 'user7@g.com', password: '', status: 'PENDING', role: 'trainer'},
-    {userId: 8, email: 'user8@g.com', password: '', status: 'PENDING', role: 'trainer'},
-  ]
+    {
+      userId: 1,
+      email: 'user1@g.com',
+      password: '',
+      status: 'PENDING',
+      role: 'trainer',
+    },
+    {
+      userId: 2,
+      email: 'user2@g.com',
+      password: '',
+      status: 'PENDING',
+      role: 'trainer',
+    },
+    {
+      userId: 3,
+      email: 'user3@g.com',
+      password: '',
+      status: 'PENDING',
+      role: 'trainer',
+    },
+    {
+      userId: 4,
+      email: 'user4@g.com',
+      password: '',
+      status: 'PENDING',
+      role: 'trainer',
+    },
+    {
+      userId: 5,
+      email: 'user5@g.com',
+      password: '',
+      status: 'PENDING',
+      role: 'trainer',
+    },
+    {
+      userId: 6,
+      email: 'user6@g.com',
+      password: '',
+      status: 'PENDING',
+      role: 'trainer',
+    },
+    {
+      userId: 7,
+      email: 'user7@g.com',
+      password: '',
+      status: 'PENDING',
+      role: 'trainer',
+    },
+    {
+      userId: 8,
+      email: 'user8@g.com',
+      password: '',
+      status: 'PENDING',
+      role: 'trainer',
+    },
+  ];
 
   constructor(private httpClient: HttpClient) {}
 
@@ -54,12 +104,29 @@ export class AuthService {
     return jwt.data;
   }
 
-  getAllPendingUsers(): Observable<User[]> {
-    return of(this.pendingUsers);
-    return this.httpClient.get<User[]>(this.url + 'resovle');
+  setPassword(password: string) {
+    const options = {
+      headers: {
+        Authorization: this.jwt!
+      }
+    }
+    const body = {
+      email:this.decodedJwtDTO?.email,
+      userId:this.decodedJwtDTO?.id,
+      password:password
+    }
+    return this.httpClient
+      .patch<{data: string}>(this.url+"password?id="+this.jwt, body, options);
   }
 
-  resolveUser(user: User):Observable<User> {
+  getAllPendingUsers(): Observable<User[]> {
+    // return this.httpClient.get<User[]>(`${this.url}resolve`);
+    return of(this.pendingUsers);
+    // return this.httpClient.get<User[]>(this.url + 'resovle');
+  }
+
+  resolveUser(user: User): Observable<User> {
+    // return this.httpClient.put(`${this.url}resolve`, user);
     return of(user);
   }
 
@@ -82,16 +149,21 @@ export class AuthService {
 
   getCurrentUserInfo() {
     let value = localStorage.getItem('Authorization');
-    let user: JwtDTO | undefined;
+    console.log("jwt", value);
     if (value != null) {
+      this.jwt = value;
       try {
-        user = JSON.parse(value!);
-        this.decodedJwtDTO = jwt_decode(user?.data!);
+        this.decodedJwtDTO = jwt_decode(value);
       } catch (e) {
-        user = undefined;
+        this.decodedJwtDTO = undefined;
       }
     }
+    console.log('current user', this.decodedJwtDTO);
   }
 
+  getJWT(): string | undefined {
+    this.getCurrentUserInfo();
+    return this.jwt;
+  }
 
 }
