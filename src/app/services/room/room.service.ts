@@ -31,6 +31,13 @@ export class RoomService {
     );
   }
 
+  getAllVirtualRoom(): Observable<Room[]> {
+    return this.httpClient.get<Room[]>(
+      `${this.baseUrl}/locations/1/buildings/1/rooms?type=VIRTUAL`,
+      this.options
+    );
+  }
+
   createRoom(room: Room): Observable<Room> {
     return this.httpClient.post<Room>(
       `${this.baseUrl}/locations/${this.buildingService.currentBuilding?.locationId}/buildings/${room.buildingId}/rooms`,

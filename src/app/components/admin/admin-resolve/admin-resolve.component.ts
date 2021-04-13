@@ -14,6 +14,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 })
 export class AdminResolveComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['userId', 'email', 'status', 'role', 'action'];
+  userRole = [
+    { value: 'trainer', viewValue: 'trainer' },
+    { value: 'admin', viewValue: 'admin' },
+  ];
+
   dataSource!: MatTableDataSource<User>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
