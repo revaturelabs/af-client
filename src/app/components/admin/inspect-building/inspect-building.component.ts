@@ -33,7 +33,6 @@ export class InspectBuildingComponent implements OnInit {
   selectedBuilding?: Building;
   buildingData?: Building;
   displayedColumns: string[] = [
-    'buildingId',
     'address',
     'roomCount',
     'actions',

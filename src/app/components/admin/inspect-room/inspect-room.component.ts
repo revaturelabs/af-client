@@ -25,14 +25,9 @@ import { AddRoomComponent } from '../add-room/add-room.component';
 })
 export class InspectRoomComponent implements OnInit {
   roomData?: Room;
+  selectedRoom?: Room;
 
-  displayedColumns: string[] = [
-    'roomId',
-    'name',
-    'type',
-    'capacity',
-    'actions',
-  ];
+  displayedColumns: string[] = ['name', 'type', 'capacity', 'actions'];
   dataSource!: MatTableDataSource<Room>;
   resRoom!: Room[];
 
@@ -51,7 +46,9 @@ export class InspectRoomComponent implements OnInit {
     private loader: AppLoaderService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.selectedRoom = undefined;
+  }
 
   createTable(): void {
     this.loader.open();
@@ -95,7 +92,9 @@ export class InspectRoomComponent implements OnInit {
           this.loader.open();
           this.roomService.deleteRoom(room).subscribe(
             (res) => {
-              this.resRoom = this.resRoom.filter( r => r.roomId !== room.roomId);
+              this.resRoom = this.resRoom.filter(
+                (r) => r.roomId !== room.roomId
+              );
               this.setTableData(this.resRoom);
               this.toastr.success('Deleted room');
               this.loader.close();
@@ -140,7 +139,9 @@ export class InspectRoomComponent implements OnInit {
         this.loader.open();
         this.roomService.updateRoom(result).subscribe(
           (res) => {
-            this.resRoom = this.resRoom.map( r => r.roomId == result.roomId ? result : r);
+            this.resRoom = this.resRoom.map((r) =>
+              r.roomId == result.roomId ? result : r
+            );
             this.setTableData(this.resRoom);
             this.loader.close();
             this.toastr.success('Updated room');
@@ -153,4 +154,9 @@ export class InspectRoomComponent implements OnInit {
       }
     });
   }
+
+  chooseRoom(room:Room) {
+    this.selectedRoom = room;
+  }
+
 }
