@@ -51,12 +51,15 @@ export class TrainerCurrentReservationsComponent implements OnInit {
     this.currentReservation = this.reservations[this.reservationIndex];
   }
 
-  deleteReservation() {
+  deleteReservation(reservation: Reservation) {
     //TODO make http request to delete the current reservation
     this.conformService.confirm().subscribe((confirm) => {
       if (confirm) {
+        this.reservationService.cancelReservation(reservation).subscribe(
+          (success) => this.toastr.success('Cancelled reservation')
+        );
         // will delete
-        this.toastr.success('Deleted reservation');
+        //this.toastr.success('Deleted reservation');
         this.ngOnInit();
       }
     });
