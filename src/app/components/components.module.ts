@@ -13,8 +13,7 @@ import { AppComfirmComponent } from '../services/app-confirm/app-confirm.compone
 import { AddBuildingComponent } from './admin/add-building/add-building.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SigninPageComponent } from './signin-page/signin-page.component';
-import { SignupPageComponent } from './signup-page/signup-page.component';
-import {GoogleMapRevModule} from '../components/landing-page/google-map/google-map-rev.module';
+import { GoogleMapRevModule } from '../components/landing-page/google-map/google-map-rev.module';
 import { ReservationPageComponent } from './reservation-page/reservation-page.component';
 import { BuildingTableComponent } from './building-table/building-table.component';
 import { LocationTableComponent } from './location-table/location-table.component';
@@ -34,8 +33,7 @@ import { AddLocationComponent } from './admin/add-location/add-location.componen
 import { AddRoomComponent } from './admin/add-room/add-room.component';
 import { InspectLocationComponent } from './admin/inspect-location/inspect-location.component';
 import { InspectRoomComponent } from './admin/inspect-room/inspect-room.component';
-
-
+import { RegSuccessDialogComponent } from './reg-success-dialog/reg-success-dialog.component';
 
 const components = [
   HeaderComponent,
@@ -50,7 +48,6 @@ const components = [
   AddRoomComponent,
   LandingPageComponent,
   SigninPageComponent,
-  SignupPageComponent,
   ReservationPageComponent,
   BuildingTableComponent,
   LocationTableComponent,
@@ -63,7 +60,8 @@ const components = [
   TrainerDashboardComponent,
   TrainerCurrentReservationsComponent,
   NotFoundComponent,
-  SetPasswordComponent
+  SetPasswordComponent,
+  RegSuccessDialogComponent,
 ];
 
 @NgModule({
@@ -75,12 +73,10 @@ const components = [
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    GoogleMapRevModule,  
+    GoogleMapRevModule,
     CalendarModule,
-    IvyCarouselModule
+    IvyCarouselModule,
   ],
-  exports: [
-    components
-  ]
+  exports: [components],
 })
-export class ComponentsModule { }
+export class ComponentsModule {}

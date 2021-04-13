@@ -20,7 +20,6 @@ const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'signin', component: SigninPageComponent },
   { path: 'reservation', component: ReservationPageComponent },
-  { path: 'calendar', component: CalendarKsComponent },
   {
     path: 'admin-page',
     component: AdminPageComponent,
