@@ -7,6 +7,7 @@ import { CalendarKsComponent } from './components/calendar/calendar-ks/calendar-
 import { CreateLocationComponent } from './components/admin/create-location/create-location.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
+import { SetPasswordComponent } from './components/set-password/set-password.component';
 import { SigninPageComponent } from './components/signin-page/signin-page.component';
 import { TrainerDashboardComponent } from './components/trainer-dashboard/trainer-dashboard.component';
 import { TrainerPageComponent } from './components/trainer-page/trainer-page.component';
@@ -40,6 +41,7 @@ const routes: Routes = [
       { path: 'trainer-profile', component: TrainerProfileComponent },
       { path: 'reservation', component: ReservationPageComponent },
       { path: 'trainer-dashboard', component: TrainerDashboardComponent },
+      { path: 'change-password', component: SetPasswordComponent },
     ],
   },
   { path: 'not-found', component: NotFoundComponent },
