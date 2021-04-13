@@ -1,0 +1,55 @@
+<div class="container">
+  <mat-horizontal-stepper linear #stepper>
+    <mat-step completed="false">
+      <ng-template matStepLabel>
+        Select Location
+      </ng-template>
+
+      <app-location-table (click)="stepper.reset(); getCurrentLocation(); resetBuildingRoom();"></app-location-table>
+
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedLocation" class="w-100">Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step label="Select Building" completed="false">
+      <app-building-table [locationData]="selectedLocation?.name" (click)="getCurrentBuilding(); resetRoom()">
+      </app-building-table>
+
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedBuilding" class="w-100">Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step completed="false" #roomStep>
+      <ng-template matStepLabel>Select Room</ng-template>
+
+      <app-room-table [buildingData]="selectedBuilding?.address" [locationData]="selectedLocation?.name"
+        (click)="getCurrentRoom()"></app-room-table>
+
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedRoom" class="w-100">Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step completed="false">
+      <ng-template matStepLabel>Select Date and Time</ng-template>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Location: {{selectedLocation?.name}}</li>
+          <li class="breadcrumb-item">Building: {{selectedBuilding?.address}}</li>
+          <li class="breadcrumb-item active" aria-current="page">Room: {{selectedRoom?.name}}</li>
+        </ol>
+      </nav>
+      <app-calendar-ks *ngIf="selectedRoom" [roomData]="selectedRoom!"></app-calendar-ks>
+
+      <div class="d-flex btnDiv">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="accent"(click)="stepper.reset()" class="w-100">Reset</button>
+      </div>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+</div>

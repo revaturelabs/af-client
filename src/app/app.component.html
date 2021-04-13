@@ -1,0 +1,16 @@
+<header>
+  <app-header></app-header>
+</header>
+
+<div class="main-container">
+  <main class="grid-container">
+    <div class="ro-container" fxFlexLayout="column" fxFlexAlign="center center">
+      <router-outlet></router-outlet>
+    </div>
+    <footer>
+      <app-footer></app-footer>
+    </footer>
+  </main>
+</div>
+
+<ngx-loading-bar color="red" height="2.5px" [includeSpinner]="false"></ngx-loading-bar>
