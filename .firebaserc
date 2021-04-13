@@ -1,6 +1,7 @@
 {
   "projects": {
     "dev": "ngassignforce",
-    "production": "assignforceprod"
+    "production": "training-team-253916",
+    "default": "training-team-253916"
   }
 }

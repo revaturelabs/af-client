@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Building } from 'src/app/models/building';
 import { Room, RoomType } from 'src/app/models/room';
-import { delay } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+//import { delay } from 'rxjs/operators';
+//import { LocationService } from '../location/location.service';
 import { AuthService } from '../auth/auth.service';
+import { HttpClient } from '@angular/common/http';
 import { BuildingService } from '../building/building.service';
 @Injectable({
   providedIn: 'root',

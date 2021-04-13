@@ -4,6 +4,7 @@ import { Building } from 'src/app/models/building';
 import { delay } from 'rxjs/operators';
 import { AuthService } from '../auth/auth.service';
 import { HttpClient } from '@angular/common/http';
+import { LocationService } from '../location/location.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -48,10 +49,13 @@ export class BuildingService {
     { buildingId: 6, address: 'address 6', locationId: 3 },
   ];
 
-  constructor(private authService : AuthService, private httpClient: HttpClient) {}
+  constructor(private locationService:LocationService,private authService: AuthService, private httpClient: HttpClient) {}
+
 
   getBuildingsByLocationId(locationId: number): Observable<Building[]> {
-    return this.httpClient.get<Building[]>(`${this.baseUrl}/locations/${locationId}/buildings`, this.options);
+    //return of(this.buildings.filter((e) => e.locationId == locationId)).pipe(delay(1000));
+
+    return this.httpClient.get<Building[]>(`${this.baseUrl}/locations/${this.locationService.currentLocation?.locationId}/buildings`, this.options);
   }
 
   createBuilding(building: Building): Observable<Building> {

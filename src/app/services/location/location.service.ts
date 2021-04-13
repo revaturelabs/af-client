@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
+//import { delay } from 'rxjs/operators';
 import { Location } from 'src/app/models/location';
 import { AuthService } from '../auth/auth.service';
 
@@ -22,8 +22,7 @@ export class LocationService {
   constructor(private authService: AuthService, private httpClient: HttpClient) {}
 
   getAllLocation(): Observable<Location[]> {
-    // return of(this.locations).pipe(delay(1500));
-    
+    //return of(this.locations).pipe(delay(1500));
     return this.httpClient.get<Location[]>(`${this.baseUrl}/locations`, this.options);
   }
 
