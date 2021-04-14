@@ -49,9 +49,14 @@ export class RoomTableComponent implements OnInit {
   }
 
   createTable(): void {
-    this.roomService.getRoomByBuilding(this.buildingService.currentBuilding!).subscribe((res) => {
-      this.dataSource = new MatTableDataSource(res);
-    });
+    if (!this.buildingService.currentBuilding?.buildingId) {
+      return;
+    }
+    this.roomService
+      .getRoomByBuilding(this.buildingService.currentBuilding!)
+      .subscribe((res) => {
+        this.dataSource = new MatTableDataSource(res);
+      });
   }
 
   applyFilter(event: Event) {
