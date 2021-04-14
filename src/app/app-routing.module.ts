@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
 import { AdminPageComponent } from './components/admin/admin-page/admin-page.component';
 import { AdminResolveComponent } from './components/admin/admin-resolve/admin-resolve.component';
-import { CalendarKsComponent } from './components/calendar/calendar-ks/calendar-ks.component';
 import { CreateLocationComponent } from './components/admin/create-location/create-location.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { ReservationPageComponent } from './components/reservation-page/reservation-page.component';
@@ -40,13 +39,11 @@ const routes: Routes = [
       { path: 'trainer-profile', component: TrainerProfileComponent },
       { path: 'reservation', component: ReservationPageComponent },
       { path: 'trainer-dashboard', component: TrainerDashboardComponent },
-      { path: 'change-password', component: SetPasswordComponent },
     ],
   },
+  { path: 'change-password', component: SetPasswordComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', component: LandingPageComponent },
-  
- 
 ];
 
 @NgModule({
