@@ -50,10 +50,15 @@ export class ReservationService {
       );
   }
 
-  getReservationByReserver(): Observable<Reservation[]> {
+  getReservationByReserver(future: boolean): Observable<Reservation[]> {
+    let forward = "";
+    if(future) {
+      forward = `&startTime=${Math.floor((+ new Date()) / 1000)}`;
+    }
+    console.log("forward: "+forward);
     return this.http
       .get<Reservation[]>(
-        `${this.BASE_URL}/reservations?reserver=${this.authService.decodedJwtDTO?.email}`,this.options
+        `${this.BASE_URL}/reservations?reserver=${this.authService.decodedJwtDTO?.email}`+forward,this.options
       );
   }
 

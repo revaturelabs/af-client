@@ -28,7 +28,7 @@ export class MyReservationsComponent implements OnInit {
   }
 
   loadData(): void {
-    this.reservationService.getReservationByReserver().subscribe(
+    this.reservationService.getReservationByReserver(true).subscribe(
       (res) => {
         this.setTableData(res);
       },

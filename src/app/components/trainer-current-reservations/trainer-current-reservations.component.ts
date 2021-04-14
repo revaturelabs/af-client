@@ -86,7 +86,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reservationService.getReservationByReserver().subscribe(
+    this.reservationService.getReservationByReserver(true).subscribe(
       (res) => {
 
         for(let r of res){
