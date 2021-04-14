@@ -34,6 +34,7 @@ import { AddRoomComponent } from './admin/add-room/add-room.component';
 import { InspectLocationComponent } from './admin/inspect-location/inspect-location.component';
 import { InspectRoomComponent } from './admin/inspect-room/inspect-room.component';
 import { RegSuccessDialogComponent } from './reg-success-dialog/reg-success-dialog.component';
+import { MyReservationsComponent } from './my-reservations/my-reservations.component';
 
 const components = [
   HeaderComponent,
@@ -62,6 +63,7 @@ const components = [
   NotFoundComponent,
   SetPasswordComponent,
   RegSuccessDialogComponent,
+  MyReservationsComponent,
 ];
 
 @NgModule({

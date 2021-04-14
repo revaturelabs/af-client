@@ -31,7 +31,7 @@ export class SigninPageComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       this.authService.getCurrentUserInfo();
       if (this.authService.decodedJwtDTO?.status == 'pending_creation') {
-        this.router.navigateByUrl('/change-password');
+        this.router.navigateByUrl('/trainer-page/change-password');
       } else if (this.authService.decodedJwtDTO?.role == 'admin') {
         this.router.navigateByUrl('/admin-page');
       } else {

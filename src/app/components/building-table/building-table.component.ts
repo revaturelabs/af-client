@@ -57,6 +57,9 @@ export class BuildingTableComponent implements OnInit, AfterViewInit {
     }
   
     createTable(): void {
+      if (!this.locationService.currentLocation?.locationId) {
+        return;
+      }
       this.buildingService
         .getBuildingsByLocationId(
           this.locationService.currentLocation?.locationId!
