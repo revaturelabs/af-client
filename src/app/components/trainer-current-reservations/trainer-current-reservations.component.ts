@@ -123,7 +123,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
     this.currentReservation = this.reservations[this.reservationIndex];
   }
 
-  deleteReservation(reservation: Reservation) {
+  deleteReservation() {
     //TODO make http request to delete the current reservation
     this.conformService.confirm().subscribe((confirm) => {
       if (confirm) {
