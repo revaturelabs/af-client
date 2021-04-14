@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { ToastrService } from 'ngx-toastr';
 import { Location } from 'src/app/models/location';
 import { LocationService } from 'src/app/services/location/location.service';
 
@@ -17,33 +18,39 @@ export class LocationTableComponent implements OnInit {
   name?: string;
   state?: string;
   city?: string;
-  zipCode?: string;
+  zipcode?: string;
   locationData?: Location;
 
-  displayedColumns: string[] = ['name', 'state', 'city', 'zipCode'];
+  displayedColumns: string[] = ['name', 'state', 'city', 'zipcode'];
   dataSource!: MatTableDataSource<Location>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private locationService: LocationService) {}
+  constructor(
+    private locationService: LocationService,
+    private toastr: ToastrService,
+  ) {}
 
   ngOnInit(): void {
     this.createTable();
   }
 
-  ngAfterViewInit() {
-    if (this.dataSource) {
-      this.dataSource.paginator = this.paginator;
-      //TODO sorting has problem
-      this.dataSource.sort = this.sort;
-    }
-  }
-
   createTable(): void {
-    this.locationService.getAllLocation().subscribe((res) => {
-      this.dataSource = new MatTableDataSource(res);
-    });
+    this.locationService.getAllLocation().subscribe(
+      res => {
+        this.setTableData(res);
+      },
+      error => {
+        this.toastr.error('Failed to load location data');
+      }
+    )
+  }
+  
+  setTableData(data: Location[]) {
+    this.dataSource = new MatTableDataSource(data);
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
@@ -56,7 +63,6 @@ export class LocationTableComponent implements OnInit {
   }
 
   chooseLocation(loc: Location) {
-    console.log('Select location: ', loc);
     this.selectedLocation = loc;
     this.locationService.currentLocation = loc;
   }

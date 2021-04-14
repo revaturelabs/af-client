@@ -30,7 +30,9 @@ export class SigninPageComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
       this.authService.getCurrentUserInfo();
-      if (this.authService.decodedJwtDTO?.role == 'admin') {
+      if (this.authService.decodedJwtDTO?.status == 'pending_creation') {
+        this.router.navigateByUrl('/trainer-page/change-password');
+      } else if (this.authService.decodedJwtDTO?.role == 'admin') {
         this.router.navigateByUrl('/admin-page');
       } else {
         this.router.navigateByUrl('/trainer-page');

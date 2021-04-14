@@ -1,13 +1,16 @@
 <mat-card class="example-card" *ngIf="currentReservation">
   <mat-card-header>
-    <mat-card-title>{{currentReservation?.reserver}}</mat-card-title>
-    <mat-card-subtitle>{{currentReservation?.roomId}} </mat-card-subtitle>
+    <mat-card-title>{{currentReservation!.reservation!.title}}</mat-card-title>
+    <mat-card-subtitle>{{currentReservation!.reservation!.status}} by {{currentReservation!.reservation!.reserver}}</mat-card-subtitle>
+    <mat-card-subtitle>Location: {{currentReservation!.location!.city}}</mat-card-subtitle>
+    <mat-card-subtitle>Building: {{currentReservation!.building!.address}}</mat-card-subtitle>
+    <mat-card-subtitle>Room: {{currentReservation!.room!.name}} </mat-card-subtitle>
   </mat-card-header>
   <img mat-card-image src="assets/images/admin2.jpg" alt="Photo of a Shiba Inu">
   <mat-card-content>
-    <p>Start time: {{currentReservation!.startTime! * 1000 | date: 'medium'}}</p>
-    <p>End time: {{currentReservation!.endTime! * 1000 | date: 'medium'}}</p>
-    <p>Duration: {{ (currentReservation!.endTime! - currentReservation!.startTime!) | secondsHours}} </p>
+    <p>Start time: {{currentReservation!.reservation.startTime! * 1000 | date: 'medium'}}</p>
+    <p>End time: {{currentReservation!.reservation.endTime! * 1000 | date: 'medium'}}</p>
+    <p>Duration: {{ (currentReservation!.reservation.endTime! - currentReservation!.reservation.startTime!) | secondsHours}} </p>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button color='primary' (click)="previousReservation()">Prev</button>
