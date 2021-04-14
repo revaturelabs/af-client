@@ -138,7 +138,7 @@ export class CalendarKsComponent implements OnInit {
   // Populates Events on calendar based on what room you selected
   populateEvents() {
     this.reservationService
-      .getReservationsByRoom(this.roomData!)
+      .getReservationsByRoom(this.roomData!, true)
       .pipe(
         finalize(() => {
           this.cdr.detectChanges();
