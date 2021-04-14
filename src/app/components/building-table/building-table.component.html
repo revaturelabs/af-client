@@ -1,17 +1,10 @@
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item active" aria-current="page">
-        Location: {{ locationData }}
-      </li>
-    </ol>
-  </nav>
-
 <div class="d-flex align-items-center mt-4">
     <mat-form-field class="w-100 mr-3">
         <mat-label>Search</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="building" #input>
     </mat-form-field>
 </div>
+
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort class="table-hover"  matSortActive="name" matSortDirection="asc">
 
@@ -43,6 +36,3 @@
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
-<button mat-button color='accent' *ngIf="selectedBuilding" class="w-100 mt-3">
-    <h2><b>Current selected Building: {{selectedBuilding?.buildingId}}</b> </h2>
-</button>

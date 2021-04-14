@@ -23,9 +23,6 @@ import { RoomTableComponent } from '../room-table/room-table.component';
 export class ReservationPageComponent implements OnInit {
   isLinear: boolean = false;
 
-  calendarModes: string[] = ['DCE', 'KS'];
-  calendarChoice: number = 0;
-
   selectedLocation?: Location;
   selectedBuilding?: Building;
   selectedRoom?: Room;
@@ -72,6 +69,16 @@ export class ReservationPageComponent implements OnInit {
   }
 
   getCurrentLocation() {
+    if (!this.locationService.currentLocation?.locationId) {
+      return;
+    }
+    if (
+      this.selectedLocation &&
+      this.selectedLocation.locationId !== this.locationService.currentLocation.locationId
+    ) {
+      this.stepper.reset();
+      this.resetBuildingRoom();
+    }
     this.selectedLocation = this.locationService.currentLocation;
     this.buildingChild.ngOnInit();
     this.stepper.selected.completed = true;
@@ -89,9 +96,4 @@ export class ReservationPageComponent implements OnInit {
     this.initCalendarChild();
   }
 
-  switchCalendar() {
-    if (++this.calendarChoice % this.calendarModes.length === 0) {
-      this.calendarChoice = 0;
-    }
-  }
 }

@@ -14,11 +14,11 @@ import { TrainerProfileComponent } from './components/trainer-profile/trainer-pr
 import { AdminGuardService } from './services/route-guard/admin-guard.service';
 import { TrainerGuardService } from './services/route-guard/trainer-guard.service';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { MyReservationsComponent } from './components/my-reservations/my-reservations.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'signin', component: SigninPageComponent },
-  { path: 'reservation', component: ReservationPageComponent },
   {
     path: 'admin-page',
     component: AdminPageComponent,
@@ -39,9 +39,10 @@ const routes: Routes = [
       { path: 'trainer-profile', component: TrainerProfileComponent },
       { path: 'reservation', component: ReservationPageComponent },
       { path: 'trainer-dashboard', component: TrainerDashboardComponent },
+      { path: 'my-reservations', component: MyReservationsComponent },
+      { path: 'change-password', component: SetPasswordComponent },
     ],
   },
-  { path: 'change-password', component: SetPasswordComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', component: LandingPageComponent },
 ];

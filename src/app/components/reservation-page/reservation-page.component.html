@@ -1,18 +1,34 @@
 <div class="container">
-  <mat-horizontal-stepper linear #stepper>
-    <mat-step completed="false">
-      <ng-template matStepLabel>
-        Select Location
-      </ng-template>
 
-      <app-location-table (click)="stepper.reset(); getCurrentLocation(); resetBuildingRoom();"></app-location-table>
+  <mat-horizontal-stepper linear #stepper>
+
+    <!-- SELECT LOCATION -->
+    <mat-step label="Select Location" completed="false">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">Location: {{selectedLocation?.name}}</li>
+          <li class="breadcrumb-item" *ngIf="selectedBuilding">Building: {{selectedBuilding?.address}}</li>
+          <li class="breadcrumb-item" *ngIf="selectedRoom">Room: {{selectedRoom?.name}}</li>
+        </ol>
+      </nav>
+
+      <app-location-table (click)="getCurrentLocation()"></app-location-table>
 
       <div class="d-flex mt-3">
         <button mat-raised-button color="primary" matStepperNext *ngIf="selectedLocation" class="w-100">Next</button>
       </div>
     </mat-step>
 
+    <!-- SELECT BUILDING -->
     <mat-step label="Select Building" completed="false">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Location: {{selectedLocation?.name}}</li>
+          <li class="breadcrumb-item active" aria-current="page">Building: {{selectedBuilding?.address}}</li>
+          <li class="breadcrumb-item" *ngIf="selectedRoom">Room: {{selectedRoom?.name}}</li>
+        </ol>
+      </nav>
+
       <app-building-table [locationData]="selectedLocation?.name" (click)="getCurrentBuilding(); resetRoom()">
       </app-building-table>
 
@@ -22,8 +38,15 @@
       </div>
     </mat-step>
 
-    <mat-step completed="false" #roomStep>
-      <ng-template matStepLabel>Select Room</ng-template>
+    <!-- SELECT ROOM -->
+    <mat-step label="Select Room" completed="false" #roomStep>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Location: {{selectedLocation?.name}}</li>
+          <li class="breadcrumb-item">Building: {{selectedBuilding?.address}}</li>
+          <li class="breadcrumb-item active" aria-current="page">Room: {{selectedRoom?.name}}</li>
+        </ol>
+      </nav>
 
       <app-room-table [buildingData]="selectedBuilding?.address" [locationData]="selectedLocation?.name"
         (click)="getCurrentRoom()"></app-room-table>
@@ -34,15 +57,16 @@
       </div>
     </mat-step>
 
-    <mat-step completed="false">
-      <ng-template matStepLabel>Select Date and Time</ng-template>
+    <!-- SELECT DATE AND TIME -->
+    <mat-step label="Select Date and Time" completed="false">
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">Location: {{selectedLocation?.name}}</li>
           <li class="breadcrumb-item">Building: {{selectedBuilding?.address}}</li>
-          <li class="breadcrumb-item active" aria-current="page">Room: {{selectedRoom?.name}}</li>
+          <li class="breadcrumb-item">Room: {{selectedRoom?.name}}</li>
         </ol>
       </nav>
+
       <app-calendar-ks *ngIf="selectedRoom" [roomData]="selectedRoom!"></app-calendar-ks>
 
       <div class="d-flex btnDiv">
@@ -52,4 +76,5 @@
     </mat-step>
 
   </mat-horizontal-stepper>
+
 </div>
