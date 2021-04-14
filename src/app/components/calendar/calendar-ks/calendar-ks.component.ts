@@ -138,7 +138,7 @@ export class CalendarKsComponent implements OnInit {
   // Populates Events on calendar based on what room you selected
   populateEvents() {
     this.reservationService
-      .getReservationsByRoom(this.roomData!)
+      .getReservationsByRoom(this.roomData!, true)
       .pipe(
         finalize(() => {
           this.cdr.detectChanges();
@@ -389,6 +389,7 @@ export class CalendarKsComponent implements OnInit {
               const { reserver, start, end } = event;
               event.id = result.reservationId;
               event.title = `${result.title}: ${start.toLocaleString()} - ${end.toLocaleString()}`;
+              event.reserver = result.reserver;
               event.actions = this.actions;
               event.color = colors.blue;
               event.status = 'reserved';

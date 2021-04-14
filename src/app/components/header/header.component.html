@@ -3,7 +3,7 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['/admin-page']" routerLinkActive="router-link-active">
+    <button mat-menu-item [routerLink]="['/admin-page']" routerLinkActive="router-link-active" *ngIf="currentUser?.role === 'admin'">
       <mat-icon>dashboard</mat-icon>
       <span>Admin</span>
     </button>

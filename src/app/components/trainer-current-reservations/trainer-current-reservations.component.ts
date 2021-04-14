@@ -86,7 +86,7 @@ export class TrainerCurrentReservationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.reservationService.getReservationByReserver().subscribe(
+    this.reservationService.getReservationByReserver(true).subscribe(
       (res) => {
 
         for(let r of res){
@@ -127,7 +127,6 @@ export class TrainerCurrentReservationsComponent implements OnInit {
     //TODO make http request to delete the current reservation
     this.conformService.confirm().subscribe((confirm) => {
       if (confirm) {
-        // will delete
         console.log(this.currentReservation.reservation)
         this.reservationService.cancelReservation(this.currentReservation.reservation).subscribe(
           (result)=>{

@@ -43,17 +43,26 @@ export class ReservationService {
   }
 
   // Read
-  getReservationsByRoom(room: Room): Observable<Reservation[]> {
+  getReservationsByRoom(room: Room, future: boolean): Observable<Reservation[]> {
+    let forward = "";
+    if(future) {
+      forward = `&start=${Math.floor((+ new Date()) / 1000)}`;
+    }
     return this.http
       .get<Reservation[]>(
-        `${this.BASE_URL}/reservations?roomId=${room.roomId}`,this.options
+        `${this.BASE_URL}/reservations?roomId=${room.roomId}`+forward,this.options
       );
   }
 
-  getReservationByReserver(): Observable<Reservation[]> {
+  getReservationByReserver(future: boolean): Observable<Reservation[]> {
+    let forward = "";
+    if(future) {
+      forward = `&start=${Math.floor((+ new Date()) / 1000)}`;
+    }
+    console.log("forward: "+forward);
     return this.http
       .get<Reservation[]>(
-        `${this.BASE_URL}/reservations?reserver=${this.authService.decodedJwtDTO?.email}`,this.options
+        `${this.BASE_URL}/reservations?reserver=${this.authService.decodedJwtDTO?.email}`+forward,this.options
       );
   }
 

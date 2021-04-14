@@ -143,7 +143,6 @@ export class AuthService {
 
   // check the role of current user to be admin
   isAdminAuthorized(): boolean {
-    return true;
     this.getCurrentUserInfo();
     return this.isLoggedIn() && this.decodedJwtDTO!.role == 'admin';
   }
