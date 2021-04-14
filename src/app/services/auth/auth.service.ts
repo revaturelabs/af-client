@@ -11,6 +11,7 @@ export interface DecodedJwtDTO {
   id?: number;
   email?: string;
   role?: string;
+  status?: string;
 }
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,6 @@ export class AuthService {
   url: string = 'http://34.123.74.34:80/';
   decodedJwtDTO?: DecodedJwtDTO;
   jwt?: string;
-
 
   pendingUsers: User[] = [
     {
@@ -107,27 +107,34 @@ export class AuthService {
   setPassword(password: string) {
     const options = {
       headers: {
-        Authorization: this.jwt!
-      }
-    }
+        Authorization: this.jwt!,
+      },
+    };
     const body = {
-      email:this.decodedJwtDTO?.email,
-      userId:this.decodedJwtDTO?.id,
-      password:password
-    }
-    return this.httpClient
-      .patch<{data: string}>(this.url+"password?id="+this.jwt, body, options);
+      email: this.decodedJwtDTO?.email,
+      userId: this.decodedJwtDTO?.id,
+      password: password,
+    };
+    return this.httpClient.patch<{ data: string }>(
+      this.url + 'password?id=' + this.jwt,
+      body,
+      options
+    );
   }
 
   getAllPendingUsers(): Observable<User[]> {
-    // return this.httpClient.get<User[]>(`${this.url}resolve`);
-    return of(this.pendingUsers);
+    return this.httpClient.get<User[]>(`${this.url}resolve`, {
+      headers: { Authorization: this.jwt! },
+    });
+    //return of(this.pendingUsers);
     // return this.httpClient.get<User[]>(this.url + 'resovle');
   }
 
   resolveUser(user: User): Observable<User> {
-    // return this.httpClient.put(`${this.url}resolve`, user);
-    return of(user);
+    return this.httpClient.patch(`${this.url}resolve/${user.userId}`, user, {
+      headers: { Authorization: this.jwt! },
+    });
+    //return of(user);
   }
 
   isLoggedIn(): boolean {
@@ -149,7 +156,7 @@ export class AuthService {
 
   getCurrentUserInfo() {
     let value = localStorage.getItem('Authorization');
-    console.log("jwt", value);
+    console.log('jwt', value);
     if (value != null) {
       this.jwt = value;
       try {
@@ -165,5 +172,4 @@ export class AuthService {
     this.getCurrentUserInfo();
     return this.jwt;
   }
-
 }

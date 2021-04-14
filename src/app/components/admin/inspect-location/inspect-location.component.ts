@@ -33,7 +33,6 @@ export class InspectLocationComponent implements OnInit {
   resLocation?: Location[];
 
   displayedColumns: string[] = [
-    'locationId',
     'name',
     'state',
     'city',
