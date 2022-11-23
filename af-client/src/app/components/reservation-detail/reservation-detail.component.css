@@ -1,0 +1,23 @@
+.error {
+  color: red;
+}
+
+
+
+  #edit-button button {
+    margin: 1%;
+    
+    cursor: pointer;
+  }
+  .detail-form {
+    margin: 1%;
+    padding: 7px 10px;
+    border: 3px solid #405061;
+    background-color: #eee;
+  }
+
+  .detail-form input {
+    margin: 10px 5px;
+    position: relative;
+    padding-block-start: 0px 10px;
+  }
