@@ -1,0 +1,30 @@
+<div class="container">
+    <h1 class="text-center mt-3">Welcome to admin dashboard!</h1>
+    <div class="d-flex flex-wrap align-items-center justify-content-center">
+        <mat-card class="example-card mx-md-5 my-2" [routerLink]="['../resolve']">
+            <img mat-card-image src="assets/images/admin1.jpg">
+            <mat-card-content>
+                <p>
+                    This page allow you to resolve a pending user request.
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color='primary'>Go to resolve page</button>
+            </mat-card-actions>
+        </mat-card>
+
+        <mat-card class="example-card my-2" [routerLink]="['../create-location']">
+            <img mat-card-image src="assets/images/admin2.jpg">
+            <mat-card-content>
+                <p>
+                    This page allow you to maintain a record of locations, buildings, rooms Revature has the ability to
+                    train from.
+                </p>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button color='primary'>Go to add location page</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>
+<router-outlet></router-outlet>

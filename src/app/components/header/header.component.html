@@ -1,0 +1,31 @@
+<mat-toolbar>
+  <button mat-icon-button aria-label="menu" [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/admin-page']" routerLinkActive="router-link-active" *ngIf="currentUser?.role === 'admin'">
+      <mat-icon>dashboard</mat-icon>
+      <span>Admin dashboard</span>
+    </button>
+    <button mat-menu-item [routerLink]="['/trainer-page']" routerLinkActive="router-link-active">
+      <mat-icon>face</mat-icon>
+      <span>Trainer dashboard</span>
+    </button>
+    <button mat-menu-item routerLink="/trainer-page/reservation" routerLinkActive="router-link-active">
+      <mat-icon>calendar_today</mat-icon>
+      <span>Reserve a Room</span>
+    </button>
+    <button mat-menu-item routerLink="/trainer-page/my-reservations">
+      <mat-icon>date_range</mat-icon>
+      <span>View My Reservations</span>
+    </button>
+  </mat-menu>
+  <span><a [routerLink]="['']" routerLinkActive="router-link-active"> AssignForce</a></span>
+  <span class="spacer"></span>
+  <p *ngIf="loggedIn" class="mx-2 mb-1">Welcome {{currentUser?.email}}</p>
+  <button mat-raised-button color="primary" *ngIf="loggedIn" (click)="logout()">Logout</button>
+  <button mat-raised-button color="primary" *ngIf="!loggedIn" [routerLink]="['/signin']"
+    routerLinkActive="router-link-active">Sign In</button>
+
+</mat-toolbar>
+

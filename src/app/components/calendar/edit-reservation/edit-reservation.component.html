@@ -1,0 +1,25 @@
+<h2>{{data.action}} Reservation</h2>
+<form [formGroup]="editReservationForm" (ngSubmit)="submitForm()" class="d-flex flex-column gap-2">
+    <mat-form-field>
+        <mat-label>Event Title</mat-label>
+        <input matInput type="text" class="form-control" formControlName="title">
+    </mat-form-field>
+    <mat-form-field floatLabel="always">
+        <mat-label>Choose Start Time</mat-label>
+        <input matInput type="text" class="form-control" mwlFlatpickr formControlName="start"
+               [altInput]="true" [convertModelValue]="true" [enableTime]="true"
+              dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set">
+    </mat-form-field>
+
+    <mat-form-field floatLabel="always">
+        <mat-label>Choose End Time</mat-label>
+        <input matInput type="text" class="form-control" mwlFlatpickr formControlName="end"
+               [altInput]="true" [convertModelValue]="true" [enableTime]="true"
+              dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set">
+    </mat-form-field>
+
+    <div class="d-flex gap-2 align-items-center">
+        <button mat-raised-button color="primary" cdkFocusInitial type="submit">{{data.action}} Event</button>
+        <button mat-flat-button color="accent" class="mx-3" (click)="closeDialog()" type="button">Cancel</button>
+    </div>
+</form>

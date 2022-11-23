@@ -1,0 +1,80 @@
+<div class="container">
+
+  <mat-horizontal-stepper linear #stepper (selectionChange)="stepperOnChange($event)">
+
+    <!-- SELECT LOCATION -->
+    <mat-step label="Select Location" completed="false">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active" aria-current="page">Location: {{selectedLocation?.name}}</li>
+          <li class="breadcrumb-item" *ngIf="selectedBuilding">Building: {{selectedBuilding?.address}}</li>
+          <li class="breadcrumb-item" *ngIf="selectedRoom">Room: {{selectedRoom?.name}}</li>
+        </ol>
+      </nav>
+
+      <app-location-table (click)="getCurrentLocation()"></app-location-table>
+
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedLocation" class="w-100">Next</button>
+      </div>
+    </mat-step>
+
+    <!-- SELECT BUILDING -->
+    <mat-step label="Select Building" completed="false">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Location: {{selectedLocation?.name}}</li>
+          <li class="breadcrumb-item active" aria-current="page">Building: {{selectedBuilding?.address}}</li>
+          <li class="breadcrumb-item" *ngIf="selectedRoom">Room: {{selectedRoom?.name}}</li>
+        </ol>
+      </nav>
+
+      <app-building-table [locationData]="selectedLocation?.name" (click)="getCurrentBuilding(); resetRoom()">
+      </app-building-table>
+
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedBuilding" class="w-100">Next</button>
+      </div>
+    </mat-step>
+
+    <!-- SELECT ROOM -->
+    <mat-step label="Select Room" completed="false" #roomStep>
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Location: {{selectedLocation?.name}}</li>
+          <li class="breadcrumb-item">Building: {{selectedBuilding?.address}}</li>
+          <li class="breadcrumb-item active" aria-current="page">Room: {{selectedRoom?.name}}</li>
+        </ol>
+      </nav>
+
+      <app-room-table [buildingData]="selectedBuilding?.address" [locationData]="selectedLocation?.name"
+        (click)="getCurrentRoom()"></app-room-table>
+
+      <div class="d-flex mt-3">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="primary" matStepperNext *ngIf="selectedRoom" class="w-100">Next</button>
+      </div>
+    </mat-step>
+
+    <!-- SELECT DATE AND TIME -->
+    <mat-step label="Select Date and Time" completed="false">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">Location: {{selectedLocation?.name}}</li>
+          <li class="breadcrumb-item">Building: {{selectedBuilding?.address}}</li>
+          <li class="breadcrumb-item">Room: {{selectedRoom?.name}}</li>
+        </ol>
+      </nav>
+
+      <app-calendar-ks *ngIf="selectedRoom" [roomData]="selectedRoom!"></app-calendar-ks>
+
+      <div class="d-flex btnDiv">
+        <button mat-raised-button color="primary" matStepperPrevious class="w-100 mr-2">Back</button>
+        <button mat-raised-button color="accent"(click)="stepper.reset()" class="w-100">Reset</button>
+      </div>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+
+</div>
